@@ -20,7 +20,6 @@ public class DatabaseDriver {
             // statement = myConn.prepareStatement("select * from Book where title = ?");
             PreparedStatement statement = myConn.prepareStatement("SELECT * FROM Book WHERE Match(title) Against(?)");
 
-
             statement.setString(1, searchWord);
 
             // 3. Execute SQL query

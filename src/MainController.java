@@ -34,8 +34,6 @@ public class MainController {
     }
 
     class LoginButtonListener implements ActionListener {
-
-
         @Override
         public void actionPerformed(ActionEvent e) {
             if (loggedIn) {

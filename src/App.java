@@ -11,12 +11,6 @@ public class App {
 
 		mainView.setVisible(true);
 
-
-/*		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new UI.MainView();
-			}
-		});	*/
 	}
 
 }
