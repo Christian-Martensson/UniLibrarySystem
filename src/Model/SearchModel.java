@@ -19,17 +19,27 @@ public class SearchModel {
     }
 
     public JTable displayBooks() {
-        String[] columnNames = new String[2];
-        Object[][] data = new Object[listOfBooks.size()][2];
+        String[] columnNames = new String[5];
+        Object[][] data = new Object[listOfBooks.size()][5];
 
-        columnNames[0] = "Title";
-        columnNames[1] = "Publication year";
+        columnNames[0] = "ISBN";
+        columnNames[1] = "Title";
+        columnNames[2] = "Publisher";
+        columnNames[3] = "Publication Year";
+        columnNames[4] = "Genre";
 
         for (int i = 0; i < listOfBooks.size(); i++) {
+            String isbn = listOfBooks.get(i).getIsbn();
             String title = listOfBooks.get(i).getTitle();
             String publicationYear = listOfBooks.get(i).getPublicationYear();
-            data[i][0] = title;
-            data[i][1] = publicationYear;
+            String publisher = listOfBooks.get(i).getPublisher();
+            String genre = listOfBooks.get(i).getGenre();
+
+            data[i][0] = isbn;
+            data[i][1] = title;
+            data[i][2] = publicationYear;
+            data[i][3] = publisher;
+            data[i][4] = genre;
         }
 
 

@@ -29,10 +29,15 @@ public class DatabaseDriver {
 
             // 4. Process the result set
             while (resultSet.next()) {
+                String isbn = resultSet.getString("isbn");
+                String articleType = resultSet.getString("articleType");
                 String title = resultSet.getString("title");
+                String publisher = resultSet.getString("publisher");
+                String genre = resultSet.getString("genre");
                 String publicationYear = resultSet.getString("publicationYear");
+                // int availability = resultSet.getInt("availability");
 
-                BookModel book = new BookModel(title, publicationYear);
+                BookModel book = new BookModel(isbn, articleType, title, publisher, genre, publicationYear);
                 listOfBooks.add(book);
             }
         }
