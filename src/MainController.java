@@ -1,4 +1,4 @@
-import Model.SearchEvent;
+import Model.SearchModel;
 import UI.MainView;
 
 import javax.swing.*;
@@ -6,14 +6,14 @@ import java.awt.event.*;
 
 public class MainController {
     private MainView mainView;
-    private SearchEvent searchEvent;
+    private SearchModel searchModel;
 
     private boolean loggedIn;
 
 
-    public MainController(MainView mainView, SearchEvent searchModel) {
+    public MainController(MainView mainView, SearchModel searchModel) {
         this.mainView = mainView;
-        this.searchEvent = searchModel;
+        this.searchModel = searchModel;
 
         this.mainView.getToolbar().addLoginButtonListener(new LoginButtonListener());
         this.mainView.getToolbar().addSearchButtonListener(new SearchButtonListener());
@@ -25,9 +25,9 @@ public class MainController {
         public void actionPerformed(ActionEvent e) {
 
             String searchWord = mainView.getToolbar().getTextField().getText();
-            searchEvent.searchInDatabase(searchWord);
+            searchModel.searchInDatabase(searchWord);
 
-            JTable table = searchEvent.displayBooks();
+            JTable table = searchModel.displayBooks();
             mainView.getScrollPanel().appendSearchResult(table);
 
         }

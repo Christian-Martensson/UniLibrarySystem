@@ -10,7 +10,6 @@ public class Toolbar extends JPanel {
 	private JButton searchButton;
 	private JTextField textField;
 	private JLabel searchLabel;
-	private StringListener textListener;
 
 	
 	public Toolbar() {
@@ -32,11 +31,6 @@ public class Toolbar extends JPanel {
 	}
 
 
-
-	public void setStringListener(StringListener listener) {
-		this.textListener = listener;
-	}
-
 	public void addSearchButtonListener (ActionListener listenForSearchButton) {
 		searchButton.addActionListener(listenForSearchButton);
 	}
@@ -53,7 +47,4 @@ public class Toolbar extends JPanel {
 		return loginButton;
 	}
 
-	public StringListener getTextListener() {
-		return textListener;
-	}
 }

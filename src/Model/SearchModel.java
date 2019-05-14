@@ -1,14 +1,12 @@
 package Model;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.util.ArrayList;
 
-public class SearchEvent {
+public class SearchModel {
     private ArrayList<BookModel> listOfBooks;
 
-    public SearchEvent() {
+    public SearchModel() {
     }
 
     public void searchInDatabase(String searchWord) {
