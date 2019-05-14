@@ -11,6 +11,9 @@ public class App {
 
 		mainView.setVisible(true);
 
+
+		//Josefine testar
+		System.out.println("test");
 	}
 
 }
