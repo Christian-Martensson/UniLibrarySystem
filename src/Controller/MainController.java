@@ -1,3 +1,5 @@
+package Controller;
+
 import Model.SearchModel;
 import UI.Views.LoginView;
 import UI.Views.MainView;
@@ -40,7 +42,6 @@ public class MainController {
             if (!loggedIn) {
                 // Opens a new window with login dialogue
                 LoginView lv = new LoginView();
-                // mainView.getToolbar().getLoginButton().setText("Log in");
             }
 
         }

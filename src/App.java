@@ -1,3 +1,4 @@
+import Controller.MainController;
 import Model.SearchModel;
 import UI.Views.MainView;
 

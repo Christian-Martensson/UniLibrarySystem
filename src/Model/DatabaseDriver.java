@@ -34,7 +34,7 @@ public class DatabaseDriver {
             Connection myConn = this.createConnection();
 
             // 2. Create a statement
-            // statement = myConn.prepareStatement("select * from Book where title = ?");
+            // To search for specific book, use: "select * from Book where title = ?";
             PreparedStatement statement = myConn.prepareStatement("SELECT * FROM Book WHERE Match(title) Against(?)");
 
             statement.setString(1, searchWord);
