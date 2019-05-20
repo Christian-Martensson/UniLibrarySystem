@@ -1,4 +1,5 @@
 import Model.SearchModel;
+import UI.LoginView;
 import UI.MainView;
 
 public class App {
@@ -11,9 +12,6 @@ public class App {
 
 		mainView.setVisible(true);
 
-
-		//Josefine Testar nu ny push
-		System.out.println("Test");
 	}
 
 }
