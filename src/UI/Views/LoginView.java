@@ -1,9 +1,7 @@
 package UI.Views;
 
 import javax.swing.*;
-import java.awt.Color;
 import java.awt.Container;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,9 +11,20 @@ public class LoginView extends JFrame {
 
     private JTextField txtUsername;
     private JPasswordField txtPassword;
-    private JButton btnLogin;
+    private JButton loginButton;
     private JLabel lblErrorMessage;
 
+    public JTextField getTxtUsername() {
+        return txtUsername;
+    }
+
+    public JPasswordField getTxtPassword() {
+        return txtPassword;
+    }
+
+    public JButton getLoginButton() {
+        return loginButton;
+    }
 
     public LoginView() {
 
@@ -54,23 +63,13 @@ public class LoginView extends JFrame {
         txtPassword.setBounds(140, 52, 200, 25);
         contentPane.add(txtPassword);
 
-
-        //Controll
-        LoginController controller = new LoginController(this);
-
         //**Create Login Button**//
-        btnLogin = new JButton("Login");
-        btnLogin.addActionListener(new ActionListener(){
+        loginButton = new JButton("Login");
 
-           @Override
-        public void actionPerformed(ActionEvent arg0) {
-               controller.checkCredentials(txtUsername.getText(), new String(txtPassword.getPassword()));
-           }
-        });
 
-        //btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 14));// Format of String
-        btnLogin.setBounds(251, 93, 89, 25);
-        contentPane.add(btnLogin);
+        //loginButton.setFont(new Font("Tahoma", Font.PLAIN, 14));// Format of String
+        loginButton.setBounds(251, 93, 89, 25);
+        contentPane.add(loginButton);
 
         //Create errormessage
         lblErrorMessage = new JLabel("");
@@ -80,17 +79,22 @@ public class LoginView extends JFrame {
         lblErrorMessage.setBounds(10, 151, 330, 25);
         contentPane.add(lblErrorMessage);
 
+
+        //Controll
+        LoginController controller = new LoginController(this);
+
     }
 
-    //Error message
     public void setErrorMessage(String errorMessage) {
         lblErrorMessage.setText(errorMessage);
     }
 
+    public void addLoginButtonListener (ActionListener listenForLoginButton) {
+        loginButton.addActionListener(listenForLoginButton);
+    }
 
-   // public void showVisible(Boolean){
-   //LoginView view = new LoginView();
-    // view.setVisible(true);
+
+
     }
 
 

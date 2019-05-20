@@ -3,6 +3,9 @@ package Controller;
 import Model.LoginModel;
 import UI.Views.LoginView;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class LoginController {
     private LoginView view;
     private LoginModel model;
@@ -11,6 +14,8 @@ public class LoginController {
     public LoginController(LoginView view){
             this.view = view;
             model = new LoginModel();
+
+            this.view.addLoginButtonListener(new LoginButtonListener());
     }
 
     //This method first ask for the data of user to the Model class.
@@ -25,6 +30,14 @@ public class LoginController {
         }
         // If the username and password makes appropriate match the "Login Success!"
         // message is passed to View other wise "Login Failed!" message is passed.
+    }
+
+    class LoginButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            checkCredentials(view.getTxtUsername().getText(), view.getTxtPassword().getText());
+
+        }
     }
 }
 
