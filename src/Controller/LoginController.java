@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.LoginModel;
-import UI.LoginView;
+import UI.Views.LoginView;
 
 public class LoginController {
     private LoginView view;

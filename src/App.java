@@ -1,6 +1,5 @@
 import Model.SearchModel;
-import UI.LoginView;
-import UI.MainView;
+import UI.Views.MainView;
 
 public class App {
 

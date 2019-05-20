@@ -1,6 +1,6 @@
 import Model.SearchModel;
-import UI.LoginView;
-import UI.MainView;
+import UI.Views.LoginView;
+import UI.Views.MainView;
 
 import javax.swing.*;
 import java.awt.event.*;
