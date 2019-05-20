@@ -12,7 +12,7 @@ public class MainView extends JFrame {
 
 	
 	public MainView() {
-		super("Hello World");
+		super("Uni Library System");
 		
 		setLayout(new BorderLayout());
 		
