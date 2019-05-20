@@ -8,14 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class MainView extends JFrame {
+public class LibrarianView extends JFrame {
 	
 	private ScrollPanel scrollPanel;
 	private Toolbar toolbar;
 	private FormPanel formPanel;
 
 	
-	public MainView() {
+	public LibrarianView() {
 		super("Uni Library System");
 		
 		setLayout(new BorderLayout());

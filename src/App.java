@@ -1,14 +1,15 @@
 import Controller.MainController;
 import Model.SearchModel;
-import UI.Views.MainView;
+import UI.Views.DefaultView;
+import UI.Views.LibrarianView;
 
 public class App {
 
 	public static void main(String[] args) {
-		MainView mainView = new MainView();
+		DefaultView defaultView = new DefaultView();
 		SearchModel searchEvent = new SearchModel();
-		MainController mainController = new MainController(mainView, searchEvent);
-		mainView.setVisible(true);
+		MainController mainController = new MainController(defaultView, searchEvent);
+		defaultView.setVisible(true);
 	}
 
 }

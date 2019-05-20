@@ -1,25 +1,25 @@
 package Controller;
 
 import Model.SearchModel;
+import UI.Views.DefaultView;
 import UI.Views.LoginView;
-import UI.Views.MainView;
 
 import javax.swing.*;
 import java.awt.event.*;
 
 public class MainController {
-    private MainView mainView;
+    private DefaultView defaultView;
     private SearchModel searchModel;
 
     private boolean loggedIn = false;
 
 
-    public MainController(MainView mainView, SearchModel searchModel) {
-        this.mainView = mainView;
+    public MainController(DefaultView mainView, SearchModel searchModel) {
+        this.defaultView = mainView;
         this.searchModel = searchModel;
 
-        this.mainView.getToolbar().addLoginButtonListener(new LoginButtonListener());
-        this.mainView.getToolbar().addSearchButtonListener(new SearchButtonListener());
+        this.defaultView.getToolbar().addLoginButtonListener(new LoginButtonListener());
+        this.defaultView.getToolbar().addSearchButtonListener(new SearchButtonListener());
     }
 
     class SearchButtonListener implements ActionListener {
@@ -27,11 +27,11 @@ public class MainController {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            String searchWord = mainView.getToolbar().getTextField().getText();
+            String searchWord = defaultView.getToolbar().getTextField().getText();
             searchModel.searchInDatabase(searchWord);
 
             JTable table = searchModel.displayBooks();
-            mainView.getScrollPanel().appendSearchResult(table);
+            defaultView.getScrollPanel().appendSearchResult(table);
 
         }
     }
