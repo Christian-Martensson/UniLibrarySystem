@@ -1,4 +1,5 @@
 import Model.SearchModel;
+import UI.LoginView;
 import UI.MainView;
 
 import javax.swing.*;
@@ -36,14 +37,12 @@ public class MainController {
     class LoginButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (loggedIn) {
-                loggedIn = false;
-                mainView.getToolbar().getLoginButton().setText("Log in");
+            if (!loggedIn) {
+                // Opens a new window with login dialogue
+                LoginView lv = new LoginView();
+                // mainView.getToolbar().getLoginButton().setText("Log in");
             }
-            else {
-                loggedIn = true;
-                mainView.getToolbar().getLoginButton().setText("Log out");
-            }
+
         }
     }
 

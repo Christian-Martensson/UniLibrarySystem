@@ -44,7 +44,6 @@ public class Toolbar extends JPanel {
 	}
 
 	public JButton getLoginButton() {
-		LoginView lv = new LoginView(); // Open new class LoginView (JFrame)
 
 		return loginButton;
 	}
