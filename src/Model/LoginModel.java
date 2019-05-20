@@ -8,7 +8,8 @@ import java.sql.SQLException;
 
 public class LoginModel {
 
-    private String username, password;
+    private String username;
+    private String password;
     private Connection conn;
 
     //Appropriate data is fetched from the database according to controller's cal
@@ -25,29 +26,41 @@ public class LoginModel {
     }
 
 
-    /////////////** OBS!!! CREATE DATABASE CONNECTION! **/////////////////
-    ///ONLY EXAMPEL!!////
     public void getCredentials(){
         try {
-            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            this.conn = driver.createConnection();
+
+            // 2. Create a statement
+            // statement = myConn.prepareStatement("select password from User where username = ?");
+            // "SELECT password FROM User WHERE Match(username) Against(?)"
+            PreparedStatement statement = this.conn.prepareStatement("select password from User where username = ?");
+
+            statement.setString(1, username);
+
+            // 3. Execute SQL query
+            ResultSet resultSet = statement.executeQuery();
+
+
+
+          /*  Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
             conn = DriverManager.getConnection("jdbc:derby:db/medit");
             PreparedStatement select = conn.prepareStatement("SELECT * FROM user_credentials WHERE username = ?");
             select.setString(1, username);
-            ResultSet rs = select.executeQuery();
+            ResultSet rs = select.executeQuery();*/
 
-            if(rs.next()){
-                password = rs.getString("password");
+            if(resultSet.next()){
+                password = resultSet.getString("password");
             }
             else{
                 password = "";
             }
 
         //Catch exceptions
-        } catch (ClassNotFoundException exception) {
-            exception.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
 
-        }catch (SQLException exception) {
-            exception.printStackTrace();
         }
 
         finally{

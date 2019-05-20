@@ -44,7 +44,6 @@ public class Toolbar extends JPanel {
 	}
 
 	public JButton getLoginButton() {
-
 		return loginButton;
 	}
 

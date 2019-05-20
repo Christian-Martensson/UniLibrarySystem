@@ -9,7 +9,7 @@ public class MainController {
     private MainView mainView;
     private SearchModel searchModel;
 
-    private boolean loggedIn;
+    private boolean loggedIn = false;
 
 
     public MainController(MainView mainView, SearchModel searchModel) {
