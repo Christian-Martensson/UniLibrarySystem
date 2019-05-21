@@ -37,7 +37,6 @@ public class MainController {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            System.out.println("Button clicked");
             String searchWord = view.getToolbar().getTextField().getText();
             String searchAlternative = view.getToolbar().getSearchAlternativesDropdown().getSelectedItem().toString();
 

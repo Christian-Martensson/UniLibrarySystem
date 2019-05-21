@@ -10,8 +10,7 @@ public class Toolbar extends JPanel {
 	private JButton searchButton;
 	private JTextField textField;
 	private JLabel searchLabel;
-	private JLabel checkboxLabel;
-	private JCheckBox checkbox;
+
 	private JComboBox<String> searchAlternativesDropdown;
 
 	
@@ -22,8 +21,7 @@ public class Toolbar extends JPanel {
 		textField = new JTextField(10);
 		searchLabel = new JLabel("SearchField:");
 		searchButton = new JButton("Search");
-		checkboxLabel = new JLabel("User search:");
-		checkbox = new JCheckBox();
+
 		searchAlternativesDropdown = new JComboBox<String>();
 		searchAlternativesDropdown.addItem("Book");
 		searchAlternativesDropdown.addItem("DVD");
@@ -37,8 +35,7 @@ public class Toolbar extends JPanel {
 		add(searchLabel);
 		add(textField);
 		add(searchButton);
-		add(checkboxLabel);
-		add(checkbox);
+
 		add(searchAlternativesDropdown);
 	}
 
@@ -50,24 +47,12 @@ public class Toolbar extends JPanel {
 		loginButton.addActionListener(listener);
 	}
 
-	public void addCheckboxListener (ActionListener listener) {
-		checkbox.addActionListener(listener);
-	}
-
 	public JTextField getTextField() {
 		return textField;
 	}
 
 	public JButton getLoginButton() {
 		return loginButton;
-	}
-
-	public JLabel getCheckboxLabel() {
-		return checkboxLabel;
-	}
-
-	public JCheckBox getCheckbox() {
-		return checkbox;
 	}
 
 	public JComboBox<String> getSearchAlternativesDropdown() {
