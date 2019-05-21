@@ -1,6 +1,7 @@
 package Models;
 
 public class BookModel {
+    private int id;
     private String isbn;
     private String articleType;
     private String title;

@@ -24,7 +24,6 @@ public class MainController {
 
         this.view.getToolbar().addLoginButtonListener(new LoginButtonListener());
         this.view.getToolbar().addSearchButtonListener(new SearchButtonListener());
-        this.view.getToolbar().addCheckboxListener(new SearchCheckboxListener());
         this.view.getBottomToolBar().addLoanButtonListener(new LoanButtonListener());
         this.view.getBottomToolBar().addReserveButtonListener(new ReserveButtonListener());
         this.view.getBottomToolBar().addEditButtonListener(new EditButtonListener());
@@ -37,21 +36,36 @@ public class MainController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            System.out.println("Button clicked");
             String searchWord = view.getToolbar().getTextField().getText();
-            if (view.getToolbar().getCheckbox().isSelected()) {
+            String searchAlternative = view.getToolbar().getSearchAlternativesDropdown().getSelectedItem().toString();
 
-                model.searchUser(searchWord);
+            switch (searchAlternative) {
+                case "Book": {
+                    model.searchBookFor(searchWord);
 
-                JTable table = model.convertListOfUsersToJTable();
-                view.getScrollPanel().appendSearchResult(table);
+                    JTable table = model.convertListOfBooksToJTable();
+                    view.getScrollPanel().appendSearchResult(table);
+                    break;
+                }
+                case "DVD": {
+                    System.out.println("DVD search not implemented");
+                    break;
+                }
+                case "Magazine": {
+                    System.out.println("Magazine search not implemented");
+                    break;
+                }
+                case "User": {
+                    model.searchUser(searchWord);
+
+                    JTable table = model.convertListOfUsersToJTable();
+                    view.getScrollPanel().appendSearchResult(table);
+                    break;
+                }
             }
-            else {
 
-                model.searchBookFor(searchWord);
-
-                JTable table = model.convertListOfBooksToJTable();
-                view.getScrollPanel().appendSearchResult(table);
-            }
         }
     }
 
@@ -72,23 +86,22 @@ public class MainController {
         }
     }
 
-    // probably won't be used. Another ActionListener just checks if the checkbox is checked or not.
-    class SearchCheckboxListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-        }
-    }
 
     class LoanButtonListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println(ScrollPanel.getTable().getRowCount());
 
             if(ScrollPanel.getTable().getSelectionModel().isSelectionEmpty()) {
                 ErrorMessageView error = new ErrorMessageView("You must select an item to loan!");
             }
             else {
+
+                int row = ScrollPanel.getTable().getSelectedRow();
+                int column = 0;
+                String rowId = ScrollPanel.getTable().getValueAt(row, column).toString();
+
+
                 LoanView loanView = new LoanView();
             }
 
@@ -128,12 +141,14 @@ public class MainController {
 
     public static void giveLibrarianAccess() {
         view.getFormPanel().setVisible(true);
+        view.getToolbar().getSearchAlternativesDropdown().addItem("User");
         view.getBottomToolBar().setVisible(true);
         view.getBottomToolBar().getEditSelectedItemButton().setVisible(true);
         view.getBottomToolBar().getRemoveSelectedItemButton().setVisible(true);
         view.getBottomToolBar().getOverdueItemsButton().setVisible(true);
         view.getToolbar().getCheckbox().setVisible(true);
         view.getToolbar().getCheckboxLabel().setVisible(true);
+
     }
 
     public static void givePatronViewAccess() {
@@ -146,9 +161,11 @@ public class MainController {
         view.getFormPanel().setVisible(false);
         view.getToolbar().getCheckbox().setVisible(false);
         view.getToolbar().getCheckboxLabel().setVisible(false);
+        view.getToolbar().getSearchAlternativesDropdown().removeItem("User");
         view.getBottomToolBar().getEditSelectedItemButton().setVisible(false);
         view.getBottomToolBar().getRemoveSelectedItemButton().setVisible(false);
         view.getBottomToolBar().getOverdueItemsButton().setVisible(false);
+
     }
 
     public static void setLogoutButton() {
