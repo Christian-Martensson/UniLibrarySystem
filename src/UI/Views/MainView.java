@@ -26,8 +26,6 @@ public class MainView extends JFrame {
 		scrollPanel = new ScrollPanel();
 		formPanel = new FormPanel();
 		bottomToolBar = new BottomToolbar();
-
-
 		
 		add(formPanel, BorderLayout.WEST);
 		add(toolbar, BorderLayout.NORTH);

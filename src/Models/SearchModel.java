@@ -25,16 +25,16 @@ public class SearchModel {
             String isbn = listOfBooks.get(i).getIsbn();
             String title = listOfBooks.get(i).getTitle();
             String author = listOfBooks.get(i).getAuthor();
-            String publicationYear = listOfBooks.get(i).getPublicationYear();
             String publisher = listOfBooks.get(i).getPublisher();
+            String publicationYear = listOfBooks.get(i).getPublicationYear();
             String genre = listOfBooks.get(i).getGenre();
             boolean available = listOfBooks.get(i).isAvailable();
 
             data[i][0] = isbn;
             data[i][1] = title;
             data[i][2] = author;
-            data[i][3] = publicationYear;
-            data[i][4] = publisher;
+            data[i][3] = publisher;
+            data[i][4] = publicationYear;
             data[i][5] = genre;
             data[i][6] = available;
         }
@@ -78,7 +78,7 @@ public class SearchModel {
                 String author = resultSet.getString("c.fName") + " " + resultSet.getString("c.lName");
                 int availability = resultSet.getInt("availability");
 
-                BookModel book = new BookModel(isbn, articleType, title, publisher, genre, publicationYear, author, availability);
+                BookModel book = new BookModel(isbn, articleType, title, publisher, publicationYear, genre, author, availability);
                 listOfBooks.add(book);
             }
         }
