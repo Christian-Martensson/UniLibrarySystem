@@ -56,16 +56,26 @@ public class MainController {
     public static void giveLibrarianAccess() {
         view.getFormPanel().setVisible(true);
         view.getBottomToolBar().setVisible(true);
+        view.getBottomToolBar().getEditSelectedItemButton().setVisible(true);
+        view.getBottomToolBar().getRemoveSelectedItemButton().setVisible(true);
+        view.getBottomToolBar().getOverdueItemsButton().setVisible(true);
+        view.getToolbar().getCheckbox().setVisible(true);
+        view.getToolbar().getCheckboxLabel().setVisible(true);
     }
 
     public static void givePatronViewAccess() {
+        giveDefaultViewAccess();
         view.getBottomToolBar().setVisible(true);
-        view.getFormPanel().setVisible(false);
     }
 
     public static void giveDefaultViewAccess() {
         view.getBottomToolBar().setVisible(false);
         view.getFormPanel().setVisible(false);
+        view.getToolbar().getCheckbox().setVisible(false);
+        view.getToolbar().getCheckboxLabel().setVisible(false);
+        view.getBottomToolBar().getEditSelectedItemButton().setVisible(false);
+        view.getBottomToolBar().getRemoveSelectedItemButton().setVisible(false);
+        view.getBottomToolBar().getOverdueItemsButton().setVisible(false);
     }
 
     public static void setLogoutButton() {

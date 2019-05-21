@@ -10,6 +10,8 @@ public class Toolbar extends JPanel {
 	private JButton searchButton;
 	private JTextField textField;
 	private JLabel searchLabel;
+	private JLabel checkboxLabel;
+	private JCheckBox checkbox;
 
 	
 	public Toolbar() {
@@ -19,6 +21,8 @@ public class Toolbar extends JPanel {
 		textField = new JTextField(10);
 		searchLabel = new JLabel("SearchField:");
 		searchButton = new JButton("Search");
+		checkboxLabel = new JLabel("User search:");
+		checkbox = new JCheckBox();
 
 		
 		setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -27,7 +31,8 @@ public class Toolbar extends JPanel {
 		add(searchLabel);
 		add(textField);
 		add(searchButton);
-
+		add(checkboxLabel);
+		add(checkbox);
 	}
 
 	public void addSearchButtonListener (ActionListener listenForSearchButton) {
@@ -46,4 +51,11 @@ public class Toolbar extends JPanel {
 		return loginButton;
 	}
 
+	public JLabel getCheckboxLabel() {
+		return checkboxLabel;
+	}
+
+	public JCheckBox getCheckbox() {
+		return checkbox;
+	}
 }

@@ -42,15 +42,6 @@ public class SearchModel {
     }
 
 
-    public void printContent() {
-        System.out.println("Title           Publication Year");
-
-        for (BookModel book : listOfBooks) {
-            System.out.printf("%s      %s\n",book.getTitle(), book.getPublicationYear());
-        }
-
-    }
-
     public ArrayList<BookModel> searchBookFor(String searchWord) {
         listOfBooks = new ArrayList<>();
 
@@ -90,9 +81,6 @@ public class SearchModel {
                 BookModel book = new BookModel(isbn, articleType, title, publisher, genre, publicationYear, author, availability);
                 listOfBooks.add(book);
             }
-
-
-
         }
 
         catch (Exception e) {
