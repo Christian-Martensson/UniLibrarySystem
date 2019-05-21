@@ -1,5 +1,6 @@
 package UI.Views;
 
+import UI.UI_Components.BottomToolbar;
 import UI.UI_Components.FormPanel;
 import UI.UI_Components.ScrollPanel;
 import UI.UI_Components.Toolbar;
@@ -8,14 +9,15 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class LibrarianView extends JFrame {
+public class MainView extends JFrame {
 	
 	private ScrollPanel scrollPanel;
 	private Toolbar toolbar;
 	private FormPanel formPanel;
+	private BottomToolbar bottomToolBar;
 
 	
-	public LibrarianView() {
+	public MainView() {
 		super("Uni Library System");
 		
 		setLayout(new BorderLayout());
@@ -23,15 +25,21 @@ public class LibrarianView extends JFrame {
 		toolbar = new Toolbar();
 		scrollPanel = new ScrollPanel();
 		formPanel = new FormPanel();
+		bottomToolBar = new BottomToolbar();
+
 
 		
 		add(formPanel, BorderLayout.WEST);
 		add(toolbar, BorderLayout.NORTH);
 		add(scrollPanel, BorderLayout.CENTER);
+		add(bottomToolBar, BorderLayout.SOUTH);
 		
 		setSize(900, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
+		formPanel.setVisible(false);
+		bottomToolBar.setVisible(false);
 	}
 
 
@@ -45,5 +53,9 @@ public class LibrarianView extends JFrame {
 
 	public FormPanel getFormPanel() {
 		return formPanel;
+	}
+
+	public BottomToolbar getBottomToolBar() {
+		return bottomToolBar;
 	}
 }

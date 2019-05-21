@@ -81,7 +81,7 @@ public class LoginView extends JFrame {
 
 
         //Controll
-        LoginController controller = new LoginController(this);
+        //controller = new LoginController(this);
 
     }
 

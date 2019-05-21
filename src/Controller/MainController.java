@@ -1,25 +1,24 @@
 package Controller;
 
 import Model.SearchModel;
-import UI.Views.DefaultView;
+import UI.Views.MainView;
 import UI.Views.LoginView;
 
 import javax.swing.*;
 import java.awt.event.*;
 
 public class MainController {
-    private DefaultView defaultView;
-    private SearchModel searchModel;
+    private static MainView view;
+    private SearchModel model;
 
     private boolean loggedIn = false;
 
+    public MainController(MainView mainView, SearchModel searchModel) {
+        this.view = mainView;
+        this.model = searchModel;
 
-    public MainController(DefaultView mainView, SearchModel searchModel) {
-        this.defaultView = mainView;
-        this.searchModel = searchModel;
-
-        this.defaultView.getToolbar().addLoginButtonListener(new LoginButtonListener());
-        this.defaultView.getToolbar().addSearchButtonListener(new SearchButtonListener());
+        this.view.getToolbar().addLoginButtonListener(new LoginButtonListener());
+        this.view.getToolbar().addSearchButtonListener(new SearchButtonListener());
     }
 
     class SearchButtonListener implements ActionListener {
@@ -27,11 +26,11 @@ public class MainController {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            String searchWord = defaultView.getToolbar().getTextField().getText();
-            searchModel.searchInDatabase(searchWord);
+            String searchWord = view.getToolbar().getTextField().getText();
+            model.searchInDatabase(searchWord);
 
-            JTable table = searchModel.displayBooks();
-            defaultView.getScrollPanel().appendSearchResult(table);
+            JTable table = model.displayBooks();
+            view.getScrollPanel().appendSearchResult(table);
 
         }
     }
@@ -42,9 +41,18 @@ public class MainController {
             if (!loggedIn) {
                 // Opens a new window with login dialogue
                 LoginView lv = new LoginView();
+                LoginController lc = new LoginController(lv);
+
             }
 
         }
+
+
+    }
+
+    public static void giveLibrarianAccess() {
+        view.getFormPanel().setVisible(true);
+        view.getBottomToolBar().setVisible(true);
     }
 
 }

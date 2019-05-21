@@ -30,7 +30,6 @@ public class Toolbar extends JPanel {
 
 	}
 
-
 	public void addSearchButtonListener (ActionListener listenForSearchButton) {
 		searchButton.addActionListener(listenForSearchButton);
 	}
