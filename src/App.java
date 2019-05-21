@@ -1,5 +1,5 @@
 import Controller.MainController;
-import Model.SearchModel;
+import Models.SearchModel;
 import UI.Views.MainView;
 
 public class App {

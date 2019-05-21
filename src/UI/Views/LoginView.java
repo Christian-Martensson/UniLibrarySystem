@@ -30,7 +30,7 @@ public class LoginView extends JFrame {
 
         //** Create Login Frame**//
         setTitle("Login");
-        setSize(400,170);
+        setSize(400,250);
         setLocation(600,300);
         setVisible(true);
         setDefaultCloseOperation(HIDE_ON_CLOSE);//Keep the application running but close Frame

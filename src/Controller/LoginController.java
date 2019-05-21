@@ -1,56 +1,53 @@
 package Controller;
 
-import Model.LoginModel;
+import Models.Entities.UserModel;
 import UI.Views.LoginView;
-import Controller.MainController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginController {
     private LoginView view;
-    private LoginModel model;
-    private boolean loginSuccess;
+    private UserModel userModel;
 
-
-    //Controlls login - checks if right credentials for authentication of user or not.
+    //Controls login - checks if right credentials for authentication of user or not.
     public LoginController(LoginView view){
             this.view = view;
-            model = new LoginModel();
+            userModel = new UserModel();
 
             this.view.addLoginButtonListener(new LoginButtonListener());
     }
 
-    //This method first ask for the data of user to the Model class.
-    public boolean checkCredentials(String username, String password){
-        boolean loginSuccess = false;
-
-        model.setUsername(username);
-        model.getCredentials();
-        if(password.equals(model.getPassword())){
-            view.setErrorMessage("Login Success!");
-            loginSuccess = true;
-        }
-        else{
-            view.setErrorMessage("Login Failed!");
-        }
-        // If the username and password makes appropriate match the "Login Success!"
-        // message is passed to View other wise "Login Failed!" message is passed.
-        return loginSuccess;
+    public void getUserFromDB(String username){
+        userModel.setUsername(username);
+        userModel.populateuser();
+        view.setErrorMessage("Login Success!");
     }
+
 
     class LoginButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            loginSuccess = checkCredentials(view.getTxtUsername().getText(), view.getTxtPassword().getText());
-            if (loginSuccess) {
-                MainController.giveLibrarianAccess();
+            String usernameFieldValue = view.getTxtUsername().getText();
+            String passwordFieldValue = view.getTxtPassword().getText();
+
+            getUserFromDB(usernameFieldValue);
+
+            if (passwordFieldValue.equals(userModel.getPassword())) {
+                view.setErrorMessage("Login Success!");
+                MainController.cycleLoginButton();
+
+                if (userModel.getUserType().equals("librarian")) {
+                    MainController.giveLibrarianAccess();
+                }
+                else {
+                    MainController.givePatronViewAccess();
+                }
+            }
+            else {
+                view.setErrorMessage("Login Failed!");
             }
         }
-    }
-
-    public boolean isLoginSuccess() {
-        return loginSuccess;
     }
 }
 

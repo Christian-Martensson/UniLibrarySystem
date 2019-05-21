@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.SearchModel;
+import Models.SearchModel;
 import UI.Views.MainView;
 import UI.Views.LoginView;
 
@@ -53,6 +53,15 @@ public class MainController {
     public static void giveLibrarianAccess() {
         view.getFormPanel().setVisible(true);
         view.getBottomToolBar().setVisible(true);
+    }
+
+    public static void givePatronViewAccess() {
+        view.getBottomToolBar().setVisible(true);
+        view.getFormPanel().setVisible(false);
+    }
+
+    public static void cycleLoginButton() {
+        view.getToolbar().getLoginButton().setText("Log out");
     }
 
 }
