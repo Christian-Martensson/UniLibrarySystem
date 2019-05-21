@@ -26,10 +26,10 @@ public class LoanView extends JFrame {
         return loginButton;
     }
 
-    public LoanView() {
+    public LoanView(String title) {
 
         //** Create Login Frame**//
-        setTitle("Loan");
+        setTitle("Loan confirmation");
         setSize(400,250);
         setLocation(600,300);
         setVisible(true);
@@ -38,56 +38,15 @@ public class LoanView extends JFrame {
         contentPane.setLayout(null);
 
         //**Create Username Label**//
-        JLabel lblUsername = new JLabel("Username:");
+        JLabel lblUsername = new JLabel("Title: " + title);
         //lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12)); // Format of String
         lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
         lblUsername.setBounds(10, 25, 120, 25);
         contentPane.add(lblUsername);
 
-        //**Create Username TextField**//
-        txtUsername = new JTextField();
-        //txtUsername.setFont(new Font("Tahoma", Font.PLAIN, 12)); // Format of String
-        txtUsername.setBounds(140, 25, 200, 25);
-        contentPane.add(txtUsername);
-
-        //**Create Password Label**//
-        JLabel lblPassword = new JLabel("Password:");
-        lblPassword.setHorizontalAlignment(SwingConstants.RIGHT);
-        //lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));// Format of String
-        lblPassword.setBounds(10, 52, 120, 25);
-        contentPane.add(lblPassword);
-
-        //**Create Password Textfield**//
-        txtPassword = new JPasswordField();
-        //txtPassword.setFont(new Font("Tahoma", Font.PLAIN, 12));// Format of String
-        txtPassword.setBounds(140, 52, 200, 25);
-        contentPane.add(txtPassword);
-
-        //**Create Login Button**//
-        loginButton = new JButton("Log in");
-
-
-        //loginButton.setFont(new Font("Tahoma", Font.PLAIN, 14));// Format of String
-        loginButton.setBounds(251, 93, 89, 25);
-        contentPane.add(loginButton);
-
-        //Create errormessage
-        lblErrorMessage = new JLabel("");
-        lblErrorMessage.setHorizontalAlignment(SwingConstants.RIGHT);
-        //lblErrorMessage.setForeground(Color.RED);//Format of setForeground
-        //lblErrorMessage.setFont(new Font("Tahoma", Font.PLAIN, 14));// Format of String
-        lblErrorMessage.setBounds(10, 151, 330, 25);
-        contentPane.add(lblErrorMessage);
 
     }
 
-    public void setErrorMessage(String errorMessage) {
-        lblErrorMessage.setText(errorMessage);
-    }
-
-    public void addLoginButtonListener (ActionListener listenForLoginButton) {
-        loginButton.addActionListener(listenForLoginButton);
-    }
 }
 
 

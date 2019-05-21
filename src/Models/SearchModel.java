@@ -166,4 +166,20 @@ public class SearchModel {
         }
     }
 
+    public ArrayList<BookModel> getListOfBooks() {
+        return listOfBooks;
+    }
+
+    public ArrayList<UserModel> getListOfUsers() {
+        return listOfUsers;
+    }
+
+    public BookModel getBookWith(String isbn) {
+        for (BookModel book : listOfBooks) {
+            if (book.getIsbn().equals(isbn)) {
+                return book;
+            }
+        }
+        return null;
+    }
 }

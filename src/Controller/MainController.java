@@ -1,5 +1,6 @@
 package Controller;
 
+import Models.BookModel;
 import Models.Entities.UserModel;
 import Models.SearchModel;
 import UI.UI_Components.ScrollPanel;
@@ -29,7 +30,6 @@ public class MainController {
         this.view.getBottomToolBar().addEditButtonListener(new EditButtonListener());
         this.view.getBottomToolBar().addRemoveButtonListener(new RemoveButtonListener());
         this.view.getBottomToolBar().addOverdueItemsButtonListener(new OverdueItemsButtonListener());
-
     }
 
     class SearchButtonListener implements ActionListener {
@@ -75,7 +75,6 @@ public class MainController {
                 // Opens a new window with login dialogue
                 LoginView lv = new LoginView();
                 LoginController lc = new LoginController(lv);
-
             }
             else {
                 loggedIn = false;
@@ -98,13 +97,12 @@ public class MainController {
 
                 int row = ScrollPanel.getTable().getSelectedRow();
                 int column = 0;
-                String rowId = ScrollPanel.getTable().getValueAt(row, column).toString();
+                String value = ScrollPanel.getTable().getValueAt(row, column).toString();
+                BookModel book = model.getListOfBooks().get(1);
 
+                LoanView loanView = new LoanView(value);
 
-                LoanView loanView = new LoanView();
             }
-
-
         }
     }
 
@@ -145,8 +143,6 @@ public class MainController {
         view.getBottomToolBar().getEditSelectedItemButton().setVisible(true);
         view.getBottomToolBar().getRemoveSelectedItemButton().setVisible(true);
         view.getBottomToolBar().getOverdueItemsButton().setVisible(true);
-        view.getToolbar().getCheckbox().setVisible(true);
-        view.getToolbar().getCheckboxLabel().setVisible(true);
 
     }
 
@@ -158,8 +154,6 @@ public class MainController {
     public static void giveDefaultViewAccess() {
         view.getBottomToolBar().setVisible(false);
         view.getFormPanel().setVisible(false);
-        view.getToolbar().getCheckbox().setVisible(false);
-        view.getToolbar().getCheckboxLabel().setVisible(false);
         view.getToolbar().getSearchAlternativesDropdown().removeItem("User");
         view.getBottomToolBar().getEditSelectedItemButton().setVisible(false);
         view.getBottomToolBar().getRemoveSelectedItemButton().setVisible(false);
@@ -170,6 +164,7 @@ public class MainController {
     public static void setLogoutButton() {
         view.getToolbar().getLoginButton().setText("Log out");
     }
+
     public static void setLoginButton() {
         view.getToolbar().getLoginButton().setText("Log in");
     }
