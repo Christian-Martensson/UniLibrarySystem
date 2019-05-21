@@ -1,22 +1,13 @@
 package Models;
 
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class SearchModel {
     private ArrayList<BookModel> listOfBooks;
-
-    public SearchModel() {
-    }
-
-    public void searchInDatabase(String searchWord) {
-        DatabaseDriver dbDriver = new DatabaseDriver();
-
-        listOfBooks = dbDriver.searchBookFor(searchWord);
-        printContent();
-
-
-    }
 
     public JTable displayBooks() {
         String[] columnNames = new String[5];
@@ -41,12 +32,9 @@ public class SearchModel {
             data[i][3] = publisher;
             data[i][4] = genre;
         }
-
-
-
-
         return new JTable(data, columnNames);
     }
+
 
     public void printContent() {
         System.out.println("Title           Publication Year");
@@ -56,4 +44,43 @@ public class SearchModel {
         }
 
     }
+
+    public ArrayList<BookModel> searchBookFor(String searchWord) {
+        listOfBooks = new ArrayList<>();
+
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Book WHERE Match(title) Against(?)");
+            statement.setString(1, searchWord);
+
+            // 3. Execute SQL query
+            ResultSet resultSet = statement.executeQuery();
+
+
+            // 4. Process the result set
+            while (resultSet.next()) {
+                String isbn = resultSet.getString("isbn");
+                String articleType = resultSet.getString("articleType");
+                String title = resultSet.getString("title");
+                String publisher = resultSet.getString("publisher");
+                String genre = resultSet.getString("genre");
+                String publicationYear = resultSet.getString("publicationYear");
+                // int availability = resultSet.getInt("availability");
+
+                BookModel book = new BookModel(isbn, articleType, title, publisher, genre, publicationYear);
+                listOfBooks.add(book);
+            }
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listOfBooks;
+    }
+
 }

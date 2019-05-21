@@ -28,7 +28,7 @@ public class MainController {
         public void actionPerformed(ActionEvent e) {
 
             String searchWord = view.getToolbar().getTextField().getText();
-            model.searchInDatabase(searchWord);
+            model.searchBookFor(searchWord);
 
             JTable table = model.displayBooks();
             view.getScrollPanel().appendSearchResult(table);
@@ -50,10 +50,7 @@ public class MainController {
                 setLoginButton();
                 giveDefaultViewAccess();
             }
-
         }
-
-
     }
 
     public static void giveLibrarianAccess() {
