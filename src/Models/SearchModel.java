@@ -10,27 +10,33 @@ public class SearchModel {
     private ArrayList<BookModel> listOfBooks;
 
     public JTable displayBooks() {
-        String[] columnNames = new String[5];
-        Object[][] data = new Object[listOfBooks.size()][5];
+        String[] columnNames = new String[7];
+        Object[][] data = new Object[listOfBooks.size()][7];
 
         columnNames[0] = "ISBN";
         columnNames[1] = "Title";
-        columnNames[2] = "Publisher";
-        columnNames[3] = "Publication Year";
-        columnNames[4] = "Genre";
+        columnNames[2] = "Author";
+        columnNames[3] = "Publisher";
+        columnNames[4] = "Publication Year";
+        columnNames[5] = "Genre";
+        columnNames[6] = "Available";
 
         for (int i = 0; i < listOfBooks.size(); i++) {
             String isbn = listOfBooks.get(i).getIsbn();
             String title = listOfBooks.get(i).getTitle();
+            String author = listOfBooks.get(i).getAuthor();
             String publicationYear = listOfBooks.get(i).getPublicationYear();
             String publisher = listOfBooks.get(i).getPublisher();
             String genre = listOfBooks.get(i).getGenre();
+            boolean available = listOfBooks.get(i).isAvailable();
 
             data[i][0] = isbn;
             data[i][1] = title;
-            data[i][2] = publicationYear;
-            data[i][3] = publisher;
-            data[i][4] = genre;
+            data[i][2] = author;
+            data[i][3] = publicationYear;
+            data[i][4] = publisher;
+            data[i][5] = genre;
+            data[i][6] = available;
         }
         return new JTable(data, columnNames);
     }
@@ -78,9 +84,10 @@ public class SearchModel {
                 String publisher = resultSet.getString("publisher");
                 String genre = resultSet.getString("genre");
                 String publicationYear = resultSet.getString("publicationYear");
-                // int availability = resultSet.getInt("availability");
+                String author = resultSet.getString("c.fName") + " " + resultSet.getString("c.lName");
+                int availability = resultSet.getInt("availability");
 
-                BookModel book = new BookModel(isbn, articleType, title, publisher, genre, publicationYear);
+                BookModel book = new BookModel(isbn, articleType, title, publisher, genre, publicationYear, author, availability);
                 listOfBooks.add(book);
             }
 

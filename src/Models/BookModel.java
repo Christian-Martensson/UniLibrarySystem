@@ -7,20 +7,22 @@ public class BookModel {
     private String publisher;
     private String publicationYear;
     private String genre;
-
-   /* Add eventually, needs work on database side
     private String author;
+    private boolean available;
+   /* Add eventually, needs work on database side
     private int numberOfBooksInStock;
     */
 
 
-    public BookModel(String isbn, String articleType, String title, String publisher, String publicationYear, String genre) {
+    public BookModel(String isbn, String articleType, String title, String publisher, String publicationYear, String genre, String author, int available) {
         this.isbn = isbn;
         this.articleType = articleType;
         this.title = title;
         this.publisher = publisher;
         this.publicationYear = publicationYear;
         this.genre = genre;
+        this.author = author;
+        setAvailable(available);
     }
 
     public String getTitle() {
@@ -45,5 +47,22 @@ public class BookModel {
 
     public String getGenre() {
         return genre;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(int value) {
+        if (value == 1) {
+            this.available = true;
+        }
+        else {
+            this.available = false;
+        }
     }
 }
