@@ -35,12 +35,16 @@ public class Toolbar extends JPanel {
 		add(checkbox);
 	}
 
-	public void addSearchButtonListener (ActionListener listenForSearchButton) {
-		searchButton.addActionListener(listenForSearchButton);
+	public void addSearchButtonListener (ActionListener listener) {
+		searchButton.addActionListener(listener);
 	}
 
-	public void addLoginButtonListener (ActionListener listenForLoginButton) {
-		loginButton.addActionListener(listenForLoginButton);
+	public void addLoginButtonListener (ActionListener listener) {
+		loginButton.addActionListener(listener);
+	}
+
+	public void addCheckboxListener (ActionListener listener) {
+		checkbox.addActionListener(listener);
 	}
 
 	public JTextField getTextField() {

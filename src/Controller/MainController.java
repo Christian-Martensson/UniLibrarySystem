@@ -19,6 +19,7 @@ public class MainController {
 
         this.view.getToolbar().addLoginButtonListener(new LoginButtonListener());
         this.view.getToolbar().addSearchButtonListener(new SearchButtonListener());
+        this.view.getToolbar().addCheckboxListener(new SearchCheckboxListener());
         this.view.getBottomToolBar().addLoanButtonListener(new LoanButtonListener());
         this.view.getBottomToolBar().addReserveButtonListener(new ReserveButtonListener());
         this.view.getBottomToolBar().addEditButtonListener(new EditButtonListener());
@@ -61,7 +62,8 @@ public class MainController {
     class SearchCheckboxListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            LoginView lv = new LoginView();
+            LoginController lc = new LoginController(lv);
         }
     }
 
