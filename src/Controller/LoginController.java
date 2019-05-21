@@ -21,7 +21,6 @@ public class LoginController {
     public void getUserFromDB(String username){
         userModel.setUsername(username);
         userModel.populateuser();
-        view.setErrorMessage("Login Success!");
     }
 
 
