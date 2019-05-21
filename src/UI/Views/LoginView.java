@@ -1,7 +1,7 @@
 package UI.Views;
 
 import javax.swing.*;
-import java.awt.Container;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -30,7 +30,7 @@ public class LoginView extends JFrame {
 
         //** Create Login Frame**//
         setTitle("Login");
-        setSize(400,400);
+        setSize(400,170);
         setLocation(600,300);
         setVisible(true);
         setDefaultCloseOperation(HIDE_ON_CLOSE);//Keep the application running but close Frame
@@ -41,13 +41,13 @@ public class LoginView extends JFrame {
         JLabel lblUsername = new JLabel("Username:");
         //lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12)); // Format of String
         lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
-        lblUsername.setBounds(10, 11, 120, 25);
+        lblUsername.setBounds(10, 25, 120, 25);
         contentPane.add(lblUsername);
 
         //**Create Username TextField**//
         txtUsername = new JTextField();
         //txtUsername.setFont(new Font("Tahoma", Font.PLAIN, 12)); // Format of String
-        txtUsername.setBounds(140, 11, 200, 25);
+        txtUsername.setBounds(140, 25, 200, 25);
         contentPane.add(txtUsername);
 
         //**Create Password Label**//
