@@ -34,7 +34,7 @@ public class LoginController {
 
             if (passwordFieldValue.equals(userModel.getPassword())) {
                 view.setErrorMessage("Login Success!");
-                MainController.cycleLoginButton();
+                MainController.setLogoutButton();
 
                 if (userModel.getUserType().equals("librarian")) {
                     MainController.giveLibrarianAccess();

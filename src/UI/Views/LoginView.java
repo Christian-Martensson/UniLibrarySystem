@@ -64,7 +64,7 @@ public class LoginView extends JFrame {
         contentPane.add(txtPassword);
 
         //**Create Login Button**//
-        loginButton = new JButton("Login");
+        loginButton = new JButton("Log in");
 
 
         //loginButton.setFont(new Font("Tahoma", Font.PLAIN, 14));// Format of String
@@ -92,10 +92,7 @@ public class LoginView extends JFrame {
     public void addLoginButtonListener (ActionListener listenForLoginButton) {
         loginButton.addActionListener(listenForLoginButton);
     }
-
-
-
-    }
+}
 
 
 

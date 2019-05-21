@@ -1,5 +1,6 @@
 package Controller;
 
+import Models.Entities.UserModel;
 import Models.SearchModel;
 import UI.Views.MainView;
 import UI.Views.LoginView;
@@ -11,7 +12,7 @@ public class MainController {
     private static MainView view;
     private SearchModel model;
 
-    private boolean loggedIn = false;
+    public static boolean loggedIn = false;
 
     public MainController(MainView mainView, SearchModel searchModel) {
         this.view = mainView;
@@ -44,6 +45,11 @@ public class MainController {
                 LoginController lc = new LoginController(lv);
 
             }
+            else {
+                loggedIn = false;
+                setLoginButton();
+                giveDefaultViewAccess();
+            }
 
         }
 
@@ -60,8 +66,16 @@ public class MainController {
         view.getFormPanel().setVisible(false);
     }
 
-    public static void cycleLoginButton() {
+    public static void giveDefaultViewAccess() {
+        view.getBottomToolBar().setVisible(false);
+        view.getFormPanel().setVisible(false);
+    }
+
+    public static void setLogoutButton() {
         view.getToolbar().getLoginButton().setText("Log out");
+    }
+    public static void setLoginButton() {
+        view.getToolbar().getLoginButton().setText("Log in");
     }
 
 }

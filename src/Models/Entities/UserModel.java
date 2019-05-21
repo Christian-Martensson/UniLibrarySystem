@@ -1,5 +1,6 @@
 package Models.Entities;
 
+import Controller.MainController;
 import Models.DatabaseDriver;
 
 import java.sql.Connection;
@@ -14,6 +15,7 @@ public class UserModel {
     private String personalId;
     private String username;
     private String password;
+    public static boolean loggedIn = false;
 
 
     public UserModel(String userType, String firstName, String lastName, String personalId, String username, String password) {
@@ -53,6 +55,7 @@ public class UserModel {
                 this.username = resultSet.getString("username");
                 this.password = resultSet.getString("password");
             }
+            MainController.loggedIn = true;
 
 
             //Catch exceptions
