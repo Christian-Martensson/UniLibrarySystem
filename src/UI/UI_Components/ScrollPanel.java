@@ -8,7 +8,7 @@ import java.awt.*;
 public class ScrollPanel extends JPanel {
 
 	private JScrollPane scrollPane;
-	private JTable table;
+	private static JTable table;
 	
 	public ScrollPanel() {
 
@@ -25,7 +25,12 @@ public class ScrollPanel extends JPanel {
 	}
 
 	public void appendSearchResult(JTable table) {
+		this.table = table;
 		scrollPane.getViewport().add(table);
 
+	}
+
+	public static JTable getTable() {
+		return table;
 	}
 }

@@ -2,6 +2,9 @@ package Controller;
 
 import Models.Entities.UserModel;
 import Models.SearchModel;
+import UI.UI_Components.ScrollPanel;
+import UI.Views.ErrorMessageView;
+import UI.Views.LoanView;
 import UI.Views.MainView;
 import UI.Views.LoginView;
 
@@ -49,7 +52,6 @@ public class MainController {
                 JTable table = model.convertListOfBooksToJTable();
                 view.getScrollPanel().appendSearchResult(table);
             }
-
         }
     }
 
@@ -81,6 +83,15 @@ public class MainController {
     class LoanButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            System.out.println(ScrollPanel.getTable().getRowCount());
+
+            if(ScrollPanel.getTable().getSelectionModel().isSelectionEmpty()) {
+                ErrorMessageView error = new ErrorMessageView("You must select an item to loan!");
+            }
+            else {
+                LoanView loanView = new LoanView();
+            }
+
 
         }
     }

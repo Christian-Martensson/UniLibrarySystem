@@ -73,8 +73,6 @@ public class SearchModel {
         return new JTable(data, columnNames);
     }
 
-
-
     public ArrayList<BookModel> searchBookFor(String searchWord) {
         listOfBooks = new ArrayList<>();
 
