@@ -1,15 +1,20 @@
 package Models;
 
+import Models.Entities.UserModel;
+
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SearchModel {
     private ArrayList<BookModel> listOfBooks;
+    private ArrayList<UserModel> listOfUsers;
 
-    public JTable displayBooks() {
+
+    public JTable convertListOfBooksToJTable() {
         String[] columnNames = new String[7];
         Object[][] data = new Object[listOfBooks.size()][7];
 
@@ -40,6 +45,34 @@ public class SearchModel {
         }
         return new JTable(data, columnNames);
     }
+
+    public JTable convertListOfUsersToJTable() {
+        String[] columnNames = new String[5];
+        Object[][] data = new Object[listOfUsers.size()][5];
+
+        columnNames[0] = "Username";
+        columnNames[1] = "Personal ID";
+        columnNames[2] = "First name";
+        columnNames[3] = "Last name";
+        columnNames[4] = "User type";
+
+        for (int i = 0; i < listOfUsers.size(); i++) {
+            String userType = listOfUsers.get(i).getUserType();
+            String firstName = listOfUsers.get(i).getFirstName();
+            String lastName = listOfUsers.get(i).getLastName();
+            String personalId = listOfUsers.get(i).getPersonalId();
+            String username = listOfUsers.get(i).getUsername();
+
+
+            data[i][0] = username;
+            data[i][1] = personalId;
+            data[i][2] = firstName;
+            data[i][3] = lastName;
+            data[i][4] = userType;
+        }
+        return new JTable(data, columnNames);
+    }
+
 
 
     public ArrayList<BookModel> searchBookFor(String searchWord) {
@@ -87,6 +120,52 @@ public class SearchModel {
             e.printStackTrace();
         }
         return listOfBooks;
+    }
+
+    public void searchUser(String searchWord){
+        Connection connection = null;
+        listOfUsers = new ArrayList<>();
+
+
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM User WHERE Match(username) Against(?)");
+            statement.setString(1, searchWord);
+
+            // 3. Execute SQL query
+            ResultSet resultSet = statement.executeQuery();
+
+            // 4. Process the result set
+            while (resultSet.next()) {
+                String userType = resultSet.getString("userType");
+                String firstName = resultSet.getString("fName");
+                String lastName = resultSet.getString("lName");
+                String personalId = resultSet.getString("personalId");
+                String username = resultSet.getString("username");
+                String password = resultSet.getString("password");
+
+                UserModel user = new UserModel(userType, firstName, lastName, personalId, username, password);
+
+                listOfUsers.add(user);
+            }
+
+            //Catch exceptions
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
     }
 
 }

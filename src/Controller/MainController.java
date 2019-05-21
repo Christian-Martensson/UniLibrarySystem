@@ -1,11 +1,13 @@
 package Controller;
 
+import Models.Entities.UserModel;
 import Models.SearchModel;
 import UI.Views.MainView;
 import UI.Views.LoginView;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class MainController {
     private static MainView view;
@@ -32,12 +34,21 @@ public class MainController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
             String searchWord = view.getToolbar().getTextField().getText();
-            model.searchBookFor(searchWord);
+            if (view.getToolbar().getCheckbox().isSelected()) {
 
-            JTable table = model.displayBooks();
-            view.getScrollPanel().appendSearchResult(table);
+                model.searchUser(searchWord);
+
+                JTable table = model.convertListOfUsersToJTable();
+                view.getScrollPanel().appendSearchResult(table);
+            }
+            else {
+
+                model.searchBookFor(searchWord);
+
+                JTable table = model.convertListOfBooksToJTable();
+                view.getScrollPanel().appendSearchResult(table);
+            }
 
         }
     }
@@ -59,15 +70,11 @@ public class MainController {
         }
     }
 
+    // probably won't be used. Another ActionListener just checks if the checkbox is checked or not.
     class SearchCheckboxListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (view.getToolbar().getCheckbox().isSelected()) {
-                System.out.println("Selected!");
-            }
-            else {
-                System.out.println("Not selected!");
-            }
+
         }
     }
 
