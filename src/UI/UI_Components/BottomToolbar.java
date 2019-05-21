@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 
 public class BottomToolbar extends JPanel {
-    private JButton borrowButton;
+    private JButton loanButton;
     private JButton reserveButton;
     private JButton editSelectedItemButton;
     private JButton removeSelectedItemButton;
@@ -15,7 +15,7 @@ public class BottomToolbar extends JPanel {
     public BottomToolbar() {
         setBorder(BorderFactory.createEtchedBorder());
 
-        borrowButton = new JButton("Loan");
+        loanButton = new JButton("Loan");
         reserveButton = new JButton("Reserve");
         editSelectedItemButton = new JButton("Edit");
         removeSelectedItemButton = new JButton("Remove");
@@ -23,15 +23,35 @@ public class BottomToolbar extends JPanel {
 
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        add(borrowButton);
+        add(loanButton);
         add(reserveButton);
         add(editSelectedItemButton);
         add(removeSelectedItemButton);
         add(overdueItemsButton);
     }
 
-    public JButton getBorrowButton() {
-        return borrowButton;
+    public void addLoanButtonListener (ActionListener listener) {
+        loanButton.addActionListener(listener);
+    }
+
+    public void addReserveButtonListener (ActionListener listener) {
+        reserveButton.addActionListener(listener);
+    }
+
+    public void addEditButtonListener(ActionListener listener) {
+        editSelectedItemButton.addActionListener(listener);
+    }
+
+    public void addRemoveButtonListener(ActionListener listener) {
+        removeSelectedItemButton.addActionListener(listener);
+    }
+
+    public void addOverdueItemsButtonListener (ActionListener listener) {
+        overdueItemsButton.addActionListener(listener);
+    }
+
+    public JButton getLoanButton() {
+        return loanButton;
     }
 
     public JButton getReserveButton() {

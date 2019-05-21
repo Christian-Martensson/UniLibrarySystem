@@ -1,6 +1,5 @@
 package Controller;
 
-import Models.Entities.UserModel;
 import Models.SearchModel;
 import UI.Views.MainView;
 import UI.Views.LoginView;
@@ -20,6 +19,12 @@ public class MainController {
 
         this.view.getToolbar().addLoginButtonListener(new LoginButtonListener());
         this.view.getToolbar().addSearchButtonListener(new SearchButtonListener());
+        this.view.getBottomToolBar().addLoanButtonListener(new LoanButtonListener());
+        this.view.getBottomToolBar().addReserveButtonListener(new ReserveButtonListener());
+        this.view.getBottomToolBar().addEditButtonListener(new EditButtonListener());
+        this.view.getBottomToolBar().addRemoveButtonListener(new RemoveButtonListener());
+        this.view.getBottomToolBar().addOverdueItemsButtonListener(new OverdueItemsButtonListener());
+
     }
 
     class SearchButtonListener implements ActionListener {
@@ -52,6 +57,50 @@ public class MainController {
             }
         }
     }
+
+    class SearchCheckboxListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    class LoanButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    class ReserveButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    class EditButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    class RemoveButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    class OverdueItemsButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+
 
     public static void giveLibrarianAccess() {
         view.getFormPanel().setVisible(true);
