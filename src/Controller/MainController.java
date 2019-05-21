@@ -62,8 +62,12 @@ public class MainController {
     class SearchCheckboxListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            LoginView lv = new LoginView();
-            LoginController lc = new LoginController(lv);
+            if (view.getToolbar().getCheckbox().isSelected()) {
+                System.out.println("Selected!");
+            }
+            else {
+                System.out.println("Not selected!");
+            }
         }
     }
 
