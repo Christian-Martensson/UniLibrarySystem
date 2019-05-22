@@ -7,6 +7,7 @@ import UI.Views.LoanConfirmationView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class LoanConfirmationController {
     private LoanConfirmationView view;
@@ -21,8 +22,13 @@ public class LoanConfirmationController {
     class ConfirmationButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (book.isAvailable()) {
+            // check for availability in db.
+            if (true) {
                 LoanModel.generateLoan(book, MainController.loggedInUser);
+                ArrayList<LoanModel> listOfLoans = LoanModel.fetchLoansFromDBfor(MainController.loggedInUser);
+                for (LoanModel loan : listOfLoans) {
+                    System.out.println(loan.toString());
+                }
             }
             else {
                 ErrorMessageView error = new ErrorMessageView("This book is not available");

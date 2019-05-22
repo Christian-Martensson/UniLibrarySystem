@@ -6,7 +6,6 @@ public class Article {
     String publicationYear;
     String genre;
     String creator;
-    boolean available;
     int numberInStock;
 
     public String getArticleType() {
@@ -29,18 +28,7 @@ public class Article {
         return title;
     }
 
-    public boolean isAvailable() {
-        return available;
-    }
 
-    void setAvailable(int value) {
-        if (value == 1) {
-            this.available = true;
-        }
-        else {
-            this.available = false;
-        }
-    }
 }
 
 

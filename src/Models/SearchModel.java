@@ -38,7 +38,8 @@ public class SearchModel {
             String publisher = listOfBooks.get(i).getPublisher();
             String publicationYear = listOfBooks.get(i).getPublicationYear();
             String genre = listOfBooks.get(i).getGenre();
-            boolean available = listOfBooks.get(i).isAvailable();
+            // fix
+            boolean available = true;
 
             data[i][0] = isbn;
             data[i][1] = title;
@@ -99,7 +100,8 @@ public class SearchModel {
             String publicationYear = listOfMovies.get(i).getPublicationYear();
             String genre = listOfMovies.get(i).getGenre();
             int minimumAge = listOfMovies.get(i).getMinimumAge();
-            boolean available = listOfMovies.get(i).isAvailable();
+            // fix
+            boolean available = true;
 
             data[i][0] = movieId;
             data[i][1] = title;
@@ -175,7 +177,7 @@ public class SearchModel {
                 String author = resultSet.getString("c.fName") + " " + resultSet.getString("c.lName");
                 int availability = resultSet.getInt("availability");
 
-                BookModel book = new BookModel(isbn, articleType, title, publisher, publicationYear, genre, author, availability);
+                BookModel book = new BookModel(isbn, articleType, title, publisher, publicationYear, genre, author);
                 listOfBooks.add(book);
             }
         }
@@ -222,7 +224,7 @@ public class SearchModel {
                 int availability = resultSet.getInt("availability");
                 int minimumAge = resultSet.getInt("m.minimumAge");
 
-                MovieModel movie = new MovieModel(movieId, minimumAge, articleType, title, publicationYear, genre, producer, availability);
+                MovieModel movie = new MovieModel(movieId, minimumAge, articleType, title, publicationYear, genre, producer);
                 listOfMovies.add(movie);
             }
         }

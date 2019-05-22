@@ -1,5 +1,9 @@
 package Controller;
 
+import Controller.FormControllers.FormBookController;
+import Controller.FormControllers.FormMagazineController;
+import Controller.FormControllers.FormMovieController;
+import Controller.FormControllers.FormUserController;
 import Models.Entities.BookModel;
 import Models.Entities.MagazineModel;
 import Models.Entities.MovieModel;
@@ -190,20 +194,23 @@ public class MainController {
 
             switch (addItemAlternative) {
                 case "Book": {
-                    FormUserView form = FormUserView.generateFormBook();
-                    System.out.println("Adding book!");
+                    FormView formV = FormView.generateFormBook();
+                    FormBookController formC = new FormBookController(formV);
                     break;
                 }
                 case "Movie": {
-                    FormUserView form = FormUserView.generateFormMovie();
+                    FormView formV = FormView.generateFormMovie();
+                    FormMovieController formC = new FormMovieController(formV);
                     break;
                 }
                 case "Magazine": {
-                    FormUserView form = FormUserView.generateFormMagazine();
+                    FormView formV = FormView.generateFormMagazine();
+                    FormMagazineController formC = new FormMagazineController(formV);
                     break;
                 }
                 case "User": {
-                    FormUserView form = FormUserView.generateFormUser();
+                    FormView formV = FormView.generateFormUser();
+                    FormUserController formC = new FormUserController(formV);
                     break;
                 }
             }

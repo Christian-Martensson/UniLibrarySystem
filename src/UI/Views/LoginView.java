@@ -85,8 +85,8 @@ public class LoginView extends JFrame {
         lblErrorMessage.setText(errorMessage);
     }
 
-    public void addLoginButtonListener (ActionListener listenForLoginButton) {
-        loginButton.addActionListener(listenForLoginButton);
+    public void addLoginButtonListener (ActionListener listener) {
+        loginButton.addActionListener(listener);
     }
 }
 
