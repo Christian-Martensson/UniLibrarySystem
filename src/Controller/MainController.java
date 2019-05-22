@@ -37,14 +37,13 @@ public class MainController {
 
             switch (searchAlternative) {
                 case "Book": {
-                    model.searchBookFor(searchWord);
+                    model.searchBook(searchWord);
 
                     JTable table = model.convertListOfBooksToJTable();
                     view.getScrollPanel().appendSearchResult(table);
                     break;
                 }
                 case "Movie": {
-                    System.out.println("Movie search not implemented");
                     model.searchMovie(searchWord);
 
                     JTable table = model.convertListOfMoviesToTable();
@@ -52,7 +51,10 @@ public class MainController {
                     break;
                 }
                 case "Magazine": {
-                    System.out.println("Magazine search not implemented");
+                    model.searchMagazine(searchWord);
+
+                    JTable table = model.convertListOfMagazinesToTable();
+                    view.getScrollPanel().appendSearchResult(table);
                     break;
                 }
                 case "User": {

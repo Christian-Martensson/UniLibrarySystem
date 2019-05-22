@@ -1,6 +1,7 @@
 package Models;
 
 import Models.Entities.BookModel;
+import Models.Entities.MagazineModel;
 import Models.Entities.UserModel;
 import Models.Entities.MovieModel;
 
@@ -10,11 +11,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SearchModel {
     private ArrayList<BookModel> listOfBooks;
     private ArrayList<UserModel> listOfUsers;
     private ArrayList<MovieModel> listOfMovies;
+    private ArrayList<MagazineModel> listOfMagazines;
 
 
     public JTable convertListOfBooksToJTable() {
@@ -45,6 +48,35 @@ public class SearchModel {
             data[i][4] = publicationYear;
             data[i][5] = genre;
             data[i][6] = available;
+        }
+        return new JTable(data, columnNames);
+    }
+
+    public JTable convertListOfMagazinesToTable() {
+        String[] columnNames = new String[6];
+        Object[][] data = new Object[listOfMagazines.size()][6];
+
+        columnNames[0] = "Magazine ID";
+        columnNames[1] = "Title";
+        columnNames[2] = "Magazine Nr";
+        columnNames[3] = "Publisher";
+        columnNames[4] = "Publication date";
+        columnNames[5] = "Genre";
+
+        for (int i = 0; i < listOfMagazines.size(); i++) {
+            int magazineId = listOfMagazines.get(i).getMagazineId();
+            String title = listOfMagazines.get(i).getTitle();
+            int magazineNr = listOfMagazines.get(i).getMagazineNr();
+            String publisher = listOfMagazines.get(i).getPublisher();
+            Date publicationDate = listOfMagazines.get(i).getPublicationDate();
+            String genre = listOfMagazines.get(i).getGenre();
+
+            data[i][0] = magazineId;
+            data[i][1] = title;
+            data[i][2] = magazineNr;
+            data[i][3] = publisher;
+            data[i][4] = publicationDate;
+            data[i][5] = genre;
         }
         return new JTable(data, columnNames);
     }
@@ -108,7 +140,7 @@ public class SearchModel {
         return new JTable(data, columnNames);
     }
 
-    public ArrayList<BookModel> searchBookFor(String searchWord) {
+    public ArrayList<BookModel> searchBook(String searchWord) {
         listOfBooks = new ArrayList<>();
 
         Connection connection = null;
@@ -155,7 +187,6 @@ public class SearchModel {
         return listOfBooks;
     }
 
-
     public ArrayList<MovieModel> searchMovie(String searchWord) {
         listOfMovies = new ArrayList<>();
 
@@ -201,6 +232,50 @@ public class SearchModel {
             e.printStackTrace();
         }
         return listOfMovies;
+    }
+
+    public ArrayList<MagazineModel> searchMagazine(String searchWord) {
+        listOfMagazines = new ArrayList<>();
+
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            // previous: "SELECT * FROM Book WHERE Match(title) Against(?)"
+            String sqlQuery = "SELECT *\n" +
+                    "FROM Magazine\n" +
+                    "WHERE Match(title) Against(?)\n" +
+                    "OR Match(genre) Against(?);";
+            PreparedStatement statement = connection.prepareStatement(sqlQuery);
+            statement.setString(1, searchWord);
+            statement.setString(2, searchWord);
+
+            // 3. Execute SQL query
+            ResultSet resultSet = statement.executeQuery();
+
+
+            // 4. Process the result set
+            while (resultSet.next()) {
+                int magazineId = resultSet.getInt("magazineId");
+                int magazineNr = resultSet.getInt("magazineNr");
+                String publisher = resultSet.getString("publisher");
+                Date publicationDate = resultSet.getDate("publicationDate");
+                String title = resultSet.getString("title");
+                String genre = resultSet.getString("genre");
+
+
+                MagazineModel magazine = new MagazineModel(magazineId, magazineNr, publisher, publicationDate, title, genre);
+                listOfMagazines.add(magazine);
+            }
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listOfMagazines;
     }
 
     public void searchUser(String searchWord){

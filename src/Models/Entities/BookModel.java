@@ -2,10 +2,7 @@ package Models.Entities;
 
 public class BookModel extends Article {
     private String isbn;
-
     private String publisher;
-
-
 
     public BookModel(String isbn, String articleType, String title, String publisher, String publicationYear, String genre, String author, int available) {
         this.isbn = isbn;
