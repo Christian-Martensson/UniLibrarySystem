@@ -179,7 +179,6 @@ public class MainController {
     }
 
     public static void giveLibrarianAccess() {
-        view.getFormPanel().setVisible(true);
         view.getToolbar().getSearchAlternativesDropdown().addItem("User");
         view.getBottomToolBar().setVisible(true);
         view.getBottomToolBar().getEditSelectedItemButton().setVisible(true);
@@ -195,7 +194,6 @@ public class MainController {
 
     public static void giveDefaultViewAccess() {
         view.getBottomToolBar().setVisible(false);
-        view.getFormPanel().setVisible(false);
         view.getToolbar().getSearchAlternativesDropdown().removeItem("User");
         view.getBottomToolBar().getEditSelectedItemButton().setVisible(false);
         view.getBottomToolBar().getRemoveSelectedItemButton().setVisible(false);
