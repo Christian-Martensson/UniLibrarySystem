@@ -339,4 +339,24 @@ public class SearchModel {
         }
         return null;
     }
+
+    public MovieModel getMovieWith(int value) {
+        for (MovieModel movie : listOfMovies) {
+            if (movie.getMovieId() == value) {
+                return movie;
+            }
+        }
+        return null;
+    }
+
+    public MagazineModel getMagazineWith(int value) {
+        for (MagazineModel magazine : listOfMagazines) {
+            if (magazine.getMagazineId() == value) {
+                return magazine;
+            }
+        }
+        return null;
+    }
+
+
 }

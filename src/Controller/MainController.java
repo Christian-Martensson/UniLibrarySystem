@@ -1,6 +1,8 @@
 package Controller;
 
 import Models.Entities.BookModel;
+import Models.Entities.MagazineModel;
+import Models.Entities.MovieModel;
 import Models.SearchModel;
 import UI.UI_Components.ScrollPanel;
 import UI.Views.*;
@@ -109,15 +111,19 @@ public class MainController {
                         break;
                     }
                     case "Movie": {
+                        int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
+                        MovieModel movie = model.getMovieWith(value);
+                        LoanConfirmationView loanConfirmationView = new LoanConfirmationView(movie);
 
                         break;
                     }
                     case "Magazine": {
-
+                        int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
+                        MagazineModel magazine = model.getMagazineWith(value);
                         break;
                     }
                     case "User": {
-
+                        ErrorMessageView error = new ErrorMessageView("You can not loan a user.");
                         break;
                     }
                 }
@@ -171,8 +177,6 @@ public class MainController {
 
         }
     }
-
-
 
     public static void giveLibrarianAccess() {
         view.getFormPanel().setVisible(true);

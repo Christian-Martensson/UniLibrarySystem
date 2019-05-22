@@ -10,6 +10,8 @@ public class App {
 		MainController mainController = new MainController(librarianView, searchEvent);
 		librarianView.setVisible(true);
 		MainController.giveDefaultViewAccess();
+
+		MainController.giveLibrarianAccess();
 	}
 
 }

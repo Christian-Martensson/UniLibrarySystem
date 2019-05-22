@@ -1,6 +1,6 @@
 package Models.Entities;
 
-class Article {
+public class Article {
     String articleType;
     String title;
     String publicationYear;
