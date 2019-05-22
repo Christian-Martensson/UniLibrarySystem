@@ -1,6 +1,8 @@
 package Controller;
 
 import Models.Entities.BookModel;
+import Models.Entities.LoanModel;
+import UI.Views.ErrorMessageView;
 import UI.Views.LoanConfirmationView;
 
 import java.awt.event.ActionEvent;
@@ -19,7 +21,13 @@ public class LoanConfirmationController {
     class ConfirmationButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Do loan stuff
+            if (book.isAvailable()) {
+                LoanModel.generateLoan(book, MainController.loggedInUser);
+            }
+            else {
+                ErrorMessageView error = new ErrorMessageView("This book is not available");
+            }
+
             view.dispose();
         }
     }

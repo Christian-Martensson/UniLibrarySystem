@@ -3,6 +3,7 @@ package Controller;
 import Models.Entities.BookModel;
 import Models.Entities.MagazineModel;
 import Models.Entities.MovieModel;
+import Models.Entities.UserModel;
 import Models.SearchModel;
 import UI.UI_Components.ScrollPanel;
 import UI.Views.*;
@@ -16,6 +17,7 @@ public class MainController {
 
     public static boolean loggedIn = false;
     public static String searchAlternative;
+    public static UserModel loggedInUser;
 
     public MainController(MainView mainView, SearchModel searchModel) {
         this.view = mainView;
