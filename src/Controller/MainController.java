@@ -1,23 +1,23 @@
 package Controller;
 
-import Models.BookModel;
+import Models.Entities.BookModel;
+import Models.Entities.MagazineModel;
+import Models.Entities.MovieModel;
 import Models.Entities.UserModel;
 import Models.SearchModel;
 import UI.UI_Components.ScrollPanel;
-import UI.Views.ErrorMessageView;
-import UI.Views.LoanView;
-import UI.Views.MainView;
-import UI.Views.LoginView;
+import UI.Views.*;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 public class MainController {
     private static MainView view;
     private SearchModel model;
 
     public static boolean loggedIn = false;
+    public static String searchAlternative;
+    public static UserModel loggedInUser;
 
     public MainController(MainView mainView, SearchModel searchModel) {
         this.view = mainView;
@@ -38,22 +38,28 @@ public class MainController {
         public void actionPerformed(ActionEvent e) {
 
             String searchWord = view.getToolbar().getTextField().getText();
-            String searchAlternative = view.getToolbar().getSearchAlternativesDropdown().getSelectedItem().toString();
+            searchAlternative = view.getToolbar().getSearchAlternativesDropdown().getSelectedItem().toString();
 
             switch (searchAlternative) {
                 case "Book": {
-                    model.searchBookFor(searchWord);
+                    model.searchBook(searchWord);
 
                     JTable table = model.convertListOfBooksToJTable();
                     view.getScrollPanel().appendSearchResult(table);
                     break;
                 }
-                case "DVD": {
-                    System.out.println("DVD search not implemented");
+                case "Movie": {
+                    model.searchMovie(searchWord);
+
+                    JTable table = model.convertListOfMoviesToTable();
+                    view.getScrollPanel().appendSearchResult(table);
                     break;
                 }
                 case "Magazine": {
-                    System.out.println("Magazine search not implemented");
+                    model.searchMagazine(searchWord);
+
+                    JTable table = model.convertListOfMagazinesToTable();
+                    view.getScrollPanel().appendSearchResult(table);
                     break;
                 }
                 case "User": {
@@ -94,13 +100,38 @@ public class MainController {
                 ErrorMessageView error = new ErrorMessageView("You must select an item to loan!");
             }
             else {
-
                 int row = ScrollPanel.getTable().getSelectedRow();
                 int column = 0;
-                String value = ScrollPanel.getTable().getValueAt(row, column).toString();
-                BookModel book = model.getListOfBooks().get(1);
 
-                LoanView loanView = new LoanView(value);
+                switch (searchAlternative) {
+                    case "Book": {
+                        String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
+                        BookModel book = model.getBookWith(valueIsbn);
+
+                        LoanConfirmationView loanConfirmationView = new LoanConfirmationView(book);
+                        LoanConfirmationController loanConfirmationController = new LoanConfirmationController(loanConfirmationView, book);
+                        break;
+                    }
+                    case "Movie": {
+                        int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
+                        MovieModel movie = model.getMovieWith(value);
+                        LoanConfirmationView loanConfirmationView = new LoanConfirmationView(movie);
+
+                        break;
+                    }
+                    case "Magazine": {
+                        int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
+                        MagazineModel magazine = model.getMagazineWith(value);
+                        break;
+                    }
+                    case "User": {
+                        ErrorMessageView error = new ErrorMessageView("You can not loan a user.");
+                        break;
+                    }
+                }
+
+
+
 
             }
         }
@@ -109,6 +140,21 @@ public class MainController {
     class ReserveButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            if(ScrollPanel.getTable().getSelectionModel().isSelectionEmpty()) {
+                ErrorMessageView error = new ErrorMessageView("You must select an item to loan!");
+            }
+            else {
+
+                int row = ScrollPanel.getTable().getSelectedRow();
+                int column = 0;
+                String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
+                BookModel book = model.getBookWith(valueIsbn);
+
+                ReservationConfirmationView reservationConfirmationView = new ReservationConfirmationView(book);
+                ReservationConfirmationController reservationConfirmationController = new ReservationConfirmationController(reservationConfirmationView, book);
+
+            }
 
         }
     }
@@ -134,10 +180,7 @@ public class MainController {
         }
     }
 
-
-
     public static void giveLibrarianAccess() {
-        view.getFormPanel().setVisible(true);
         view.getToolbar().getSearchAlternativesDropdown().addItem("User");
         view.getBottomToolBar().setVisible(true);
         view.getBottomToolBar().getEditSelectedItemButton().setVisible(true);
@@ -153,7 +196,6 @@ public class MainController {
 
     public static void giveDefaultViewAccess() {
         view.getBottomToolBar().setVisible(false);
-        view.getFormPanel().setVisible(false);
         view.getToolbar().getSearchAlternativesDropdown().removeItem("User");
         view.getBottomToolBar().getEditSelectedItemButton().setVisible(false);
         view.getBottomToolBar().getRemoveSelectedItemButton().setVisible(false);

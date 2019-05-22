@@ -24,7 +24,7 @@ public class Toolbar extends JPanel {
 
 		searchAlternativesDropdown = new JComboBox<String>();
 		searchAlternativesDropdown.addItem("Book");
-		searchAlternativesDropdown.addItem("DVD");
+		searchAlternativesDropdown.addItem("Movie");
 		searchAlternativesDropdown.addItem("Magazine");
 		searchAlternativesDropdown.addItem("User");
 

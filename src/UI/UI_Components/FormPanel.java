@@ -24,6 +24,34 @@ public class FormPanel extends JPanel {
 		lastNameField = new JTextField(10);
 
 		okButton = new JButton("OK");
+
+
+		Border innerBorder = BorderFactory.createTitledBorder("Add Person");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		setLayout(null);
+
+		firstNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		firstNameLabel.setBounds(10, 25, 120,25);
+
+
+
+	}
+
+
+
+	public FormPanel(String aa) {
+		Dimension dim = getPreferredSize();
+		dim.width = 250;
+		setPreferredSize(dim);
+
+		firstNameLabel = new JLabel("First name: ");
+		lastNameLabel = new JLabel("Last name: ");
+		firstNameField = new JTextField(10);
+		lastNameField = new JTextField(10);
+
+		okButton = new JButton("OK");
 		
 		Border innerBorder = BorderFactory.createTitledBorder("Add Person");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);

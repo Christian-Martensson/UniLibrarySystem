@@ -13,7 +13,6 @@ public class MainView extends JFrame {
 	
 	private ScrollPanel scrollPanel;
 	private Toolbar toolbar;
-	private FormPanel formPanel;
 	private BottomToolbar bottomToolBar;
 
 	
@@ -24,15 +23,14 @@ public class MainView extends JFrame {
 		
 		toolbar = new Toolbar();
 		scrollPanel = new ScrollPanel();
-		formPanel = new FormPanel();
 		bottomToolBar = new BottomToolbar();
 		
-		add(formPanel, BorderLayout.WEST);
+		/*add(formPanel, BorderLayout.WEST);*/
 		add(toolbar, BorderLayout.NORTH);
 		add(scrollPanel, BorderLayout.CENTER);
 		add(bottomToolBar, BorderLayout.SOUTH);
 		
-		setSize(900, 500);
+		setSize(700, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
@@ -45,9 +43,6 @@ public class MainView extends JFrame {
 		return toolbar;
 	}
 
-	public FormPanel getFormPanel() {
-		return formPanel;
-	}
 
 	public BottomToolbar getBottomToolBar() {
 		return bottomToolBar;
