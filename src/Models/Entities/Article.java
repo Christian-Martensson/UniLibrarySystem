@@ -1,6 +1,7 @@
 package Models.Entities;
 
 class Article {
+    String articleType;
     String title;
     String publicationYear;
     String genre;
@@ -8,8 +9,11 @@ class Article {
     boolean available;
     int numberInStock;
 
+    public String getArticleType() {
+        return articleType;
+    }
 
-    public String getAuthor() {
+    public String getCreator() {
         return creator;
     }
 
@@ -23,6 +27,10 @@ class Article {
 
     public String getTitle() {
         return title;
+    }
+
+    public boolean isAvailable() {
+        return available;
     }
 
     void setAvailable(int value) {

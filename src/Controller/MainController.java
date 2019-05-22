@@ -43,9 +43,12 @@ public class MainController {
                     view.getScrollPanel().appendSearchResult(table);
                     break;
                 }
-                case "DVD": {
-                    System.out.println("DVD search not implemented");
-                    model.searchDVD(searchWord);
+                case "Movie": {
+                    System.out.println("Movie search not implemented");
+                    model.searchMovie(searchWord);
+
+                    JTable table = model.convertListOfMoviesToTable();
+                    view.getScrollPanel().appendSearchResult(table);
                     break;
                 }
                 case "Magazine": {

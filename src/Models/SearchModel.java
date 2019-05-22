@@ -2,7 +2,7 @@ package Models;
 
 import Models.Entities.BookModel;
 import Models.Entities.UserModel;
-import Models.Entities.DvdModel;
+import Models.Entities.MovieModel;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class SearchModel {
     private ArrayList<BookModel> listOfBooks;
     private ArrayList<UserModel> listOfUsers;
-    private ArrayList<DvdModel> listOfDvds;
+    private ArrayList<MovieModel> listOfMovies;
 
 
     public JTable convertListOfBooksToJTable() {
@@ -32,7 +32,7 @@ public class SearchModel {
         for (int i = 0; i < listOfBooks.size(); i++) {
             String isbn = listOfBooks.get(i).getIsbn();
             String title = listOfBooks.get(i).getTitle();
-            String author = listOfBooks.get(i).getAuthor();
+            String author = listOfBooks.get(i).getCreator();
             String publisher = listOfBooks.get(i).getPublisher();
             String publicationYear = listOfBooks.get(i).getPublicationYear();
             String genre = listOfBooks.get(i).getGenre();
@@ -44,6 +44,38 @@ public class SearchModel {
             data[i][3] = publisher;
             data[i][4] = publicationYear;
             data[i][5] = genre;
+            data[i][6] = available;
+        }
+        return new JTable(data, columnNames);
+    }
+
+    public JTable convertListOfMoviesToTable() {
+        String[] columnNames = new String[7];
+        Object[][] data = new Object[listOfMovies.size()][7];
+
+        columnNames[0] = "Movie ID";
+        columnNames[1] = "Title";
+        columnNames[2] = "Producer";
+        columnNames[3] = "Publication Year";
+        columnNames[4] = "Genre";
+        columnNames[5] = "Minimum Age";
+        columnNames[6] = "Available";
+
+        for (int i = 0; i < listOfMovies.size(); i++) {
+            int movieId = listOfMovies.get(i).getMovieId();
+            String title = listOfMovies.get(i).getTitle();
+            String producer = listOfMovies.get(i).getCreator();
+            String publicationYear = listOfMovies.get(i).getPublicationYear();
+            String genre = listOfMovies.get(i).getGenre();
+            int minimumAge = listOfMovies.get(i).getMinimumAge();
+            boolean available = listOfMovies.get(i).isAvailable();
+
+            data[i][0] = movieId;
+            data[i][1] = title;
+            data[i][2] = producer;
+            data[i][3] = publicationYear;
+            data[i][4] = genre;
+            data[i][5] = minimumAge;
             data[i][6] = available;
         }
         return new JTable(data, columnNames);
@@ -124,8 +156,8 @@ public class SearchModel {
     }
 
 
-    public ArrayList<BookModel> searchDVD(String searchWord) {
-        listOfBooks = new ArrayList<>();
+    public ArrayList<MovieModel> searchMovie(String searchWord) {
+        listOfMovies = new ArrayList<>();
 
         Connection connection = null;
         try {
@@ -135,12 +167,12 @@ public class SearchModel {
 
             // 2. Create a statement
             // previous: "SELECT * FROM Book WHERE Match(title) Against(?)"
-            String sqlQuery = "SELECT b.*, c.* \n" +
-                    "FROM Book b\n" +
-                    "JOIN BookAuthor ba on b.isbn = ba.isbn\n" +
-                    "JOIN Creator c on c.creatorId = ba.authorId\n" +
-                    "WHERE Match(b.title) Against(?)\n" +
-                    "OR Match(c.fName) Against(?);\n";
+            String sqlQuery = "SELECT m.*, c.* \n" +
+                    "FROM Movie m\n" +
+                    "JOIN MovieProducer mp on mp.movieId = m.movieId\n" +
+                    "JOIN Creator c on c.creatorId = mp.creatorId\n" +
+                    "WHERE Match(m.title) Against(?)\n" +
+                    "OR Match(c.fName) Against(?)";
             PreparedStatement statement = connection.prepareStatement(sqlQuery);
             statement.setString(1, searchWord);
             statement.setString(2, searchWord);
@@ -151,24 +183,24 @@ public class SearchModel {
 
             // 4. Process the result set
             while (resultSet.next()) {
-                String isbn = resultSet.getString("isbn");
+                int movieId = resultSet.getInt("movieId");
                 String articleType = resultSet.getString("articleType");
                 String title = resultSet.getString("title");
-                String publisher = resultSet.getString("publisher");
                 String genre = resultSet.getString("genre");
                 String publicationYear = resultSet.getString("publicationYear");
-                String author = resultSet.getString("c.fName") + " " + resultSet.getString("c.lName");
+                String producer = resultSet.getString("c.fName") + " " + resultSet.getString("c.lName");
                 int availability = resultSet.getInt("availability");
+                int minimumAge = resultSet.getInt("m.minimumAge");
 
-                BookModel book = new BookModel(isbn, articleType, title, publisher, publicationYear, genre, author, availability);
-                listOfBooks.add(book);
+                MovieModel movie = new MovieModel(movieId, minimumAge, articleType, title, publicationYear, genre, producer, availability);
+                listOfMovies.add(movie);
             }
         }
 
         catch (Exception e) {
             e.printStackTrace();
         }
-        return listOfBooks;
+        return listOfMovies;
     }
 
     public void searchUser(String searchWord){
