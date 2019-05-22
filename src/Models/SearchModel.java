@@ -1,6 +1,8 @@
 package Models;
 
+import Models.Entities.BookModel;
 import Models.Entities.UserModel;
+import Models.Entities.DvdModel;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 public class SearchModel {
     private ArrayList<BookModel> listOfBooks;
     private ArrayList<UserModel> listOfUsers;
+    private ArrayList<DvdModel> listOfDvds;
 
 
     public JTable convertListOfBooksToJTable() {
@@ -74,6 +77,54 @@ public class SearchModel {
     }
 
     public ArrayList<BookModel> searchBookFor(String searchWord) {
+        listOfBooks = new ArrayList<>();
+
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            // previous: "SELECT * FROM Book WHERE Match(title) Against(?)"
+            String sqlQuery = "SELECT b.*, c.* \n" +
+                    "FROM Book b\n" +
+                    "JOIN BookAuthor ba on b.isbn = ba.isbn\n" +
+                    "JOIN Creator c on c.creatorId = ba.authorId\n" +
+                    "WHERE Match(b.title) Against(?)\n" +
+                    "OR Match(c.fName) Against(?);\n";
+            PreparedStatement statement = connection.prepareStatement(sqlQuery);
+            statement.setString(1, searchWord);
+            statement.setString(2, searchWord);
+
+            // 3. Execute SQL query
+            ResultSet resultSet = statement.executeQuery();
+
+
+            // 4. Process the result set
+            while (resultSet.next()) {
+                String isbn = resultSet.getString("isbn");
+                String articleType = resultSet.getString("articleType");
+                String title = resultSet.getString("title");
+                String publisher = resultSet.getString("publisher");
+                String genre = resultSet.getString("genre");
+                String publicationYear = resultSet.getString("publicationYear");
+                String author = resultSet.getString("c.fName") + " " + resultSet.getString("c.lName");
+                int availability = resultSet.getInt("availability");
+
+                BookModel book = new BookModel(isbn, articleType, title, publisher, publicationYear, genre, author, availability);
+                listOfBooks.add(book);
+            }
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listOfBooks;
+    }
+
+
+    public ArrayList<BookModel> searchDVD(String searchWord) {
         listOfBooks = new ArrayList<>();
 
         Connection connection = null;

@@ -1,17 +1,12 @@
 package Controller;
 
-import Models.BookModel;
-import Models.Entities.UserModel;
+import Models.Entities.BookModel;
 import Models.SearchModel;
 import UI.UI_Components.ScrollPanel;
-import UI.Views.ErrorMessageView;
-import UI.Views.LoanView;
-import UI.Views.MainView;
-import UI.Views.LoginView;
+import UI.Views.*;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 public class MainController {
     private static MainView view;
@@ -50,6 +45,7 @@ public class MainController {
                 }
                 case "DVD": {
                     System.out.println("DVD search not implemented");
+                    model.searchDVD(searchWord);
                     break;
                 }
                 case "Magazine": {
@@ -97,10 +93,11 @@ public class MainController {
 
                 int row = ScrollPanel.getTable().getSelectedRow();
                 int column = 0;
-                String value = ScrollPanel.getTable().getValueAt(row, column).toString();
-                BookModel book = model.getListOfBooks().get(1);
+                String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
+                BookModel book = model.getBookWith(valueIsbn);
 
-                LoanView loanView = new LoanView(value);
+                LoanConfirmationView loanConfirmationView = new LoanConfirmationView(book);
+                LoanConfirmationController loanConfirmationController = new LoanConfirmationController(loanConfirmationView, book);
 
             }
         }
@@ -109,6 +106,21 @@ public class MainController {
     class ReserveButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            if(ScrollPanel.getTable().getSelectionModel().isSelectionEmpty()) {
+                ErrorMessageView error = new ErrorMessageView("You must select an item to loan!");
+            }
+            else {
+
+                int row = ScrollPanel.getTable().getSelectedRow();
+                int column = 0;
+                String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
+                BookModel book = model.getBookWith(valueIsbn);
+
+                ReservationConfirmationView reservationConfirmationView = new ReservationConfirmationView(book);
+                ReservationConfirmationController reservationConfirmationController = new ReservationConfirmationController(reservationConfirmationView, book);
+
+            }
 
         }
     }
