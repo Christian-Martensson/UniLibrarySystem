@@ -2,6 +2,7 @@ package Models.Entities;
 
 import Models.DatabaseDriver;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,17 +23,33 @@ public class LoanModel {
     }
 
     public static void generateLoan(BookModel book, UserModel user) {
-        LoanModel loan = new LoanModel();
-        loan.barcodeId = getAvailableBarcodeFor(book.getIsbn());
-        //loan.userId = user.getUserId();
+        int barcodeId = getAvailableBarcodeFor(book.getIsbn());
+
+        createLoanOn(barcodeId, user.getUserId());
+
+    }
+
+    public static void createLoanOn(int barcodeId, int userId) {
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            String sqlQuery = "CALL spCreateNewLoanBook(?, ?)";
+            CallableStatement statement = connection.prepareCall(sqlQuery);
+            statement.setInt(1, barcodeId);
+            statement.setInt(2, userId);
+            // 3. Execute SQL query
+            statement.executeQuery();
+            System.out.println("I got here!");
+        }
 
 
-        String pattern = "yyyy-MM-dd";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String date = simpleDateFormat.format(new Date());
-        loan.dateOfLoan = date;
-
-
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -65,6 +82,7 @@ public class LoanModel {
         catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(barcode);
         return barcode;
     }
 }

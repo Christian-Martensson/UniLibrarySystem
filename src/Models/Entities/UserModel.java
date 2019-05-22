@@ -52,6 +52,7 @@ public class UserModel {
 
             // 4. Process the result set
             while (resultSet.next()) {
+                this.userId = resultSet.getInt("userId");
                 this.userType = resultSet.getString("userType");
                 this.firstName = resultSet.getString("fName");
                 this.lastName = resultSet.getString("lName");
