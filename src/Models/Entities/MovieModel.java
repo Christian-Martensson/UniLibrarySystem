@@ -6,7 +6,9 @@ public class MovieModel extends Article {
     private int minimumAge;
 
 
-    public MovieModel(int movieId, int minimumAge, String articleType, String title, String publicationYear, String genre, String producer, int available) {
+    public MovieModel(int movieId, int minimumAge, String articleType,
+                      String title, String publicationYear, String genre,
+                      String producer, int available) {
         this.movieId = movieId;
         this.minimumAge = minimumAge;
         super.articleType = articleType;

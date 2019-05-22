@@ -296,6 +296,7 @@ public class SearchModel {
 
             // 4. Process the result set
             while (resultSet.next()) {
+                int userId = resultSet.getInt("userId");
                 String userType = resultSet.getString("userType");
                 String firstName = resultSet.getString("fName");
                 String lastName = resultSet.getString("lName");
@@ -303,7 +304,7 @@ public class SearchModel {
                 String username = resultSet.getString("username");
                 String password = resultSet.getString("password");
 
-                UserModel user = new UserModel(userType, firstName, lastName, personalId, username, password);
+                UserModel user = new UserModel(userId, userType, firstName, lastName, personalId, username, password);
 
                 listOfUsers.add(user);
             }

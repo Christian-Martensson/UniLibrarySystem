@@ -5,13 +5,14 @@ import Models.DatabaseDriver;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class LoanModel {
-    int loanId;
+    int loanId; // generated in database
     int userId;
     int barcodeId;
-    Date dateOfLoan;
+    String dateOfLoan;
     Date dateOfReturn;
     Date dueDate;
     int nrRenewals;
@@ -23,6 +24,15 @@ public class LoanModel {
     public static void generateLoan(BookModel book, UserModel user) {
         LoanModel loan = new LoanModel();
         loan.barcodeId = getAvailableBarcodeFor(book.getIsbn());
+        //loan.userId = user.getUserId();
+
+
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(new Date());
+        loan.dateOfLoan = date;
+
+
 
     }
 
@@ -37,7 +47,9 @@ public class LoanModel {
 
             // 2. Create a statement
             // previous: "SELECT * FROM Book WHERE Match(title) Against(?)"
-            String sqlQuery = "";
+            String sqlQuery = "SELECT * FROM Barcode\n" +
+                    "WHERE isbn = ?\n" +
+                    "AND available = 1; ";
             PreparedStatement statement = connection.prepareStatement(sqlQuery);
             statement.setString(1, isbn);
 
@@ -45,8 +57,8 @@ public class LoanModel {
             ResultSet resultSet = statement.executeQuery();
 
             // 4. Process the result set
-            while (resultSet.next()) {
-
+            if (resultSet.next()) {
+                barcode = resultSet.getInt("barcodeId");
             }
         }
 

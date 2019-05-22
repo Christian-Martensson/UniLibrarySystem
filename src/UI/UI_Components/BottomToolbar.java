@@ -11,6 +11,9 @@ public class BottomToolbar extends JPanel {
     private JButton editSelectedItemButton;
     private JButton removeSelectedItemButton;
     private JButton overdueItemsButton;
+    private JButton addButton;
+
+    private JComboBox<String> addAlternativesDropdown;
 
     public BottomToolbar() {
         setBorder(BorderFactory.createEtchedBorder());
@@ -20,6 +23,13 @@ public class BottomToolbar extends JPanel {
         editSelectedItemButton = new JButton("Edit");
         removeSelectedItemButton = new JButton("Remove");
         overdueItemsButton = new JButton("See overdue items");
+        addButton = new JButton("Add");
+
+        addAlternativesDropdown = new JComboBox<>();
+        addAlternativesDropdown.addItem("Book");
+        addAlternativesDropdown.addItem("Movie");
+        addAlternativesDropdown.addItem("Magazine");
+        addAlternativesDropdown.addItem("User");
 
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -28,6 +38,8 @@ public class BottomToolbar extends JPanel {
         add(editSelectedItemButton);
         add(removeSelectedItemButton);
         add(overdueItemsButton);
+        add(addButton);
+        add(addAlternativesDropdown);
     }
 
     public void addLoanButtonListener (ActionListener listener) {
@@ -49,6 +61,9 @@ public class BottomToolbar extends JPanel {
     public void addOverdueItemsButtonListener (ActionListener listener) {
         overdueItemsButton.addActionListener(listener);
     }
+    public void addAddButtonListener (ActionListener listener) {
+        addButton.addActionListener(listener);
+    }
 
     public JButton getLoanButton() {
         return loanButton;
@@ -68,5 +83,13 @@ public class BottomToolbar extends JPanel {
 
     public JButton getOverdueItemsButton() {
         return overdueItemsButton;
+    }
+
+    public JButton getAddButton() {
+        return addButton;
+    }
+
+    public JComboBox<String> getAddAlternativesDropdown() {
+        return addAlternativesDropdown;
     }
 }

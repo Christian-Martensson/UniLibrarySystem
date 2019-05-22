@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserModel {
+    private int userId;
     private String userType;
     private String firstName;
     private String lastName;
@@ -18,7 +19,8 @@ public class UserModel {
     public static boolean loggedIn = false;
 
 
-    public UserModel(String userType, String firstName, String lastName, String personalId, String username, String password) {
+    public UserModel(int userId, String userType, String firstName, String lastName, String personalId, String username, String password) {
+        this.userId = userId;
         this.userType = userType;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -99,5 +101,9 @@ public class UserModel {
 
     public String getUsername() {
         return username;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 }
