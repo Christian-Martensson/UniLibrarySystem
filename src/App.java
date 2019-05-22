@@ -9,6 +9,7 @@ public class App {
 		SearchModel searchEvent = new SearchModel();
 		MainController mainController = new MainController(librarianView, searchEvent);
 		librarianView.setVisible(true);
+		MainController.giveDefaultViewAccess();
 	}
 
 }

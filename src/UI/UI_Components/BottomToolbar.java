@@ -6,47 +6,67 @@ import java.awt.event.ActionListener;
 
 
 public class BottomToolbar extends JPanel {
-    private JButton borrowButton;
+    private JButton loanButton;
     private JButton reserveButton;
-    private JButton editButton;
-    private JButton deleteButton;
-
-
+    private JButton editSelectedItemButton;
+    private JButton removeSelectedItemButton;
+    private JButton overdueItemsButton;
 
     public BottomToolbar() {
         setBorder(BorderFactory.createEtchedBorder());
 
-        borrowButton = new JButton("Borrow");
+        loanButton = new JButton("Loan");
         reserveButton = new JButton("Reserve");
-        editButton = new JButton("Edit");
-        deleteButton = new JButton("Delete");
-
+        editSelectedItemButton = new JButton("Edit");
+        removeSelectedItemButton = new JButton("Remove");
+        overdueItemsButton = new JButton("See overdue items");
 
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        add(borrowButton);
+        add(loanButton);
         add(reserveButton);
-        add(editButton);
-        add(deleteButton);
-
+        add(editSelectedItemButton);
+        add(removeSelectedItemButton);
+        add(overdueItemsButton);
     }
 
-    /*
-    public void addReserveButtonListener (ActionListener listenForSearchButton) {
-        reserveButton.addActionListener(listenForSearchButton);
+    public void addLoanButtonListener (ActionListener listener) {
+        loanButton.addActionListener(listener);
     }
 
-    public void addBorrowButtonListener (ActionListener listenForLoginButton) {
-        borrowButton.addActionListener(listenForLoginButton);
+    public void addReserveButtonListener (ActionListener listener) {
+        reserveButton.addActionListener(listener);
     }
 
-    public void addEditButtonListener (ActionListener listenForEditButton) {
-        editButton.addActionListener(listenForEditButton);
+    public void addEditButtonListener(ActionListener listener) {
+        editSelectedItemButton.addActionListener(listener);
     }
 
-    public void addDeleteButtonListener (ActionListener listenForDeleteButton) {
-        deleteButton.addActionListener(listenForDeleteButton);
+    public void addRemoveButtonListener(ActionListener listener) {
+        removeSelectedItemButton.addActionListener(listener);
     }
-    */
 
+    public void addOverdueItemsButtonListener (ActionListener listener) {
+        overdueItemsButton.addActionListener(listener);
+    }
+
+    public JButton getLoanButton() {
+        return loanButton;
+    }
+
+    public JButton getReserveButton() {
+        return reserveButton;
+    }
+
+    public JButton getEditSelectedItemButton() {
+        return editSelectedItemButton;
+    }
+
+    public JButton getRemoveSelectedItemButton() {
+        return removeSelectedItemButton;
+    }
+
+    public JButton getOverdueItemsButton() {
+        return overdueItemsButton;
+    }
 }

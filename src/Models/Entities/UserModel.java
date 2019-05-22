@@ -84,4 +84,20 @@ public class UserModel {
     public String getUserType() {
         return userType;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPersonalId() {
+        return personalId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
 }

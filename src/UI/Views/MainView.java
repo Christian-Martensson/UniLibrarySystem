@@ -26,8 +26,6 @@ public class MainView extends JFrame {
 		scrollPanel = new ScrollPanel();
 		formPanel = new FormPanel();
 		bottomToolBar = new BottomToolbar();
-
-
 		
 		add(formPanel, BorderLayout.WEST);
 		add(toolbar, BorderLayout.NORTH);
@@ -36,10 +34,6 @@ public class MainView extends JFrame {
 		
 		setSize(900, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-		formPanel.setVisible(false);
-		bottomToolBar.setVisible(false);
 	}
 
 

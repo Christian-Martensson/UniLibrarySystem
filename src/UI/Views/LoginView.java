@@ -79,10 +79,6 @@ public class LoginView extends JFrame {
         lblErrorMessage.setBounds(10, 151, 330, 25);
         contentPane.add(lblErrorMessage);
 
-
-        //Controll
-        //controller = new LoginController(this);
-
     }
 
     public void setErrorMessage(String errorMessage) {

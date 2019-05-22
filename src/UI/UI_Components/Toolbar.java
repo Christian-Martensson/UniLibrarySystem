@@ -11,6 +11,8 @@ public class Toolbar extends JPanel {
 	private JTextField textField;
 	private JLabel searchLabel;
 
+	private JComboBox<String> searchAlternativesDropdown;
+
 	
 	public Toolbar() {
 		setBorder(BorderFactory.createEtchedBorder());
@@ -20,6 +22,12 @@ public class Toolbar extends JPanel {
 		searchLabel = new JLabel("SearchField:");
 		searchButton = new JButton("Search");
 
+		searchAlternativesDropdown = new JComboBox<String>();
+		searchAlternativesDropdown.addItem("Book");
+		searchAlternativesDropdown.addItem("DVD");
+		searchAlternativesDropdown.addItem("Magazine");
+		searchAlternativesDropdown.addItem("User");
+
 		
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		
@@ -28,14 +36,15 @@ public class Toolbar extends JPanel {
 		add(textField);
 		add(searchButton);
 
+		add(searchAlternativesDropdown);
 	}
 
-	public void addSearchButtonListener (ActionListener listenForSearchButton) {
-		searchButton.addActionListener(listenForSearchButton);
+	public void addSearchButtonListener (ActionListener listener) {
+		searchButton.addActionListener(listener);
 	}
 
-	public void addLoginButtonListener (ActionListener listenForLoginButton) {
-		loginButton.addActionListener(listenForLoginButton);
+	public void addLoginButtonListener (ActionListener listener) {
+		loginButton.addActionListener(listener);
 	}
 
 	public JTextField getTextField() {
@@ -46,4 +55,7 @@ public class Toolbar extends JPanel {
 		return loginButton;
 	}
 
+	public JComboBox<String> getSearchAlternativesDropdown() {
+		return searchAlternativesDropdown;
+	}
 }
