@@ -19,7 +19,6 @@ public class SearchModel {
     private ArrayList<MovieModel> listOfMovies;
     private ArrayList<MagazineModel> listOfMagazines;
 
-
     public JTable convertListOfBooksToJTable() {
         String[] columnNames = new String[7];
         Object[][] data = new Object[listOfBooks.size()][7];

@@ -13,6 +13,7 @@ public class MainController {
     private SearchModel model;
 
     public static boolean loggedIn = false;
+    public static String searchAlternative;
 
     public MainController(MainView mainView, SearchModel searchModel) {
         this.view = mainView;
@@ -33,7 +34,7 @@ public class MainController {
         public void actionPerformed(ActionEvent e) {
 
             String searchWord = view.getToolbar().getTextField().getText();
-            String searchAlternative = view.getToolbar().getSearchAlternativesDropdown().getSelectedItem().toString();
+            searchAlternative = view.getToolbar().getSearchAlternativesDropdown().getSelectedItem().toString();
 
             switch (searchAlternative) {
                 case "Book": {
@@ -95,14 +96,34 @@ public class MainController {
                 ErrorMessageView error = new ErrorMessageView("You must select an item to loan!");
             }
             else {
-
                 int row = ScrollPanel.getTable().getSelectedRow();
                 int column = 0;
-                String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
-                BookModel book = model.getBookWith(valueIsbn);
 
-                LoanConfirmationView loanConfirmationView = new LoanConfirmationView(book);
-                LoanConfirmationController loanConfirmationController = new LoanConfirmationController(loanConfirmationView, book);
+                switch (searchAlternative) {
+                    case "Book": {
+                        String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
+                        BookModel book = model.getBookWith(valueIsbn);
+
+                        LoanConfirmationView loanConfirmationView = new LoanConfirmationView(book);
+                        LoanConfirmationController loanConfirmationController = new LoanConfirmationController(loanConfirmationView, book);
+                        break;
+                    }
+                    case "Movie": {
+
+                        break;
+                    }
+                    case "Magazine": {
+
+                        break;
+                    }
+                    case "User": {
+
+                        break;
+                    }
+                }
+
+
+
 
             }
         }
