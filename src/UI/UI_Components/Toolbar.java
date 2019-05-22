@@ -22,7 +22,7 @@ public class Toolbar extends JPanel {
 		searchLabel = new JLabel("SearchField:");
 		searchButton = new JButton("Search");
 
-		searchAlternativesDropdown = new JComboBox<String>();
+		searchAlternativesDropdown = new JComboBox<>();
 		searchAlternativesDropdown.addItem("Book");
 		searchAlternativesDropdown.addItem("Movie");
 		searchAlternativesDropdown.addItem("Magazine");

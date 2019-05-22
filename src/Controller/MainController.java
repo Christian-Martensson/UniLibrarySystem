@@ -17,6 +17,7 @@ public class MainController {
 
     public static boolean loggedIn = false;
     public static String searchAlternative;
+    public static String addItemAlternative;
     public static UserModel loggedInUser;
 
     public MainController(MainView mainView, SearchModel searchModel) {
@@ -30,6 +31,7 @@ public class MainController {
         this.view.getBottomToolBar().addEditButtonListener(new EditButtonListener());
         this.view.getBottomToolBar().addRemoveButtonListener(new RemoveButtonListener());
         this.view.getBottomToolBar().addOverdueItemsButtonListener(new OverdueItemsButtonListener());
+        this.view.getBottomToolBar().addAddButtonListener(new AddButtonListener());
     }
 
     class SearchButtonListener implements ActionListener {
@@ -179,6 +181,36 @@ public class MainController {
 
         }
     }
+
+    class AddButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            addItemAlternative = view.getBottomToolBar().getAddAlternativesDropdown().getSelectedItem().toString();
+
+            switch (addItemAlternative) {
+                case "Book": {
+                    FormUserView form = FormUserView.generateFormBook();
+                    System.out.println("Adding book!");
+                    break;
+                }
+                case "Movie": {
+                    FormUserView form = FormUserView.generateFormMovie();
+                    break;
+                }
+                case "Magazine": {
+                    FormUserView form = FormUserView.generateFormMagazine();
+                    break;
+                }
+                case "User": {
+                    FormUserView form = FormUserView.generateFormUser();
+                    break;
+                }
+            }
+
+        }
+    }
+
 
     public static void giveLibrarianAccess() {
         view.getToolbar().getSearchAlternativesDropdown().addItem("User");

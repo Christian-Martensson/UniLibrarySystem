@@ -1,5 +1,6 @@
 import Controller.MainController;
 import Models.SearchModel;
+import UI.Views.FormUserView;
 import UI.Views.MainView;
 
 public class App {
@@ -10,7 +11,6 @@ public class App {
 		MainController mainController = new MainController(librarianView, searchEvent);
 		librarianView.setVisible(true);
 		MainController.giveDefaultViewAccess();
-
 		MainController.giveLibrarianAccess();
 	}
 
