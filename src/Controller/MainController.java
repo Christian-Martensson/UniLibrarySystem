@@ -32,6 +32,7 @@ public class MainController {
         this.view.getToolbar().addLoginButtonListener(new LoginButtonListener());
         this.view.getToolbar().addSearchButtonListener(new SearchButtonListener());
         this.view.getBottomToolBar().addLoanButtonListener(new LoanButtonListener());
+        this.view.getBottomToolBar().addMyLoansButtonListener(new MyLoanButtonListener());
         this.view.getBottomToolBar().addEditButtonListener(new EditButtonListener());
         this.view.getBottomToolBar().addRemoveButtonListener(new RemoveButtonListener());
         this.view.getBottomToolBar().addOverdueItemsButtonListener(new OverdueItemsButtonListener());
@@ -140,6 +141,17 @@ public class MainController {
         }
     }
 
+    class MyLoanButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            ArrayList<LoanModel> listOfLoans = LoanModel.fetchLoansFromDbFor(loggedInUser);
+            JTable table = SearchModel.converListOfLoansToTable(listOfLoans);
+            MyLoansView view = new MyLoansView(table);
+            MyLoansController controller = new MyLoansController(view, listOfLoans);
+        }
+    }
 
     class EditButtonListener implements ActionListener {
         @Override

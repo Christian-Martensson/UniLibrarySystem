@@ -46,6 +46,10 @@ public class BottomToolbar extends JPanel {
         loanButton.addActionListener(listener);
     }
 
+    public void addMyLoansButtonListener (ActionListener listener) {
+        myLoansButton.addActionListener(listener);
+    }
+
     public void addEditButtonListener(ActionListener listener) {
         editSelectedItemButton.addActionListener(listener);
     }
