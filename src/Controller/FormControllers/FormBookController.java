@@ -10,9 +10,13 @@ import java.awt.event.ActionListener;
 public class FormBookController {
     FormView view;
     BookModel bookModel;
+    final int ADDING = 1;
+    final int EDITING = 2;
+    int option;
 
 
-    public FormBookController(FormView formView) {
+    public FormBookController(FormView formView, int option) {
+        this.option = option;
         this.view = formView;
 
         this.view.addSubmitButtonListener(new SubmitButtonListener());
@@ -29,10 +33,18 @@ public class FormBookController {
             String publicationYear = view.getText(4);
             String genre = view.getText(5);
             String author = view.getText(6);
-
             bookModel = new BookModel(isbn, articleType, title, publisher, publicationYear, genre, author);
-            bookModel.loadToDb();
-            System.out.println(bookModel.toString());
+
+            if(option == ADDING) {
+                bookModel.insertIntoDb();
+            }
+
+            else if (option == EDITING) {
+                bookModel.updateInDb();
+
+            }
+
+
 
         }
     }

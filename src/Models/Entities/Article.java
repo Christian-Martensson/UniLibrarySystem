@@ -10,7 +10,7 @@ public abstract class Article {
 
     public abstract boolean checkAvailabilityInDb();
 
-    public abstract void loadToDb();
+    public abstract void insertIntoDb();
 
     public abstract void removeFromDb();
 

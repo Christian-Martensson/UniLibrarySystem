@@ -29,7 +29,7 @@ public class FormMagazineController {
             Date publicationDate = MyConversionHelper.fromStringToDate(view.getText(3));
             String genre = view.getText(4);
             magazineModel = new MagazineModel(0, magazineNr, publisher, publicationDate, title, genre);
-            magazineModel.loadToDb();
+            magazineModel.insertIntoDb();
 
         }
     }

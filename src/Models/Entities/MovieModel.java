@@ -5,7 +5,7 @@ import UI.Views.ErrorMessageView;
 
 import java.sql.*;
 
-public class MovieModel extends Article implements DatabaseActions {
+public class MovieModel extends Article {
 
     private int movieId;
     private int minimumAge;
@@ -26,7 +26,7 @@ public class MovieModel extends Article implements DatabaseActions {
 
 
     @Override
-    public void loadToDb() {
+    public void insertIntoDb() {
         Connection connection = null;
 
         try {

@@ -1,5 +1,7 @@
 package UI.Views;
 
+import Models.Entities.BookModel;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -53,43 +55,58 @@ public class FormView extends JFrame {
         submitButton.addActionListener(listener);
     }
 
-    public static FormView generateFormUser() {
+    public static FormView generateFormUser(String buttonText) {
         String[] labels = { "First Name:", "Last Name: ", "Personal ID:", "User Type:",
                 "Street:", "Zip code:", "City:", "Country:", "Telephone:", "Mail:",
                 "Username:", "Password:"};
 
-
-        FormView view = new FormView(labels, "Add user");
+        FormView view = new FormView(labels, buttonText);
 
 
         return view;
     }
-    public static FormView generateFormBook() {
+
+    public static FormView generateFormBook(String buttonText) {
         String[] labels = { "ISBN:", "Title:", "Article type:", "Publisher:", "Publication year:",
         "Genre:", "Author:", };
 
-        FormView view = new FormView(labels, "Add book");
+        FormView view = new FormView(labels, buttonText);
         return view;
     }
 
-    public static FormView generateFormMagazine() {
+    public static FormView generateFormMagazine(String buttonText) {
         String[] labels = { "Magazine number:", "Title:", "Publisher:", "Publication date:",
                 "Genre:"};
 
-        FormView view = new FormView(labels, "Add Magazine");
+        FormView view = new FormView(labels, buttonText);
         return view;
     }
 
-    public static FormView generateFormMovie() {
+    public static FormView generateFormMovie(String buttonText) {
         String[] labels = { "Title:", "Publication Year", "Producer:", "Genre:",
                 "Article Type:"};
 
-        FormView view = new FormView(labels, "Add movie");
+        FormView view = new FormView(labels, buttonText);
         return view;
+    }
+
+    public void fillFieldsWith(BookModel book) {
+        this.setText(0, book.getIsbn());
+        this.setText(1, book.getTitle());
+        this.setText(2, book.getArticleType());
+        this.setText(3, book.getPublisher());
+        this.setText(4, book.getPublicationYear());
+        this.setText(5, book.getGenre());
+        this.setText(6, book.getCreator());
+        textFields[0].setEditable(false);
+
     }
 
     //GetText
     public String getText(int i) {
         return (textFields[i].getText());
+    }
+    public void setText(int i, String text) {
+        textFields[i].setText(text);
     }
 }

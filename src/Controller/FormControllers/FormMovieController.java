@@ -30,7 +30,7 @@ public class FormMovieController {
             String articleType = view.getText(4);
 
             movieModel = new MovieModel(0, 18, title, publicationYear, genre, producer);
-            movieModel.loadToDb();
+            movieModel.insertIntoDb();
 
         }
     }

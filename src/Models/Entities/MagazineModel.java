@@ -6,7 +6,7 @@ import UI.Views.ErrorMessageView;
 import java.sql.*;
 import java.util.Date;
 
-public class MagazineModel extends Article implements DatabaseActions {
+public class MagazineModel extends Article {
     private int magazineId;
     private int magazineNr;
     private String publisher;
@@ -22,7 +22,7 @@ public class MagazineModel extends Article implements DatabaseActions {
     }
 
     @Override
-    public void loadToDb() {
+    public void insertIntoDb() {
         Connection connection = null;
         java.sql.Date sqlDate = new java.sql.Date(this.publicationDate.getTime());
 
