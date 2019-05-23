@@ -36,7 +36,7 @@ public class FormMagazineController {
                 String genre = view.getText(4);
                 magazineModel = new MagazineModel(0, magazineNr, publisher, publicationDate, title, genre);
                 magazineModel.insertIntoDb();
-                magazineModel.addBarcodesInDb(1);
+                magazineModel.addBarcodesInDb(1, title);
             }
 
 

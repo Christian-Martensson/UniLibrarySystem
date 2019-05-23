@@ -60,7 +60,7 @@ public class BookModel extends Article {
     }
 
     @Override
-    public void addBarcodesInDb(int number) {
+    public void addBarcodesInDb(int number, String title) {
         Connection connection = null;
         try {
             // 1. Get a connection to the database

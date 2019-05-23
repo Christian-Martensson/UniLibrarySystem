@@ -49,6 +49,7 @@ public class MovieModel extends Article {
 
 
 
+
             // 3. Execute SQL query
             statement.executeUpdate();
 
@@ -68,8 +69,10 @@ public class MovieModel extends Article {
         }
     }
 
+
+
     @Override
-    public void addBarcodesInDb(int number) {
+    public void addBarcodesInDb(int number, String title) {
         Connection connection = null;
         try {
             // 1. Get a connection to the database
@@ -80,7 +83,7 @@ public class MovieModel extends Article {
                 PreparedStatement statement = connection.prepareStatement(
                         "INSERT INTO Barcode (movieId, goneMissing, isAvailable) " +
                                 "VALUES (?, ?, ?);");
-                statement.setInt(1, this.movieId);
+                statement.setInt(1, getDbMovieId(title));
                 statement.setInt(2, 1);
                 statement.setInt(3, 1);
 
@@ -103,6 +106,7 @@ public class MovieModel extends Article {
             }
         }
     }
+
 
     @Override
     public void removeFromDb() {
@@ -289,6 +293,43 @@ public class MovieModel extends Article {
         return barcode;
     }
 
+    public int getDbMovieId(String title) {
+        int movieId = 0;
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT movieId FROM Movie WHERE title = ?;");
+            statement.setString(1, title);
+
+
+            // 3. Execute SQL query
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                movieId = resultSet.getInt("movieId");
+            }
+
+
+            //Catch exceptions
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorMessageView error = new ErrorMessageView("Error!");
+        }
+
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+        return movieId;
+    }
 
     public int getMovieId() {
         return movieId;
