@@ -50,7 +50,7 @@ public class UserModel {
             connection = driver.createConnection();
 
             // 2. Create a statement
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM User WHERE Match(username) Against(?)");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM User WHERE username = ?");
             statement.setString(1, username);
 
             // 3. Execute SQL query

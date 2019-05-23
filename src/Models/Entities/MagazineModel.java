@@ -1,6 +1,5 @@
 package Models.Entities;
 
-import Controller.MainController;
 import Models.DatabaseDriver;
 
 import java.sql.*;
@@ -126,6 +125,13 @@ public class MagazineModel extends Article implements DatabaseActions {
 
         catch (Exception e) {
             e.printStackTrace();
+        }
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
         }
     }
 

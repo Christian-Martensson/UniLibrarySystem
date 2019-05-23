@@ -2,12 +2,12 @@ package Models.Entities;
 
 public interface DatabaseActions {
 
-    public void createLoan(int barcodeId, int userId);
+    void createLoan(int barcodeId, int userId);
 
-    public boolean checkAvailabilityInDb();
+    boolean checkAvailabilityInDb();
 
-    public void loadToDb();
+    void loadToDb();
 
-    public int getAvailableBarcode();
+    int getAvailableBarcode();
 
 }

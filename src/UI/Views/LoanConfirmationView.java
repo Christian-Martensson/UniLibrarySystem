@@ -46,9 +46,7 @@ public class LoanConfirmationView extends JFrame {
         confirmationButton.setBounds(75, 180, 250, 25);
         contentPane.add(confirmationButton);
 
-        if (article.getArticleType().equals("CourseLit") || article.getArticleType().equals("Normal")) {
-            buildIsbnLabel();
-        }
+
 
     }
 

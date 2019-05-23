@@ -152,15 +152,31 @@ public class SearchModel {
 
             // 2. Create a statement
             // previous: "SELECT * FROM Book WHERE Match(title) Against(?)"
-            String sqlQuery = "SELECT b.*, c.* \n" +
-                    "FROM Book b\n" +
-                    "JOIN BookAuthor ba on b.isbn = ba.isbn\n" +
-                    "JOIN Creator c on c.creatorId = ba.authorId\n" +
-                    "WHERE Match(b.title) Against(?)\n" +
-                    "OR Match(c.fName) Against(?);\n";
-            PreparedStatement statement = connection.prepareStatement(sqlQuery);
-            statement.setString(1, searchWord);
-            statement.setString(2, searchWord);
+            String sqlQuery;
+            PreparedStatement statement = null;
+            if (searchWord.length() == 0) {
+                sqlQuery = "SELECT * FROM Book;";
+
+                statement = connection.prepareStatement(sqlQuery);
+            }
+            else {
+                 sqlQuery = "SELECT b.*, c.* \n" +
+                        "FROM Book b\n" +
+                        "JOIN BookAuthor ba on b.isbn = ba.isbn\n" +
+                        "JOIN Creator c on c.creatorId = ba.authorId\n" +
+                        "WHERE Match(b.title) Against(?)\n" +
+                        "OR Match(c.fName) Against(?)\n" +
+                        "OR Match(c.lName) Against(?)" +
+                        "OR Match(b.genre) Against(?)\n" +
+                        "OR Match(b.isbn) Against(?)\n;";
+
+                statement = connection.prepareStatement(sqlQuery);
+                statement.setString(1, searchWord);
+                statement.setString(2, searchWord);
+                statement.setString(3, searchWord);
+                statement.setString(4, searchWord);
+                statement.setString(5, searchWord);
+            }
 
             // 3. Execute SQL query
             ResultSet resultSet = statement.executeQuery();
@@ -204,10 +220,14 @@ public class SearchModel {
                     "JOIN MovieProducer mp on mp.movieId = m.movieId\n" +
                     "JOIN Creator c on c.creatorId = mp.creatorId\n" +
                     "WHERE Match(m.title) Against(?)\n" +
-                    "OR Match(c.fName) Against(?)";
+                    "OR Match(c.fName) Against(?)" +
+                    "OR Match(c.lName) Against(?)" +
+                    "OR Match(m.genre) Against(?)";
             PreparedStatement statement = connection.prepareStatement(sqlQuery);
             statement.setString(1, searchWord);
             statement.setString(2, searchWord);
+            statement.setString(3, searchWord);
+            statement.setString(4, searchWord);
 
             // 3. Execute SQL query
             ResultSet resultSet = statement.executeQuery();
@@ -216,7 +236,6 @@ public class SearchModel {
             // 4. Process the result set
             while (resultSet.next()) {
                 int movieId = resultSet.getInt("movieId");
-                String articleType = resultSet.getString("articleType");
                 String title = resultSet.getString("title");
                 String genre = resultSet.getString("genre");
                 String publicationYear = resultSet.getString("publicationYear");
@@ -224,7 +243,7 @@ public class SearchModel {
                 int availability = resultSet.getInt("isAvailable");
                 int minimumAge = resultSet.getInt("m.minimumAge");
 
-                MovieModel movie = new MovieModel(movieId, minimumAge, articleType, title, publicationYear, genre, producer);
+                MovieModel movie = new MovieModel(movieId, minimumAge, title, publicationYear, genre, producer);
                 listOfMovies.add(movie);
             }
         }
@@ -290,7 +309,7 @@ public class SearchModel {
             connection = driver.createConnection();
 
             // 2. Create a statement
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM User WHERE Match(username) Against(?)");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM User WHERE username = ?");
             statement.setString(1, searchWord);
 
             // 3. Execute SQL query

@@ -1,14 +1,6 @@
 package Models.Entities;
 
-import Models.DatabaseDriver;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Date;
-
-public class Article {
+public class Article implements DatabaseActions {
     String articleType;
     String title;
     String publicationYear;
@@ -24,9 +16,7 @@ public class Article {
 
     }
 
-    public void createLoan(int barcodeId, int userId) {
-
-    }
+    public void createLoan(int barcodeId, int userId) { }
 
     public int getAvailableBarcode() {
         return 0;
@@ -51,8 +41,6 @@ public class Article {
     public String getTitle() {
         return title;
     }
-
-
 }
 
 

@@ -1,13 +1,11 @@
 package Controller;
 
 import Models.Entities.Article;
-import Models.Entities.LoanModel;
 import UI.Views.ErrorMessageView;
 import UI.Views.LoanConfirmationView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class LoanConfirmationController {
     private LoanConfirmationView view;
@@ -26,6 +24,7 @@ public class LoanConfirmationController {
             boolean isAvailable = article.checkAvailabilityInDb();
 
             if (isAvailable) {
+                System.out.println(MainController.loggedInUser.getUsername());
                 int userId = MainController.loggedInUser.getUserId();
                 int barcodeId = article.getAvailableBarcode();
                 article.createLoan(barcodeId, userId);

@@ -4,6 +4,7 @@ import Models.DatabaseDriver;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -63,6 +64,13 @@ public class LoanModel {
 
         catch (Exception e) {
             e.printStackTrace();
+        }
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
         }
         return listOfLoans;
     }

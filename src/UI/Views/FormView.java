@@ -9,18 +9,20 @@ public class FormView extends JFrame {
 
     private JTextField[] textFields;
     JButton submitButton;
+    JPanel panelPosition;
+
 
     // Create a form with the specified labels, tools, and sizes.
     public FormView(String[] labels, String buttonText) {
-        setTitle("Add new user");
+        setTitle(buttonText);
         setLocation(200,200);
         setVisible(true);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
 
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout());
-        JPanel labelPanel = new JPanel(new GridLayout(labels.length, 1));
-        JPanel fieldPanel = new JPanel(new GridLayout(labels.length, 1));
+        JPanel labelPanel = new JPanel(new GridLayout(labels.length + 1, 1));
+        JPanel fieldPanel = new JPanel(new GridLayout(labels.length + 1, 1));
         contentPane.add(labelPanel, BorderLayout.WEST);
         contentPane.add(fieldPanel, BorderLayout.CENTER);
         textFields = new JTextField[labels.length];
@@ -36,7 +38,7 @@ public class FormView extends JFrame {
 
             //Panel position FlowLayout left
             labelPanel.add(labelPosition);
-            JPanel panelPosition = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            panelPosition = new JPanel(new FlowLayout(FlowLayout.LEFT));
             panelPosition.add(textFields[i]);
             fieldPanel.add(panelPosition);
         }
@@ -58,6 +60,8 @@ public class FormView extends JFrame {
 
 
         FormView view = new FormView(labels, "Add user");
+
+
         return view;
     }
     public static FormView generateFormBook() {

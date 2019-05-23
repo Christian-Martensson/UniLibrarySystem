@@ -4,10 +4,7 @@ import Controller.FormControllers.FormBookController;
 import Controller.FormControllers.FormMagazineController;
 import Controller.FormControllers.FormMovieController;
 import Controller.FormControllers.FormUserController;
-import Models.Entities.BookModel;
-import Models.Entities.MagazineModel;
-import Models.Entities.MovieModel;
-import Models.Entities.UserModel;
+import Models.Entities.*;
 import Models.SearchModel;
 import UI.UI_Components.ScrollPanel;
 import UI.Views.*;
@@ -122,12 +119,12 @@ public class MainController {
                         int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
                         MovieModel movie = model.getMovieWith(value);
                         LoanConfirmationView loanConfirmationView = new LoanConfirmationView(movie);
+                        LoanConfirmationController loanConfirmationController = new LoanConfirmationController(loanConfirmationView, movie);
 
                         break;
                     }
                     case "Magazine": {
-                        int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
-                        MagazineModel magazine = model.getMagazineWith(value);
+                        ErrorMessageView error = new ErrorMessageView("You can not loan a magazine.");
                         break;
                     }
                     case "User": {

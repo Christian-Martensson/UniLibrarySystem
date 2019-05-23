@@ -1,7 +1,6 @@
 package UI.Views;
 
 import UI.UI_Components.BottomToolbar;
-import UI.UI_Components.FormPanel;
 import UI.UI_Components.ScrollPanel;
 import UI.UI_Components.Toolbar;
 

@@ -1,6 +1,5 @@
 package Models.Entities;
 
-import Controller.MainController;
 import Models.DatabaseDriver;
 
 import java.sql.*;
@@ -11,12 +10,11 @@ public class MovieModel extends Article implements DatabaseActions {
     private int minimumAge;
 
 
-    public MovieModel(int movieId, int minimumAge, String articleType,
+    public MovieModel(int movieId, int minimumAge,
                       String title, String publicationYear, String genre,
                       String producer) {
         this.movieId = movieId;
         this.minimumAge = minimumAge;
-        super.articleType = articleType;
         super.title = title;
         super.publicationYear = publicationYear;
         super.genre = genre;
@@ -119,7 +117,7 @@ public class MovieModel extends Article implements DatabaseActions {
             connection = driver.createConnection();
 
             // 2. Create a statement
-            String sqlQuery = "CALL spCreateNewLoan(?, ?)";
+            String sqlQuery = "CALL spCreateNewLoanMovie(?, ?)";
             CallableStatement statement = connection.prepareCall(sqlQuery);
             statement.setInt(1, barcodeId);
             statement.setInt(2, userId);
@@ -130,6 +128,14 @@ public class MovieModel extends Article implements DatabaseActions {
         catch (Exception e) {
             e.printStackTrace();
         }
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+        System.out.println(barcodeId);
     }
 
     public int getAvailableBarcode() {
@@ -144,9 +150,9 @@ public class MovieModel extends Article implements DatabaseActions {
 
             // 2. Create a statement
             // previous: "SELECT * FROM Book WHERE Match(title) Against(?)"
-            String sqlQuery = "SELECT * FROM Movie\n" +
+            String sqlQuery = "SELECT * FROM Barcode\n" +
                     "WHERE movieId = ?\n" +
-                    "AND available = 1; ";
+                    "AND isAvailable = 1; ";
             PreparedStatement statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, this.movieId);
 
@@ -161,6 +167,13 @@ public class MovieModel extends Article implements DatabaseActions {
 
         catch (Exception e) {
             e.printStackTrace();
+        }
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
         }
         return barcode;
     }

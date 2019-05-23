@@ -1,7 +1,7 @@
 package Models.Entities;
 
-import Controller.MainController;
 import Models.DatabaseDriver;
+import UI.Views.ErrorMessageView;
 
 import java.sql.*;
 
@@ -45,7 +45,7 @@ public class BookModel extends Article implements DatabaseActions {
             //Catch exceptions
         } catch (Exception e) {
             e.printStackTrace();
-
+            ErrorMessageView error = new ErrorMessageView("Error!");
         }
 
         finally{
@@ -85,6 +85,7 @@ public class BookModel extends Article implements DatabaseActions {
                     isAvailable = true;
                 }
             }
+
         }
 
         catch (Exception e) {
@@ -124,6 +125,13 @@ public class BookModel extends Article implements DatabaseActions {
         catch (Exception e) {
             e.printStackTrace();
         }
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
     }
 
     public int getAvailableBarcode() {
@@ -140,7 +148,7 @@ public class BookModel extends Article implements DatabaseActions {
             // previous: "SELECT * FROM Book WHERE Match(title) Against(?)"
             String sqlQuery = "SELECT * FROM Barcode\n" +
                     "WHERE isbn = ?\n" +
-                    "AND available = 1; ";
+                    "AND isAvailable = 1; ";
             PreparedStatement statement = connection.prepareStatement(sqlQuery);
             statement.setString(1, this.isbn);
 
@@ -155,6 +163,13 @@ public class BookModel extends Article implements DatabaseActions {
 
         catch (Exception e) {
             e.printStackTrace();
+        }
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
         }
         return barcode;
     }
