@@ -18,7 +18,7 @@ public class MainController {
     private SearchModel model;
 
     public static boolean loggedIn = false;
-    public static String searchAlternative;
+    public static String searchAlternativeWhenPressed;
     public static String addItemAlternative;
     public static UserModel loggedInUser;
 
@@ -42,9 +42,9 @@ public class MainController {
         public void actionPerformed(ActionEvent e) {
 
             String searchWord = view.getToolbar().getTextField().getText();
-            searchAlternative = view.getToolbar().getSearchAlternativesDropdown().getSelectedItem().toString();
+            searchAlternativeWhenPressed = view.getToolbar().getSearchAlternativesDropdown().getSelectedItem().toString();
 
-            switch (searchAlternative) {
+            switch (searchAlternativeWhenPressed) {
                 case "Book": {
                     model.searchBook(searchWord);
 
@@ -107,7 +107,7 @@ public class MainController {
                 int row = ScrollPanel.getTable().getSelectedRow();
                 int column = 0;
 
-                switch (searchAlternative) {
+                switch (searchAlternativeWhenPressed) {
                     case "Book": {
                         String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
                         BookModel book = model.getBookWith(valueIsbn);
@@ -173,6 +173,44 @@ public class MainController {
     class RemoveButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if(ScrollPanel.getTable().getSelectionModel().isSelectionEmpty()) {
+                ErrorMessageView error = new ErrorMessageView("You must select an item to loan!");
+            }
+            else {
+                int row = ScrollPanel.getTable().getSelectedRow();
+                int column = 0;
+
+                switch (searchAlternativeWhenPressed) {
+                    case "Book": {
+                        String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
+                        BookModel book = model.getBookWith(valueIsbn);
+
+                        LoanConfirmationView loanConfirmationView = new LoanConfirmationView(book);
+                        LoanConfirmationController loanConfirmationController = new LoanConfirmationController(loanConfirmationView, book);
+                        break;
+                    }
+                    case "Movie": {
+                        int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
+                        MovieModel movie = model.getMovieWith(value);
+                        LoanConfirmationView loanConfirmationView = new LoanConfirmationView(movie);
+                        LoanConfirmationController loanConfirmationController = new LoanConfirmationController(loanConfirmationView, movie);
+
+                        break;
+                    }
+                    case "Magazine": {
+                        ErrorMessageView error = new ErrorMessageView("You can not loan a magazine.");
+                        break;
+                    }
+                    case "User": {
+                        ErrorMessageView error = new ErrorMessageView("You can not loan a user.");
+                        break;
+                    }
+                }
+
+
+
+
+            }
 
         }
     }
@@ -182,7 +220,8 @@ public class MainController {
         public void actionPerformed(ActionEvent e) {
             ArrayList<LoanModel> listOfLoans = LoanModel.fetchOverdueLoansFromDBfor();
             JTable table = SearchModel.converListOfLoansToTable(listOfLoans);
-            view.getScrollPanel().appendSearchResult(table);
+            OverdueItemsView view = new OverdueItemsView(table);
+
         }
     }
 
