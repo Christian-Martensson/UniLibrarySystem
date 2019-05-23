@@ -32,7 +32,6 @@ public class MainController {
         this.view.getToolbar().addLoginButtonListener(new LoginButtonListener());
         this.view.getToolbar().addSearchButtonListener(new SearchButtonListener());
         this.view.getBottomToolBar().addLoanButtonListener(new LoanButtonListener());
-        this.view.getBottomToolBar().addReserveButtonListener(new ReserveButtonListener());
         this.view.getBottomToolBar().addEditButtonListener(new EditButtonListener());
         this.view.getBottomToolBar().addRemoveButtonListener(new RemoveButtonListener());
         this.view.getBottomToolBar().addOverdueItemsButtonListener(new OverdueItemsButtonListener());
@@ -135,35 +134,12 @@ public class MainController {
                         break;
                     }
                 }
-
-
-
-
             }
+
+
         }
     }
 
-    class ReserveButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            if(ScrollPanel.getTable().getSelectionModel().isSelectionEmpty()) {
-                ErrorMessageView error = new ErrorMessageView("You must select an item to loan!");
-            }
-            else {
-
-                int row = ScrollPanel.getTable().getSelectedRow();
-                int column = 0;
-                String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
-                BookModel book = model.getBookWith(valueIsbn);
-
-                ReservationConfirmationView reservationConfirmationView = new ReservationConfirmationView(book);
-                ReservationConfirmationController reservationConfirmationController = new ReservationConfirmationController(reservationConfirmationView, book);
-
-            }
-
-        }
-    }
 
     class EditButtonListener implements ActionListener {
         @Override
@@ -258,7 +234,7 @@ public class MainController {
     class OverdueItemsButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            ArrayList<LoanModel> listOfLoans = LoanModel.fetchOverdueLoansFromDBfor();
+            ArrayList<LoanModel> listOfLoans = LoanModel.fetchOverdueLoansFromDb();
             JTable table = SearchModel.converListOfLoansToTable(listOfLoans);
             OverdueItemsView view = new OverdueItemsView(table);
         }

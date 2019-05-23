@@ -50,10 +50,10 @@ public class LoanModel {
 
             // 4. Process the result set
             while (resultSet.next()) {
-                int loanId = resultSet.getInt("loanId");
+                int loanId = resultSet.getInt("reserverationId");
                 int userId = resultSet.getInt("userId");
                 int barcodeId = resultSet.getInt("barcodeId");
-                Date dateOfLoan = resultSet.getDate("dateOfLoan");
+                Date dateOfLoan = resultSet.getDate("dateOfReservation");
                 Date dateOfReturn = resultSet.getDate("dateOfReturn");
                 Date dueDate = resultSet.getDate("dueDate");
                 int nrRenewals = resultSet.getInt("nrRenewals");
@@ -75,7 +75,7 @@ public class LoanModel {
         return listOfLoans;
     }
 
-    public static ArrayList<LoanModel> fetchOverdueLoansFromDBfor() {
+    public static ArrayList<LoanModel> fetchOverdueLoansFromDb() {
         ArrayList<LoanModel> listOfLoans = new ArrayList<>();
 
         Connection connection = null;
@@ -96,10 +96,10 @@ public class LoanModel {
 
             // 4. Process the result set
             while (resultSet.next()) {
-                int loanId = resultSet.getInt("loanId");
+                int loanId = resultSet.getInt("reserverationId");
                 int userId = resultSet.getInt("userId");
                 int barcodeId = resultSet.getInt("barcodeId");
-                Date dateOfLoan = resultSet.getDate("dateOfLoan");
+                Date dateOfLoan = resultSet.getDate("dateOfReservation");
                 Date dateOfReturn = resultSet.getDate("dateOfReturn");
                 Date dueDate = resultSet.getDate("dueDate");
                 int nrRenewals = resultSet.getInt("nrRenewals");
@@ -152,10 +152,10 @@ public class LoanModel {
     @Override
     public String toString() {
         return "LoanModel{" +
-                "loanId=" + loanId +
+                "reserverationId=" + loanId +
                 ", userId=" + userId +
                 ", barcodeId=" + barcodeId +
-                ", dateOfLoan=" + dateOfLoan +
+                ", dateOfReservation=" + dateOfLoan +
                 ", dateOfReturn=" + dateOfReturn +
                 ", dueDate=" + dueDate +
                 ", nrRenewals=" + nrRenewals +

@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
 
 public class BottomToolbar extends JPanel {
     private JButton loanButton;
-    private JButton reserveButton;
+    private JButton myLoansButton;
+    private JButton overdueItemsButton;
     private JButton editSelectedItemButton;
     private JButton removeSelectedItemButton;
-    private JButton overdueItemsButton;
     private JButton addButton;
 
     private JComboBox<String> addAlternativesDropdown;
@@ -19,10 +19,10 @@ public class BottomToolbar extends JPanel {
         setBorder(BorderFactory.createEtchedBorder());
 
         loanButton = new JButton("Loan");
-        reserveButton = new JButton("Reserve");
+        myLoansButton = new JButton("My loans");
+        overdueItemsButton = new JButton("See overdue items");
         editSelectedItemButton = new JButton("Edit");
         removeSelectedItemButton = new JButton("Remove");
-        overdueItemsButton = new JButton("See overdue items");
         addButton = new JButton("Add");
 
         addAlternativesDropdown = new JComboBox<>();
@@ -34,20 +34,16 @@ public class BottomToolbar extends JPanel {
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
         add(loanButton);
-        add(reserveButton);
+        add(myLoansButton);
+        add(overdueItemsButton);
         add(editSelectedItemButton);
         add(removeSelectedItemButton);
-        add(overdueItemsButton);
         add(addButton);
         add(addAlternativesDropdown);
     }
 
     public void addLoanButtonListener (ActionListener listener) {
         loanButton.addActionListener(listener);
-    }
-
-    public void addReserveButtonListener (ActionListener listener) {
-        reserveButton.addActionListener(listener);
     }
 
     public void addEditButtonListener(ActionListener listener) {
@@ -67,10 +63,6 @@ public class BottomToolbar extends JPanel {
 
     public JButton getLoanButton() {
         return loanButton;
-    }
-
-    public JButton getReserveButton() {
-        return reserveButton;
     }
 
     public JButton getEditSelectedItemButton() {
