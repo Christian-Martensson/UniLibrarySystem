@@ -1,7 +1,7 @@
 package Models.Entities;
 
 import Models.DatabaseDriver;
-import UI.Views.ErrorMessageView;
+import UI.Views.MessageView;
 
 import java.sql.*;
 
@@ -47,7 +47,9 @@ public class BookModel extends Article {
             //Catch exceptions
         } catch (Exception e) {
             e.printStackTrace();
-            ErrorMessageView error = new ErrorMessageView("Error!");
+            String text = "Error! \n" +"One of the fields probably contains the wrong datatype."+
+                    "\nRemember that the article type must be Normal or CourseLit.\nYear must be written with numbers.";
+            MessageView error = new MessageView(text);
         }
 
         finally{
@@ -83,7 +85,6 @@ public class BookModel extends Article {
             //Catch exceptions
         } catch (Exception e) {
             e.printStackTrace();
-            ErrorMessageView error = new ErrorMessageView("Error!");
         }
 
         finally{
@@ -115,7 +116,7 @@ public class BookModel extends Article {
             //Catch exceptions
         } catch (Exception e) {
             e.printStackTrace();
-            ErrorMessageView error = new ErrorMessageView("Error!");
+            MessageView error = new MessageView("Error!");
         }
 
         finally{
@@ -154,7 +155,7 @@ public class BookModel extends Article {
             //Catch exceptions
         } catch (Exception e) {
             e.printStackTrace();
-            ErrorMessageView error = new ErrorMessageView("Error!");
+            MessageView error = new MessageView("Error!");
         }
 
         finally{

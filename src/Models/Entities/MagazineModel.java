@@ -1,7 +1,7 @@
 package Models.Entities;
 
 import Models.DatabaseDriver;
-import UI.Views.ErrorMessageView;
+import UI.Views.MessageView;
 
 import java.sql.*;
 import java.util.Date;
@@ -84,7 +84,7 @@ public class MagazineModel extends Article {
             //Catch exceptions
         } catch (Exception e) {
             e.printStackTrace();
-            ErrorMessageView error = new ErrorMessageView("Error!");
+            MessageView error = new MessageView("Error!");
         }
 
         finally{
@@ -116,7 +116,7 @@ public class MagazineModel extends Article {
             //Catch exceptions
         } catch (Exception e) {
             e.printStackTrace();
-            ErrorMessageView error = new ErrorMessageView("Error!");
+            MessageView error = new MessageView("Error!");
         }
 
         finally{
@@ -153,7 +153,7 @@ public class MagazineModel extends Article {
             //Catch exceptions
         } catch (Exception e) {
             e.printStackTrace();
-            ErrorMessageView error = new ErrorMessageView("Error!");
+            MessageView error = new MessageView("Error!");
         }
 
         finally{

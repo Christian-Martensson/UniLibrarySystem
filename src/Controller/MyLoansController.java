@@ -1,9 +1,7 @@
 package Controller;
 
-import Models.Entities.BookModel;
 import Models.Entities.LoanModel;
-import UI.UI_Components.ScrollPanel;
-import UI.Views.ErrorMessageView;
+import UI.Views.MessageView;
 import UI.Views.MyLoansView;
 
 import java.awt.event.ActionEvent;
@@ -26,7 +24,7 @@ public class MyLoansController {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(view.getTable().getSelectionModel().isSelectionEmpty()) {
-                ErrorMessageView error = new ErrorMessageView("You must select an item to return!");
+                MessageView error = new MessageView("You must select an item to return!");
             }
             else {
                 int row = view.getTable().getSelectedRow();

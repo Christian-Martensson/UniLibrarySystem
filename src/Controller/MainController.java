@@ -103,7 +103,7 @@ public class MainController {
         public void actionPerformed(ActionEvent e) {
 
             if(ScrollPanel.getTable().getSelectionModel().isSelectionEmpty()) {
-                ErrorMessageView error = new ErrorMessageView("You must select an item to loan!");
+                MessageView error = new MessageView("You must select an item to loan!");
             }
             else {
                 int row = ScrollPanel.getTable().getSelectedRow();
@@ -127,11 +127,11 @@ public class MainController {
                         break;
                     }
                     case "Magazine": {
-                        ErrorMessageView error = new ErrorMessageView("You can not loan a magazine.");
+                        MessageView error = new MessageView("You can not loan a magazine.");
                         break;
                     }
                     case "User": {
-                        ErrorMessageView error = new ErrorMessageView("You can not loan a user.");
+                        MessageView error = new MessageView("You can not loan a user.");
                         break;
                     }
                 }
@@ -157,7 +157,7 @@ public class MainController {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(ScrollPanel.getTable().getSelectionModel().isSelectionEmpty()) {
-                ErrorMessageView error = new ErrorMessageView("You must select an item to edit!");
+                MessageView error = new MessageView("You must select an item to edit!");
             }
             else {
                 int row = ScrollPanel.getTable().getSelectedRow();
@@ -205,7 +205,7 @@ public class MainController {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(ScrollPanel.getTable().getSelectionModel().isSelectionEmpty()) {
-                ErrorMessageView error = new ErrorMessageView("You must select an item to remove!");
+                MessageView error = new MessageView("You must select an item to remove!");
             }
             else {
                 int row = ScrollPanel.getTable().getSelectedRow();
@@ -238,7 +238,7 @@ public class MainController {
                         break;
                     }
                 }
-                ErrorMessageView error = new ErrorMessageView("Item sucessfully removed from db");
+                MessageView error = new MessageView("Item sucessfully removed from db");
             }
         }
     }

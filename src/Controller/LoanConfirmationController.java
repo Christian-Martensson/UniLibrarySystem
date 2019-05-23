@@ -2,7 +2,7 @@ package Controller;
 
 import Models.Entities.Article;
 import Models.Entities.LoanModel;
-import UI.Views.ErrorMessageView;
+import UI.Views.MessageView;
 import UI.Views.LoanConfirmationView;
 import UI.Views.LoanReceiptView;
 
@@ -36,7 +36,7 @@ public class LoanConfirmationController {
             }
 
             else {
-                ErrorMessageView error = new ErrorMessageView("This book is not available");
+                MessageView error = new MessageView("This book is not available");
             }
 
             view.dispose();
