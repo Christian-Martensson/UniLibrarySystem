@@ -11,6 +11,7 @@ import UI.Views.*;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class MainController {
     private static MainView view;
@@ -179,7 +180,9 @@ public class MainController {
     class OverdueItemsButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            ArrayList<LoanModel> listOfLoans = LoanModel.fetchOverdueLoansFromDBfor();
+            JTable table = SearchModel.converListOfLoansToTable(listOfLoans);
+            view.getScrollPanel().appendSearchResult(table);
         }
     }
 

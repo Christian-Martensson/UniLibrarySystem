@@ -1,9 +1,6 @@
 package Models;
 
-import Models.Entities.BookModel;
-import Models.Entities.MagazineModel;
-import Models.Entities.UserModel;
-import Models.Entities.MovieModel;
+import Models.Entities.*;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -77,6 +74,34 @@ public class SearchModel {
             data[i][3] = publisher;
             data[i][4] = publicationDate;
             data[i][5] = genre;
+        }
+        return new JTable(data, columnNames);
+    }
+
+    public static JTable converListOfLoansToTable(ArrayList<LoanModel> listOfLoans) {
+        String[] columnNames = new String[5];
+        Object[][] data = new Object[listOfLoans.size()][5];
+
+        columnNames[0] = "Loan ID";
+        columnNames[1] = "User ID";
+        columnNames[2] = "Barcode ID";
+        columnNames[3] = "Date of loan";
+        columnNames[4] = "Due date";
+
+
+        for (int i = 0; i < listOfLoans.size(); i++) {
+            int loanId = listOfLoans.get(i).getLoanId();
+            int userId = listOfLoans.get(i).getUserId();
+            int barcodeId = listOfLoans.get(i).getBarcodeId();
+            Date dateOfLoan = listOfLoans.get(i).getDateOfLoan();
+            Date dueDate = listOfLoans.get(i).getDueDate();
+
+
+            data[i][0] = loanId;
+            data[i][1] = userId;
+            data[i][2] = barcodeId;
+            data[i][3] = dateOfLoan;
+            data[i][4] = dueDate;
         }
         return new JTable(data, columnNames);
     }
