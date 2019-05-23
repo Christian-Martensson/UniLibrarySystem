@@ -1,12 +1,16 @@
 package Controller;
 
 import Models.Entities.Article;
+import Models.Entities.LoanModel;
 import UI.Views.ErrorMessageView;
 import UI.Views.LoanConfirmationView;
 import UI.Views.LoanReceiptView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LoanConfirmationController {
     private LoanConfirmationView view;
@@ -28,7 +32,7 @@ public class LoanConfirmationController {
                 int userId = MainController.loggedInUser.getUserId();
                 int barcodeId = article.getAvailableBarcode();
                 article.createLoan(barcodeId, userId);
-                LoanReceiptView view = new LoanReceiptView(article);
+                LoanReceiptView view = new LoanReceiptView(article, generateText(barcodeId));
             }
 
             else {
@@ -38,6 +42,25 @@ public class LoanConfirmationController {
             view.dispose();
         }
     }
+    public String generateText(int barcodeId) {
+        String text;
+        LoanModel loan = LoanModel.fetchLoansFromDbFor(barcodeId);
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+
+
+        text = "-- RECEIPT LOAN --\n" +
+                "\nDate: " +  dateFormat.format(date) +
+                "\nTitle: " + article.getTitle() +
+                "\nLoan ID: " + loan.getLoanId() +
+                "\nDue date: " + loan.getDueDate().toString() +
+                "\n -- WELCOME BACK! --";
+
+        return text;
+    }
+
+
 }
 
 
