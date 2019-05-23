@@ -31,6 +31,7 @@ public class BookModel extends Article {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO Book (isbn, articleType, title, publisher , publicationYear, genre, creator) " +
                             "VALUES (?, ?, ?, ?, ?, ?, ?); ");
+
             statement.setString(1, this.isbn);
             statement.setString(2, this.articleType);
             statement.setString(3, this.title);
@@ -41,6 +42,42 @@ public class BookModel extends Article {
 
             // 3. Execute SQL query
             statement.executeUpdate();
+
+
+            //Catch exceptions
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorMessageView error = new ErrorMessageView("Error!");
+        }
+
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void addBarcodesInDb(int number) {
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+            for(int i = 0; i < number; i++) {
+                // 2. Create a statement
+                PreparedStatement statement = connection.prepareStatement(
+                        "INSERT INTO Barcode (isbn, goneMissing, isAvailable) " +
+                                "VALUES (?, ?, ?);");
+                statement.setString(1, this.isbn);
+                statement.setInt(2, 1);
+                statement.setInt(3, 1);
+
+                // 3. Execute SQL query
+                statement.executeUpdate();
+            }
 
 
             //Catch exceptions
@@ -128,6 +165,7 @@ public class BookModel extends Article {
             }
         }
     }
+
 
     @Override
     public boolean checkAvailabilityInDb() {

@@ -16,6 +16,8 @@ public abstract class Article {
 
     public abstract void createLoan(int barcodeId, int userId);
 
+    public abstract void addBarcodesInDb(int number);
+
     public abstract int getAvailableBarcode();
 
     public String getArticleType() {

@@ -3,6 +3,7 @@ package Controller;
 import Models.Entities.Article;
 import UI.Views.ErrorMessageView;
 import UI.Views.LoanConfirmationView;
+import UI.Views.LoanReceiptView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +28,7 @@ public class LoanConfirmationController {
                 int userId = MainController.loggedInUser.getUserId();
                 int barcodeId = article.getAvailableBarcode();
                 article.createLoan(barcodeId, userId);
+                LoanReceiptView view = new LoanReceiptView(article);
             }
 
             else {

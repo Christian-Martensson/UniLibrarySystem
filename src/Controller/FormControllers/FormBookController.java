@@ -37,6 +37,7 @@ public class FormBookController {
 
             if(option == ADDING) {
                 bookModel.insertIntoDb();
+                bookModel.addBarcodesInDb(1);
             }
 
             else if (option == EDITING) {

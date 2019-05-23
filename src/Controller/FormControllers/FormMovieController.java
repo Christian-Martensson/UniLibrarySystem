@@ -34,6 +34,7 @@ public class FormMovieController {
                 String genre = view.getText(3);
                 movieModel = new MovieModel(0, 18, title, publicationYear, genre, producer);
                 movieModel.insertIntoDb();
+                movieModel.addBarcodesInDb(1);
             }
             if (option == EDITING) {
                 int movieId = Integer.parseInt(view.getText(0));
