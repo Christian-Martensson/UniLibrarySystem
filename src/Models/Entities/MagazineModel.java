@@ -10,9 +10,9 @@ public class MagazineModel extends Article {
     private int magazineId;
     private int magazineNr;
     private String publisher;
-    private Date publicationDate;
+    private String publicationDate;
 
-    public MagazineModel(int magazineId, int magazineNr, String publisher, Date publicationDate, String title, String genre) {
+    public MagazineModel(int magazineId, int magazineNr, String publisher, String publicationDate, String title, String genre) {
         this.magazineId = magazineId;
         this.magazineNr = magazineNr;
         this.publisher = publisher;
@@ -24,7 +24,7 @@ public class MagazineModel extends Article {
     @Override
     public void insertIntoDb() {
         Connection connection = null;
-        java.sql.Date sqlDate = new java.sql.Date(this.publicationDate.getTime());
+        System.out.println(this.publicationDate);
 
         try {
             // 1. Get a connection to the database
@@ -39,7 +39,7 @@ public class MagazineModel extends Article {
             statement.setInt(2, this.magazineNr);
             statement.setString(3, this.publisher);
             statement.setString(4, this.genre);
-            statement.setDate(5, sqlDate);
+            statement.setString(5, this.publicationDate);
 
 
             // 3. Execute SQL query
@@ -73,6 +73,43 @@ public class MagazineModel extends Article {
             PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM Magazine WHERE magazineId = ?;" );
             statement.setInt(1, this.magazineId);
+
+            // 3. Execute SQL query
+            statement.executeUpdate();
+
+
+            //Catch exceptions
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorMessageView error = new ErrorMessageView("Error!");
+        }
+
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    public void updateInDb() {
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE Magazine SET  title = ?, magazineNr = ?, publisher = ?, genre = ?, publicationDate = ?" +
+                            "WHERE magazineId = ?;");
+            statement.setString(1, this.title);
+            statement.setInt(2, this.magazineNr);
+            statement.setString(3, this.publisher);
+            statement.setString(4, this.genre);
+            statement.setString(5, this.publicationDate);
+            statement.setInt(6, this.magazineId);
 
             // 3. Execute SQL query
             statement.executeUpdate();
@@ -213,9 +250,7 @@ public class MagazineModel extends Article {
         return publisher;
     }
 
-    public Date getPublicationDate() {
+    public String getPublicationDate() {
         return publicationDate;
     }
-
-
 }

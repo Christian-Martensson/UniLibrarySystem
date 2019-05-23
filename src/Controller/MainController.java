@@ -21,6 +21,9 @@ public class MainController {
     public static String searchAlternativeWhenSearchWasExecuted;
     public static String addItemAlternative;
     public static UserModel loggedInUser;
+    public final int ADD = 1;
+    public final int EDIT = 2;
+
 
     public MainController(MainView mainView, SearchModel searchModel) {
         this.view = mainView;
@@ -178,25 +181,31 @@ public class MainController {
                         BookModel book = model.getBookWith(valueIsbn);
                         FormView formV = FormView.generateFormBook("Edit book");
                         formV.fillFieldsWith(book);
-                        FormBookController formC = new FormBookController(formV, 2);
+                        FormBookController formC = new FormBookController(formV, EDIT);
                         break;
                     }
                     case "Movie": {
                         int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
                         MovieModel movie = model.getMovieWith(value);
-                        movie.removeFromDb();
+                        FormView formV = FormView.generateFormEditMovie("Edit movie");
+                        formV.fillFieldsWith(movie);
+                        FormMovieController formC = new FormMovieController(formV, EDIT);
                         break;
                     }
                     case "Magazine": {
                         int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
                         MagazineModel magazine = model.getMagazineWith(value);
-                        magazine.removeFromDb();
+                        FormView formV = FormView.generateFormEditMagazine("Edit magazine");
+                        formV.fillFieldsWith(magazine);
+                        FormMagazineController formC = new FormMagazineController(formV, EDIT);
                         break;
                     }
                     case "User": {
                         int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
                         UserModel user = model.getUserWith(value);
-                        user.removeFromDb();
+                        FormView formV = FormView.generateFormEditUser("Edit user");
+                        formV.fillFieldsWith(user);
+                        FormUserController formC = new FormUserController(formV, EDIT);
                         break;
                     }
                 }
@@ -264,22 +273,22 @@ public class MainController {
             switch (addItemAlternative) {
                 case "Book": {
                     FormView formV = FormView.generateFormBook("Add book");
-                    FormBookController formC = new FormBookController(formV, 1);
+                    FormBookController formC = new FormBookController(formV, ADD);
                     break;
                 }
                 case "Movie": {
                     FormView formV = FormView.generateFormMovie("Add movie");
-                    FormMovieController formC = new FormMovieController(formV);
+                    FormMovieController formC = new FormMovieController(formV, ADD);
                     break;
                 }
                 case "Magazine": {
                     FormView formV = FormView.generateFormMagazine("Add magazine");
-                    FormMagazineController formC = new FormMagazineController(formV);
+                    FormMagazineController formC = new FormMagazineController(formV, ADD);
                     break;
                 }
                 case "User": {
                     FormView formV = FormView.generateFormUser("Add user");
-                    FormUserController formC = new FormUserController(formV);
+                    FormUserController formC = new FormUserController(formV,ADD);
                     break;
                 }
             }

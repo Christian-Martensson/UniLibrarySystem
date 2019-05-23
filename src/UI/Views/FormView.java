@@ -1,6 +1,9 @@
 package UI.Views;
 
 import Models.Entities.BookModel;
+import Models.Entities.MagazineModel;
+import Models.Entities.MovieModel;
+import Models.Entities.UserModel;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -23,7 +26,7 @@ public class FormView extends JFrame {
 
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout());
-        JPanel labelPanel = new JPanel(new GridLayout(labels.length + 1, 1));
+        JPanel labelPanel = new JPanel(new GridLayout(labels.length +1 , 1));
         JPanel fieldPanel = new JPanel(new GridLayout(labels.length + 1, 1));
         contentPane.add(labelPanel, BorderLayout.WEST);
         contentPane.add(fieldPanel, BorderLayout.CENTER);
@@ -62,6 +65,15 @@ public class FormView extends JFrame {
 
         FormView view = new FormView(labels, buttonText);
 
+        return view;
+    }
+
+    public static FormView generateFormEditUser(String buttonText) {
+        String[] labels = { "User ID", "First Name:", "Last Name: ", "Personal ID:", "User Type:",
+                "Street:", "Zip code:", "City:", "Country:", "Telephone:", "Mail:",
+                "Username:", "Password:"};
+
+        FormView view = new FormView(labels, buttonText);
 
         return view;
     }
@@ -82,9 +94,23 @@ public class FormView extends JFrame {
         return view;
     }
 
+    public static FormView generateFormEditMagazine(String buttonText) {
+        String[] labels = { "Magazine ID", "Magazine number:", "Title:", "Publisher:", "Publication date:",
+                "Genre:"};
+
+        FormView view = new FormView(labels, buttonText);
+        return view;
+    }
+
     public static FormView generateFormMovie(String buttonText) {
-        String[] labels = { "Title:", "Publication Year", "Producer:", "Genre:",
-                "Article Type:"};
+        String[] labels = { "Title:", "Publication Year", "Producer:", "Genre:"};
+
+        FormView view = new FormView(labels, buttonText);
+        return view;
+    }
+
+    public static FormView generateFormEditMovie(String buttonText) {
+        String[] labels = { "Movie ID", "Title:", "Publication Year", "Producer:", "Genre:"};
 
         FormView view = new FormView(labels, buttonText);
         return view;
@@ -99,13 +125,51 @@ public class FormView extends JFrame {
         this.setText(5, book.getGenre());
         this.setText(6, book.getCreator());
         textFields[0].setEditable(false);
-
+    }
+    public void fillFieldsWith(MovieModel movie) {
+        this.setText(0, Integer.toString(movie.getMovieId()));
+        this.setText(1, movie.getTitle());
+        this.setText(2, movie.getPublicationYear());
+        this.setText(3, movie.getCreator());
+        this.setText(4, movie.getGenre());
+        textFields[0].setEditable(false);
+    }
+    public void fillFieldsWith(MagazineModel magazine) {
+        this.setText(0, Integer.toString(magazine.getMagazineId()));
+        this.setText(1, Integer.toString(magazine.getMagazineNr()));
+        this.setText(2, magazine.getTitle());
+        this.setText(3, magazine.getPublisher());
+        this.setText(4, magazine.getPublicationDate().toString());
+        this.setText(5, magazine.getGenre());
+        textFields[0].setEditable(false);
+    }
+    public void fillFieldsWith(UserModel user) {
+        this.setText(0, Integer.toString(user.getUserId()));
+        this.setText(1, user.getFirstName());
+        this.setText(2, user.getLastName());
+        this.setText(3, user.getPersonalId());
+        this.setText(4, user.getUserType());
+        this.setText(5, "");
+        this.setText(6, "");
+        this.setText(7, "");
+        this.setText(8, "");
+        this.setText(9, "");
+        this.setText(10, "");
+        this.setText(11, user.getUsername());
+        this.setText(12, user.getPassword());
+        textFields[0].setEditable(false);
+        textFields[11].setEditable(false);
     }
 
     //GetText
     public String getText(int i) {
         return (textFields[i].getText());
     }
+
+    public JButton getSubmitButton() {
+        return submitButton;
+    }
+
     public void setText(int i, String text) {
         textFields[i].setText(text);
     }
