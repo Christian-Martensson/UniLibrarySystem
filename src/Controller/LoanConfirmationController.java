@@ -1,6 +1,6 @@
 package Controller;
 
-import Models.Entities.BookModel;
+import Models.Entities.Article;
 import Models.Entities.LoanModel;
 import UI.Views.ErrorMessageView;
 import UI.Views.LoanConfirmationView;
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 
 public class LoanConfirmationController {
     private LoanConfirmationView view;
-    private BookModel book;
+    private Article article;
 
-    public LoanConfirmationController(LoanConfirmationView view, BookModel book) {
+    public LoanConfirmationController(LoanConfirmationView view, Article article) {
         this.view = view;
-        this.book = book;
+        this.article = article;
         this.view.addConfirmationButtonListener(new ConfirmationButtonListener());
     }
 
@@ -23,13 +23,14 @@ public class LoanConfirmationController {
         @Override
         public void actionPerformed(ActionEvent e) {
             // check for availability in db.
-            if (true) {
-                LoanModel.generateLoan(book, MainController.loggedInUser);
-                ArrayList<LoanModel> listOfLoans = LoanModel.fetchLoansFromDBfor(MainController.loggedInUser);
-                for (LoanModel loan : listOfLoans) {
-                    System.out.println(loan.toString());
-                }
+            boolean isAvailable = article.checkAvailabilityInDb();
+
+            if (isAvailable) {
+                int userId = MainController.loggedInUser.getUserId();
+                int barcodeId = article.getAvailableBarcode();
+                article.createLoan(barcodeId, userId);
             }
+
             else {
                 ErrorMessageView error = new ErrorMessageView("This book is not available");
             }

@@ -1,7 +1,6 @@
 package Controller.FormControllers;
 
 import Models.Entities.BookModel;
-import Models.Entities.UserModel;
 import UI.Views.FormView;
 
 
@@ -10,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class FormBookController {
     FormView view;
-    UserModel userModel;
+    BookModel bookModel;
 
 
     public FormBookController(FormView formView) {
@@ -31,9 +30,9 @@ public class FormBookController {
             String genre = view.getText(5);
             String author = view.getText(6);
 
-            BookModel book = new BookModel(isbn, articleType, title, publisher, publicationYear, genre, author);
-            book.loadBookToDb();
-            System.out.println(book.toString());
+            bookModel = new BookModel(isbn, articleType, title, publisher, publicationYear, genre, author);
+            bookModel.loadToDb();
+            System.out.println(bookModel.toString());
 
         }
     }

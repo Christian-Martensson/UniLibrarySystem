@@ -1,7 +1,6 @@
 package Controller.FormControllers;
 
 import Models.Entities.MagazineModel;
-import Models.Entities.UserModel;
 import UI.Views.FormView;
 
 
@@ -11,7 +10,7 @@ import java.util.Date;
 
 public class FormMagazineController {
     FormView view;
-    UserModel userModel;
+    MagazineModel magazineModel;
 
 
     public FormMagazineController(FormView formView) {
@@ -29,8 +28,8 @@ public class FormMagazineController {
             String publisher = view.getText(2);
             Date publicationDate = MyConversionHelper.fromStringToDate(view.getText(3));
             String genre = view.getText(4);
-            MagazineModel magazineModel = new MagazineModel(0, magazineNr, publisher, publicationDate, title, genre);
-            magazineModel.loadMagazineToDb();
+            magazineModel = new MagazineModel(0, magazineNr, publisher, publicationDate, title, genre);
+            magazineModel.loadToDb();
 
         }
     }

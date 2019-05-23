@@ -50,8 +50,6 @@ public class LoanConfirmationView extends JFrame {
             buildIsbnLabel();
         }
 
-
-
     }
 
     private void buildIsbnLabel() {

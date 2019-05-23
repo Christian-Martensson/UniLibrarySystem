@@ -2,7 +2,6 @@ package Controller.FormControllers;
 
 
 import Models.Entities.MovieModel;
-import Models.Entities.UserModel;
 import UI.Views.FormView;
 
 
@@ -11,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class FormMovieController {
     FormView view;
-    UserModel userModel;
+    MovieModel movieModel;
 
 
     public FormMovieController(FormView formView) {
@@ -30,8 +29,8 @@ public class FormMovieController {
             String genre = view.getText(3);
             String articleType = view.getText(4);
 
-            MovieModel movie = new MovieModel(0, 18, articleType, title, publicationYear, genre, producer);
-            movie.loadMovieToDb();
+            movieModel = new MovieModel(0, 18, articleType, title, publicationYear, genre, producer);
+            movieModel.loadToDb();
 
         }
     }

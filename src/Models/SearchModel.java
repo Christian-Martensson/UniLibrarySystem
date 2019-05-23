@@ -175,7 +175,7 @@ public class SearchModel {
                 String genre = resultSet.getString("genre");
                 String publicationYear = resultSet.getString("publicationYear");
                 String author = resultSet.getString("c.fName") + " " + resultSet.getString("c.lName");
-                int availability = resultSet.getInt("availability");
+                int availability = resultSet.getInt("isAvailable");
 
                 BookModel book = new BookModel(isbn, articleType, title, publisher, publicationYear, genre, author);
                 listOfBooks.add(book);
@@ -221,7 +221,7 @@ public class SearchModel {
                 String genre = resultSet.getString("genre");
                 String publicationYear = resultSet.getString("publicationYear");
                 String producer = resultSet.getString("c.fName") + " " + resultSet.getString("c.lName");
-                int availability = resultSet.getInt("availability");
+                int availability = resultSet.getInt("isAvailable");
                 int minimumAge = resultSet.getInt("m.minimumAge");
 
                 MovieModel movie = new MovieModel(movieId, minimumAge, articleType, title, publicationYear, genre, producer);
