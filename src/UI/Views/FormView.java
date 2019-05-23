@@ -41,7 +41,7 @@ public class FormView extends JFrame {
             JLabel labelPosition = new JLabel(labels[i], JLabel.RIGHT);
             labelPosition.setLabelFor(textFields[i]);
 
-            //Panel position FlowLayout left
+            //Panel position with FlowLayout
             labelPanel.add(labelPosition);
             panelPosition = new JPanel(new FlowLayout(FlowLayout.LEFT));
             panelPosition.add(textFields[i]);
@@ -58,6 +58,7 @@ public class FormView extends JFrame {
         submitButton.addActionListener(listener);
     }
 
+    //Form for User
     public static FormView generateFormUser(String buttonText) {
         String[] labels = { "First Name:", "Last Name: ", "Personal ID:", "User Type:",
                 "Street:", "Zip code:", "City:", "Country:", "Telephone:", "Mail:",
@@ -68,6 +69,7 @@ public class FormView extends JFrame {
         return view;
     }
 
+    //Form for EditUser
     public static FormView generateFormEditUser(String buttonText) {
         String[] labels = { "User ID", "First Name:", "Last Name: ", "Personal ID:", "User Type:",
                 "Street:", "Zip code:", "City:", "Country:", "Telephone:", "Mail:",
@@ -78,6 +80,7 @@ public class FormView extends JFrame {
         return view;
     }
 
+    //Form for Book
     public static FormView generateFormBook(String buttonText) {
         String[] labels = { "ISBN:", "Title:", "Article type:", "Publisher:", "Publication year:",
         "Genre:", "Author:", };
@@ -86,6 +89,16 @@ public class FormView extends JFrame {
         return view;
     }
 
+    //Form for edit Book
+    public static FormView generateFormEditBook(String buttonText) {
+        String[] labels = {"ISBN:", "Title:", "Article type:", "Publisher:", "Publication year:",
+                "Genre:", "Author:",};
+
+        FormView view = new FormView(labels, buttonText);
+        return view;
+    }
+
+    //Form for new Magazine
     public static FormView generateFormMagazine(String buttonText) {
         String[] labels = { "Magazine number:", "Title:", "Publisher:", "Publication date:",
                 "Genre:"};
@@ -94,6 +107,7 @@ public class FormView extends JFrame {
         return view;
     }
 
+    //Form for edit Magazine
     public static FormView generateFormEditMagazine(String buttonText) {
         String[] labels = { "Magazine ID", "Magazine number:", "Title:", "Publisher:", "Publication date:",
                 "Genre:"};
@@ -102,6 +116,7 @@ public class FormView extends JFrame {
         return view;
     }
 
+    //Form for new Movie
     public static FormView generateFormMovie(String buttonText) {
         String[] labels = { "Title:", "Publication Year", "Producer:", "Genre:"};
 
@@ -109,6 +124,7 @@ public class FormView extends JFrame {
         return view;
     }
 
+    //Form for edit Movie
     public static FormView generateFormEditMovie(String buttonText) {
         String[] labels = { "Movie ID", "Title:", "Publication Year", "Producer:", "Genre:"};
 
@@ -161,7 +177,7 @@ public class FormView extends JFrame {
         textFields[11].setEditable(false);
     }
 
-    //GetText
+    //GetText in TextFields
     public String getText(int i) {
         return (textFields[i].getText());
     }
@@ -170,6 +186,7 @@ public class FormView extends JFrame {
         return submitButton;
     }
 
+    //SetText in TextFields
     public void setText(int i, String text) {
         textFields[i].setText(text);
     }

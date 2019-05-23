@@ -167,7 +167,7 @@ public class MainController {
                     case "Book": {
                         String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
                         BookModel book = model.getBookWith(valueIsbn);
-                        FormView formV = FormView.generateFormBook("Edit book");
+                        FormView formV = FormView.generateFormEditBook("Edit book");
                         formV.fillFieldsWith(book);
                         FormBookController formC = new FormBookController(formV, EDIT);
                         break;

@@ -14,21 +14,21 @@ public class MainView extends JFrame {
 	private Toolbar toolbar;
 	private BottomToolbar bottomToolBar;
 
-	
+	// Create Main View Frame
 	public MainView() {
 		super("Uni Library System");
-		
+
 		setLayout(new BorderLayout());
-		
+
 		toolbar = new Toolbar();
 		scrollPanel = new ScrollPanel();
 		bottomToolBar = new BottomToolbar();
-		
-		/*add(formPanel, BorderLayout.WEST);*/
+
+
 		add(toolbar, BorderLayout.NORTH);
 		add(scrollPanel, BorderLayout.CENTER);
 		add(bottomToolBar, BorderLayout.SOUTH);
-		
+
 		setSize(750, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

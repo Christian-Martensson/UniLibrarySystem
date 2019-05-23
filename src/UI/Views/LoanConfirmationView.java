@@ -10,20 +10,19 @@ import Models.Entities.MovieModel;
 
 public class LoanConfirmationView extends JFrame {
 
-    JLabel labelTitle;
-    JLabel labelIsbn;
-    JButton confirmationButton;
-    Article article;
-    Container contentPane;
+    private JLabel labelTitle;
+    private JLabel labelIsbn;
+    private JButton confirmationButton;
+    private Article article;
+    private Container contentPane;
 
     public LoanConfirmationView(Article article) {
         this.article = article;
         buildFrame();
     }
 
-
     public void buildFrame() {
-        //** Create Login Frame**//
+        //Create Loan Confirmation View
         setTitle("Loan confirmation");
         setSize(400,250);
         setLocation(600,300);
@@ -32,29 +31,25 @@ public class LoanConfirmationView extends JFrame {
         contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
-        //**Create Title Label**//
+        //Create Title Label
         labelTitle = new JLabel("Title: " + article.getTitle());
-        //lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12)); // Format of String
         labelTitle.setHorizontalAlignment(SwingConstants.LEFT);
         labelTitle.setBounds(10, 25, 250, 25);
         contentPane.add(labelTitle);
 
-        //**Create confirmation button**//
+        //Create Confirmation button
         confirmationButton = new JButton("Confirm loan");
-        //lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12)); // Format of String
         confirmationButton.setHorizontalAlignment(SwingConstants.CENTER);
         confirmationButton.setBounds(75, 180, 250, 25);
         contentPane.add(confirmationButton);
-
-
 
     }
 
     private void buildIsbnLabel() {
         BookModel book = (BookModel) article;
-        //**Create ISBN Label**//
+
+        //Create ISBN Label
         labelIsbn = new JLabel("ISBN: " + book.getIsbn());
-        //lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12)); // Format of String
         labelIsbn.setHorizontalAlignment(SwingConstants.LEFT);
         labelIsbn.setBounds(10, 52, 250, 25);
         contentPane.add(labelIsbn);

@@ -13,7 +13,8 @@ public class OverdueItemsView extends JFrame {
     public OverdueItemsView(JTable table) {
         table.setPreferredScrollableViewportSize(new Dimension(600,350));
         table.setFillsViewportHeight(true);
-        //** Create Login Frame**//
+
+        //Create New Pop Up View
         setTitle("Overdue items");
         setSize(650,450);
         setLocation(600,300);

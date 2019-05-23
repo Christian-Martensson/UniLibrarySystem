@@ -9,7 +9,7 @@ public class ErrorMessageView extends JFrame {
 
     public ErrorMessageView(String errorMessage) {
 
-        //** Create Login Frame**//
+        //Create Error Frame
         setTitle("Error!");
         setSize(400,250);
         setLocation(600,300);
@@ -18,9 +18,8 @@ public class ErrorMessageView extends JFrame {
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
-        //**Create Username Label**//
+        //Create Error Label
         JLabel labelError = new JLabel(errorMessage);
-        //lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12)); // Format of String
         labelError.setHorizontalAlignment(SwingConstants.RIGHT);
         labelError.setBounds(10, 25, 250, 25);
         contentPane.add(labelError);
@@ -28,11 +27,5 @@ public class ErrorMessageView extends JFrame {
     }
 
 }
-
-
-
-
-
-
 
 
