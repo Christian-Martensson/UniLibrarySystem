@@ -42,7 +42,6 @@ public class MainView extends JFrame {
 		return toolbar;
 	}
 
-
 	public BottomToolbar getBottomToolBar() {
 		return bottomToolBar;
 	}

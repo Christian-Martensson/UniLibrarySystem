@@ -140,28 +140,30 @@ public class SearchModel {
     }
 
     public JTable convertListOfUsersToJTable() {
-        String[] columnNames = new String[5];
-        Object[][] data = new Object[listOfUsers.size()][5];
+        String[] columnNames = new String[6];
+        Object[][] data = new Object[listOfUsers.size()][6];
 
-        columnNames[0] = "Username";
-        columnNames[1] = "Personal ID";
-        columnNames[2] = "First name";
-        columnNames[3] = "Last name";
-        columnNames[4] = "User type";
+        columnNames[0] = "User ID";
+        columnNames[1] = "Username";
+        columnNames[2] = "Personal ID";
+        columnNames[3] = "First name";
+        columnNames[4] = "Last name";
+        columnNames[5] = "User type";
 
         for (int i = 0; i < listOfUsers.size(); i++) {
+            int userId = listOfUsers.get(i).getUserId();
             String userType = listOfUsers.get(i).getUserType();
             String firstName = listOfUsers.get(i).getFirstName();
             String lastName = listOfUsers.get(i).getLastName();
             String personalId = listOfUsers.get(i).getPersonalId();
             String username = listOfUsers.get(i).getUsername();
 
-
-            data[i][0] = username;
-            data[i][1] = personalId;
-            data[i][2] = firstName;
-            data[i][3] = lastName;
-            data[i][4] = userType;
+            data[i][0] = userId;
+            data[i][1] = username;
+            data[i][2] = personalId;
+            data[i][3] = firstName;
+            data[i][4] = lastName;
+            data[i][5] = userType;
         }
         return new JTable(data, columnNames);
     }
@@ -429,6 +431,15 @@ public class SearchModel {
         for (MagazineModel magazine : listOfMagazines) {
             if (magazine.getMagazineId() == value) {
                 return magazine;
+            }
+        }
+        return null;
+    }
+
+    public UserModel getUserWith(int value) {
+        for (UserModel userModel : listOfUsers) {
+            if (userModel.getUserId() == value) {
+                return userModel;
             }
         }
         return null;

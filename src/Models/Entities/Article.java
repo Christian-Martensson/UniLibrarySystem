@@ -1,6 +1,6 @@
 package Models.Entities;
 
-public class Article {
+public abstract class Article {
     String articleType;
     String title;
     String publicationYear;
@@ -8,23 +8,15 @@ public class Article {
     String creator;
     int numberInStock;
 
-    public boolean checkAvailabilityInDb() {
-        return false;
-    }
+    public abstract boolean checkAvailabilityInDb();
 
-    public void loadToDb() {
+    public abstract void loadToDb();
 
-    }
+    public abstract void removeFromDb();
 
-    public void removeFromDb() {
+    public abstract void createLoan(int barcodeId, int userId);
 
-    }
-
-    public void createLoan(int barcodeId, int userId) { }
-
-    public int getAvailableBarcode() {
-        return 0;
-    }
+    public abstract int getAvailableBarcode();
 
     public String getArticleType() {
         return articleType;

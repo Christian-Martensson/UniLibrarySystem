@@ -184,7 +184,6 @@ public class MainController {
                     case "Book": {
                         String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
                         BookModel book = model.getBookWith(valueIsbn);
-
                         book.removeFromDb();
 
                         break;
@@ -192,17 +191,19 @@ public class MainController {
                     case "Movie": {
                         int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
                         MovieModel movie = model.getMovieWith(value);
-                        LoanConfirmationView loanConfirmationView = new LoanConfirmationView(movie);
-                        LoanConfirmationController loanConfirmationController = new LoanConfirmationController(loanConfirmationView, movie);
-
+                        movie.removeFromDb();
                         break;
                     }
                     case "Magazine": {
-                        ErrorMessageView error = new ErrorMessageView("You can not loan a magazine.");
+                        int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
+                        MagazineModel magazine = model.getMagazineWith(value);
+                        magazine.removeFromDb();
                         break;
                     }
                     case "User": {
-                        ErrorMessageView error = new ErrorMessageView("You can not loan a user.");
+                        int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
+                        UserModel user = model.getUserWith(value);
+                        user.removeFromDb();
                         break;
                     }
                 }

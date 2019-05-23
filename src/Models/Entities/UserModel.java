@@ -2,6 +2,7 @@ package Models.Entities;
 
 import Controller.MainController;
 import Models.DatabaseDriver;
+import UI.Views.ErrorMessageView;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -110,6 +111,37 @@ public class UserModel {
         } catch (Exception e) {
             e.printStackTrace();
 
+        }
+
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    public void removeFromDb() {
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM User WHERE userId= ?;" );
+            statement.setInt(1, this.getUserId());
+
+            // 3. Execute SQL query
+            statement.executeUpdate();
+
+
+            //Catch exceptions
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorMessageView error = new ErrorMessageView("Error!");
         }
 
         finally{

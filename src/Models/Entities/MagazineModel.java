@@ -1,6 +1,7 @@
 package Models.Entities;
 
 import Models.DatabaseDriver;
+import UI.Views.ErrorMessageView;
 
 import java.sql.*;
 import java.util.Date;
@@ -49,6 +50,38 @@ public class MagazineModel extends Article implements DatabaseActions {
         } catch (Exception e) {
             e.printStackTrace();
 
+        }
+
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void removeFromDb() {
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM Magazine WHERE magazineId = ?;" );
+            statement.setInt(1, this.magazineId);
+
+            // 3. Execute SQL query
+            statement.executeUpdate();
+
+
+            //Catch exceptions
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorMessageView error = new ErrorMessageView("Error!");
         }
 
         finally{
