@@ -5,7 +5,7 @@ import UI.Views.ErrorMessageView;
 
 import java.sql.*;
 
-public class MovieModel extends Article implements DatabaseActions {
+public class MovieModel extends Article {
 
     private int movieId;
     private int minimumAge;
@@ -13,21 +13,22 @@ public class MovieModel extends Article implements DatabaseActions {
 
     public MovieModel(int movieId, int minimumAge,
                       String title, String publicationYear, String genre,
-                      String producer) {
+                      String creator) {
         this.movieId = movieId;
         this.minimumAge = minimumAge;
         super.title = title;
         super.publicationYear = publicationYear;
         super.genre = genre;
-        super.creator = producer;
+        super.creator = creator;
     }
 
 
 
 
     @Override
-    public void loadToDb() {
+    public void insertIntoDb() {
         Connection connection = null;
+        System.out.println(this.toString());
 
         try {
             // 1. Get a connection to the database
@@ -35,14 +36,17 @@ public class MovieModel extends Article implements DatabaseActions {
             connection = driver.createConnection();
 
             // 2. Create a statement
-            PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO Movie (articleType, title, genre, publicationYear , minimumAge) " +
-                            "VALUES (?, ?, ?, ?, ?); ");
-            statement.setString(1, this.articleType);
-            statement.setString(2, this.title);
-            statement.setString(3, this.genre);
-            statement.setString(4, this.publicationYear);
-            statement.setInt(5, minimumAge);
+            String sqlQuery =
+                    "INSERT INTO Movie (title, genre, publicationYear , minimumAge, creator) " +
+                    "VALUES (?, ?, ?, ?, ?); ";
+            PreparedStatement statement = connection.prepareStatement(sqlQuery);
+
+            statement.setString(1, this.title);
+            statement.setString(2, this.genre);
+            statement.setString(3, this.publicationYear);
+            statement.setInt(4, minimumAge);
+            statement.setString(5, this.creator);
+
 
 
             // 3. Execute SQL query
@@ -76,6 +80,44 @@ public class MovieModel extends Article implements DatabaseActions {
             PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM Movie WHERE movieId = ?;" );
             statement.setInt(1, this.movieId);
+
+            // 3. Execute SQL query
+            statement.executeUpdate();
+
+
+            //Catch exceptions
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorMessageView error = new ErrorMessageView("Error!");
+        }
+
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    public void updateInDb() {
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE Movie SET title = ?, genre = ?, publicationYear = ?, minimumAge = ?, creator = ?" +
+                            "WHERE movieId = ?;");
+            statement.setString(1, this.title);
+            statement.setString(2, this.genre);
+            statement.setString(3, this.publicationYear);
+            statement.setInt(4, this.minimumAge);
+            statement.setString(5, this.creator);
+            statement.setInt(6, this.movieId);
+
 
             // 3. Execute SQL query
             statement.executeUpdate();

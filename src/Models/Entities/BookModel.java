@@ -5,22 +5,22 @@ import UI.Views.ErrorMessageView;
 
 import java.sql.*;
 
-public class BookModel extends Article implements DatabaseActions {
+public class BookModel extends Article {
     private String isbn;
     private String publisher;
 
-    public BookModel(String isbn, String articleType, String title, String publisher, String publicationYear, String genre, String author) {
+    public BookModel(String isbn, String articleType, String title, String publisher, String publicationYear, String genre, String creator) {
         this.isbn = isbn;
         super.articleType = articleType;
         super.title = title;
         this.publisher = publisher;
         super.publicationYear = publicationYear;
         super.genre = genre;
-        super.creator = author;
+        super.creator = creator;
     }
 
     @Override
-    public void loadToDb() {
+    public void insertIntoDb() {
         Connection connection = null;
         try {
             // 1. Get a connection to the database
@@ -29,14 +29,15 @@ public class BookModel extends Article implements DatabaseActions {
 
             // 2. Create a statement
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO Book (isbn, articleType, title, publisher , publicationYear, genre) " +
-                            "VALUES (?, ?, ?, ?, ?, ?); ");
+                    "INSERT INTO Book (isbn, articleType, title, publisher , publicationYear, genre, creator) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?); ");
             statement.setString(1, this.isbn);
             statement.setString(2, this.articleType);
             statement.setString(3, this.title);
             statement.setString(4, this.publisher);
             statement.setString(5, this.publicationYear);
             statement.setString(6, this.genre);
+            statement.setString(7, this.creator);
 
             // 3. Execute SQL query
             statement.executeUpdate();
@@ -69,6 +70,45 @@ public class BookModel extends Article implements DatabaseActions {
             PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM Book WHERE isbn = ?;" );
             statement.setString(1, this.isbn);
+
+            // 3. Execute SQL query
+            statement.executeUpdate();
+
+
+            //Catch exceptions
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorMessageView error = new ErrorMessageView("Error!");
+        }
+
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    public void updateInDb() {
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE Book SET articleType = ?, title = ?, publisher = ?, publicationYear = ?, genre = ?, creator = ?" +
+                            "WHERE isbn = ?;");
+            statement.setString(1, this.articleType);
+            statement.setString(2, this.title);
+            statement.setString(3, this.publisher);
+            statement.setString(4, this.publicationYear);
+            statement.setString(5, this.genre);
+            statement.setString(6, this.creator);
+            statement.setString(7, this.isbn);
+
 
             // 3. Execute SQL query
             statement.executeUpdate();

@@ -85,7 +85,7 @@ public class UserModel {
         }
     }
 
-    public void loadUserToDb() {
+    public void insertIntoDb() {
         Connection connection = null;
         try {
             // 1. Get a connection to the database
@@ -153,6 +153,43 @@ public class UserModel {
         }
     }
 
+    public void updateInDb() {
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE User SET  userType = ?, fName = ?, lName = ?, personalId = ?, password = ?" +
+                            "WHERE username = ?;");
+            statement.setString(1, this.userType);
+            statement.setString(2, this.firstName);
+            statement.setString(3, this.lastName);
+            statement.setString(4, this.personalId);
+            statement.setString(5, this.password);
+            statement.setString(6, this.username);
+
+            // 3. Execute SQL query
+            statement.executeUpdate();
+
+
+            //Catch exceptions
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorMessageView error = new ErrorMessageView("Error!");
+        }
+
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -180,6 +217,7 @@ public class UserModel {
     public String getUsername() {
         return username;
     }
+
 
     public int getUserId() {
         return userId;

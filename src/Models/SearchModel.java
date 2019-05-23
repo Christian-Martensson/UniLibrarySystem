@@ -16,6 +16,34 @@ public class SearchModel {
     private ArrayList<MovieModel> listOfMovies;
     private ArrayList<MagazineModel> listOfMagazines;
 
+    public static JTable converListOfLoansToTable(ArrayList<LoanModel> listOfLoans) {
+        String[] columnNames = new String[5];
+        Object[][] data = new Object[listOfLoans.size()][5];
+
+        columnNames[0] = "Loan ID";
+        columnNames[1] = "User ID";
+        columnNames[2] = "Barcode ID";
+        columnNames[3] = "Date of loan";
+        columnNames[4] = "Due date";
+
+
+        for (int i = 0; i < listOfLoans.size(); i++) {
+            int loanId = listOfLoans.get(i).getLoanId();
+            int userId = listOfLoans.get(i).getUserId();
+            int barcodeId = listOfLoans.get(i).getBarcodeId();
+            Date dateOfLoan = listOfLoans.get(i).getDateOfLoan();
+            Date dueDate = listOfLoans.get(i).getDueDate();
+
+
+            data[i][0] = loanId;
+            data[i][1] = userId;
+            data[i][2] = barcodeId;
+            data[i][3] = dateOfLoan;
+            data[i][4] = dueDate;
+        }
+        return new JTable(data, columnNames);
+    }
+
     public JTable convertListOfBooksToJTable() {
         String[] columnNames = new String[7];
         Object[][] data = new Object[listOfBooks.size()][7];
@@ -65,7 +93,7 @@ public class SearchModel {
             String title = listOfMagazines.get(i).getTitle();
             int magazineNr = listOfMagazines.get(i).getMagazineNr();
             String publisher = listOfMagazines.get(i).getPublisher();
-            Date publicationDate = listOfMagazines.get(i).getPublicationDate();
+            String publicationDate = listOfMagazines.get(i).getPublicationDate();
             String genre = listOfMagazines.get(i).getGenre();
 
             data[i][0] = magazineId;
@@ -74,34 +102,6 @@ public class SearchModel {
             data[i][3] = publisher;
             data[i][4] = publicationDate;
             data[i][5] = genre;
-        }
-        return new JTable(data, columnNames);
-    }
-
-    public static JTable converListOfLoansToTable(ArrayList<LoanModel> listOfLoans) {
-        String[] columnNames = new String[5];
-        Object[][] data = new Object[listOfLoans.size()][5];
-
-        columnNames[0] = "Loan ID";
-        columnNames[1] = "User ID";
-        columnNames[2] = "Barcode ID";
-        columnNames[3] = "Date of loan";
-        columnNames[4] = "Due date";
-
-
-        for (int i = 0; i < listOfLoans.size(); i++) {
-            int loanId = listOfLoans.get(i).getLoanId();
-            int userId = listOfLoans.get(i).getUserId();
-            int barcodeId = listOfLoans.get(i).getBarcodeId();
-            Date dateOfLoan = listOfLoans.get(i).getDateOfLoan();
-            Date dueDate = listOfLoans.get(i).getDueDate();
-
-
-            data[i][0] = loanId;
-            data[i][1] = userId;
-            data[i][2] = barcodeId;
-            data[i][3] = dateOfLoan;
-            data[i][4] = dueDate;
         }
         return new JTable(data, columnNames);
     }
@@ -182,30 +182,23 @@ public class SearchModel {
             PreparedStatement statement = null;
 
             if (searchWord.length() == 0) {
-                sqlQuery = "SELECT b.*, c.* \n" +
-                        "FROM Book b\n" +
-                        "JOIN BookAuthor ba on b.isbn = ba.isbn\n" +
-                        "JOIN Creator c on c.creatorId = ba.authorId;\n";
+                sqlQuery = "SELECT * FROM Book;";
 
                 statement = connection.prepareStatement(sqlQuery);
             }
             else {
-                 sqlQuery = "SELECT b.*, c.* \n" +
-                        "FROM Book b\n" +
-                        "JOIN BookAuthor ba on b.isbn = ba.isbn\n" +
-                        "JOIN Creator c on c.creatorId = ba.authorId\n" +
-                        "WHERE Match(b.title) Against(?)\n" +
-                        "OR Match(c.fName) Against(?)\n" +
-                        "OR Match(c.lName) Against(?)" +
-                        "OR Match(b.genre) Against(?)\n" +
-                        "OR Match(b.isbn) Against(?)\n;";
+                 sqlQuery = "SELECT * \n" +
+                        "FROM Book\n" +
+                        "WHERE Match(title) Against(?)\n" +
+                        "OR Match(creator) Against(?)\n" +
+                        "OR Match(genre) Against(?)\n" +
+                        "OR Match(isbn) Against(?)\n;";
 
                 statement = connection.prepareStatement(sqlQuery);
                 statement.setString(1, searchWord);
                 statement.setString(2, searchWord);
                 statement.setString(3, searchWord);
                 statement.setString(4, searchWord);
-                statement.setString(5, searchWord);
             }
 
             // 3. Execute SQL query
@@ -220,10 +213,9 @@ public class SearchModel {
                 String publisher = resultSet.getString("publisher");
                 String genre = resultSet.getString("genre");
                 String publicationYear = resultSet.getString("publicationYear");
-                String author = resultSet.getString("c.fName") + " " + resultSet.getString("c.lName");
-                int availability = resultSet.getInt("isAvailable");
+                String creator = resultSet.getString("creator");
 
-                BookModel book = new BookModel(isbn, articleType, title, publisher, publicationYear, genre, author);
+                BookModel book = new BookModel(isbn, articleType, title, publisher, publicationYear, genre, creator);
                 listOfBooks.add(book);
             }
         }
@@ -247,26 +239,18 @@ public class SearchModel {
             String sqlQuery;
             PreparedStatement statement = null;
             if (searchWord.length() == 0) {
-                sqlQuery = "SELECT m.*, c.* \n" +
-                        "FROM Movie m\n" +
-                        "JOIN MovieProducer mp on mp.movieId = m.movieId\n" +
-                        "JOIN Creator c on c.creatorId = mp.creatorId;";
+                sqlQuery = "SELECT * FROM Movie;";
                 statement = connection.prepareStatement(sqlQuery);
             }
             else {
-                sqlQuery = "SELECT m.*, c.* \n" +
-                        "FROM Movie m\n" +
-                        "JOIN MovieProducer mp on mp.movieId = m.movieId\n" +
-                        "JOIN Creator c on c.creatorId = mp.creatorId\n" +
-                        "WHERE Match(m.title) Against(?)\n" +
-                        "OR Match(c.fName) Against(?)" +
-                        "OR Match(c.lName) Against(?)" +
-                        "OR Match(m.genre) Against(?)";
+                sqlQuery = "SELECT * FROM Movie\n" +
+                        "WHERE Match(title) Against(?)\n" +
+                        "OR Match(creator) Against(?)" +
+                        "OR Match(genre) Against(?)";
                 statement = connection.prepareStatement(sqlQuery);
                 statement.setString(1, searchWord);
                 statement.setString(2, searchWord);
                 statement.setString(3, searchWord);
-                statement.setString(4, searchWord);
             }
 
             // 3. Execute SQL query
@@ -279,11 +263,11 @@ public class SearchModel {
                 String title = resultSet.getString("title");
                 String genre = resultSet.getString("genre");
                 String publicationYear = resultSet.getString("publicationYear");
-                String producer = resultSet.getString("c.fName") + " " + resultSet.getString("c.lName");
+                String creator = resultSet.getString("creator");
                 int availability = resultSet.getInt("isAvailable");
-                int minimumAge = resultSet.getInt("m.minimumAge");
+                int minimumAge = resultSet.getInt("minimumAge");
 
-                MovieModel movie = new MovieModel(movieId, minimumAge, title, publicationYear, genre, producer);
+                MovieModel movie = new MovieModel(movieId, minimumAge, title, publicationYear, genre, creator);
                 listOfMovies.add(movie);
             }
         }
@@ -330,7 +314,7 @@ public class SearchModel {
                 int magazineId = resultSet.getInt("magazineId");
                 int magazineNr = resultSet.getInt("magazineNr");
                 String publisher = resultSet.getString("publisher");
-                Date publicationDate = resultSet.getDate("publicationDate");
+                String publicationDate = resultSet.getString("publicationDate");
                 String title = resultSet.getString("title");
                 String genre = resultSet.getString("genre");
 
