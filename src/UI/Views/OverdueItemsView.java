@@ -22,8 +22,6 @@ public class OverdueItemsView extends JFrame {
         contentPane = this.getContentPane();
         contentPane.setLayout(new FlowLayout());
         scrollPane = new JScrollPane(table);
-
-
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
     }

@@ -58,6 +58,38 @@ public class BookModel extends Article implements DatabaseActions {
     }
 
     @Override
+    public void removeFromDb() {
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM Book WHERE isbn = ?;" );
+            statement.setString(1, this.isbn);
+
+            // 3. Execute SQL query
+            statement.executeUpdate();
+
+
+            //Catch exceptions
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorMessageView error = new ErrorMessageView("Error!");
+        }
+
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    @Override
     public boolean checkAvailabilityInDb() {
         boolean isAvailable = false;
         String isbn = this.getIsbn();

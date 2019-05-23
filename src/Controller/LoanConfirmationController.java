@@ -24,7 +24,6 @@ public class LoanConfirmationController {
             boolean isAvailable = article.checkAvailabilityInDb();
 
             if (isAvailable) {
-                System.out.println(MainController.loggedInUser.getUsername());
                 int userId = MainController.loggedInUser.getUserId();
                 int barcodeId = article.getAvailableBarcode();
                 article.createLoan(barcodeId, userId);

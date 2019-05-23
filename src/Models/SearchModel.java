@@ -176,11 +176,14 @@ public class SearchModel {
             connection = driver.createConnection();
 
             // 2. Create a statement
-            // previous: "SELECT * FROM Book WHERE Match(title) Against(?)"
             String sqlQuery;
             PreparedStatement statement = null;
+
             if (searchWord.length() == 0) {
-                sqlQuery = "SELECT * FROM Book;";
+                sqlQuery = "SELECT b.*, c.* \n" +
+                        "FROM Book b\n" +
+                        "JOIN BookAuthor ba on b.isbn = ba.isbn\n" +
+                        "JOIN Creator c on c.creatorId = ba.authorId;\n";
 
                 statement = connection.prepareStatement(sqlQuery);
             }
@@ -239,20 +242,30 @@ public class SearchModel {
             connection = driver.createConnection();
 
             // 2. Create a statement
-            // previous: "SELECT * FROM Book WHERE Match(title) Against(?)"
-            String sqlQuery = "SELECT m.*, c.* \n" +
-                    "FROM Movie m\n" +
-                    "JOIN MovieProducer mp on mp.movieId = m.movieId\n" +
-                    "JOIN Creator c on c.creatorId = mp.creatorId\n" +
-                    "WHERE Match(m.title) Against(?)\n" +
-                    "OR Match(c.fName) Against(?)" +
-                    "OR Match(c.lName) Against(?)" +
-                    "OR Match(m.genre) Against(?)";
-            PreparedStatement statement = connection.prepareStatement(sqlQuery);
-            statement.setString(1, searchWord);
-            statement.setString(2, searchWord);
-            statement.setString(3, searchWord);
-            statement.setString(4, searchWord);
+            String sqlQuery;
+            PreparedStatement statement = null;
+            if (searchWord.length() == 0) {
+                sqlQuery = "SELECT m.*, c.* \n" +
+                        "FROM Movie m\n" +
+                        "JOIN MovieProducer mp on mp.movieId = m.movieId\n" +
+                        "JOIN Creator c on c.creatorId = mp.creatorId;";
+                statement = connection.prepareStatement(sqlQuery);
+            }
+            else {
+                sqlQuery = "SELECT m.*, c.* \n" +
+                        "FROM Movie m\n" +
+                        "JOIN MovieProducer mp on mp.movieId = m.movieId\n" +
+                        "JOIN Creator c on c.creatorId = mp.creatorId\n" +
+                        "WHERE Match(m.title) Against(?)\n" +
+                        "OR Match(c.fName) Against(?)" +
+                        "OR Match(c.lName) Against(?)" +
+                        "OR Match(m.genre) Against(?)";
+                statement = connection.prepareStatement(sqlQuery);
+                statement.setString(1, searchWord);
+                statement.setString(2, searchWord);
+                statement.setString(3, searchWord);
+                statement.setString(4, searchWord);
+            }
 
             // 3. Execute SQL query
             ResultSet resultSet = statement.executeQuery();
@@ -289,15 +302,23 @@ public class SearchModel {
             connection = driver.createConnection();
 
             // 2. Create a statement
-            // previous: "SELECT * FROM Book WHERE Match(title) Against(?)"
-            String sqlQuery = "SELECT *\n" +
-                    "FROM Magazine\n" +
-                    "WHERE Match(title) Against(?)\n" +
-                    "OR Match(genre) Against(?);";
-            PreparedStatement statement = connection.prepareStatement(sqlQuery);
-            statement.setString(1, searchWord);
-            statement.setString(2, searchWord);
+            String sqlQuery;
+            PreparedStatement statement = null;
+            if (searchWord.length() == 0) {
+                sqlQuery = "SELECT *\n" +
+                        "FROM Magazine;";
+                statement = connection.prepareStatement(sqlQuery);
+            }
 
+            else {
+                sqlQuery = "SELECT *\n" +
+                        "FROM Magazine\n" +
+                        "WHERE Match(title) Against(?)\n" +
+                        "OR Match(genre) Against(?);";
+                statement = connection.prepareStatement(sqlQuery);
+                statement.setString(1, searchWord);
+                statement.setString(2, searchWord);
+            }
             // 3. Execute SQL query
             ResultSet resultSet = statement.executeQuery();
 
@@ -334,8 +355,16 @@ public class SearchModel {
             connection = driver.createConnection();
 
             // 2. Create a statement
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM User WHERE username = ?");
-            statement.setString(1, searchWord);
+            PreparedStatement statement = null;
+            String sqlQuery;
+            if(searchWord.length() == 0) {
+                sqlQuery = "SELECT * FROM User";
+                statement = connection.prepareStatement(sqlQuery);
+            } else {
+                sqlQuery = "SELECT * FROM User WHERE username = ?";
+                statement = connection.prepareStatement(sqlQuery);
+                statement.setString(1, searchWord);
+            }
 
             // 3. Execute SQL query
             ResultSet resultSet = statement.executeQuery();

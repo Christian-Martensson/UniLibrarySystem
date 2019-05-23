@@ -10,4 +10,6 @@ public interface DatabaseActions {
 
     int getAvailableBarcode();
 
+    void removeFromDb();
+
 }

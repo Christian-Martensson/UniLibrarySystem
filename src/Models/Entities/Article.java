@@ -1,6 +1,6 @@
 package Models.Entities;
 
-public class Article implements DatabaseActions {
+public class Article {
     String articleType;
     String title;
     String publicationYear;
@@ -13,6 +13,10 @@ public class Article implements DatabaseActions {
     }
 
     public void loadToDb() {
+
+    }
+
+    public void removeFromDb() {
 
     }
 

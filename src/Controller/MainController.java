@@ -174,7 +174,7 @@ public class MainController {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(ScrollPanel.getTable().getSelectionModel().isSelectionEmpty()) {
-                ErrorMessageView error = new ErrorMessageView("You must select an item to loan!");
+                ErrorMessageView error = new ErrorMessageView("You must select an item to remove!");
             }
             else {
                 int row = ScrollPanel.getTable().getSelectedRow();
@@ -185,8 +185,8 @@ public class MainController {
                         String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
                         BookModel book = model.getBookWith(valueIsbn);
 
-                        LoanConfirmationView loanConfirmationView = new LoanConfirmationView(book);
-                        LoanConfirmationController loanConfirmationController = new LoanConfirmationController(loanConfirmationView, book);
+                        book.removeFromDb();
+
                         break;
                     }
                     case "Movie": {
@@ -206,12 +206,8 @@ public class MainController {
                         break;
                     }
                 }
-
-
-
-
+                ErrorMessageView error = new ErrorMessageView("Item sucessfully removed from db");
             }
-
         }
     }
 
@@ -221,7 +217,6 @@ public class MainController {
             ArrayList<LoanModel> listOfLoans = LoanModel.fetchOverdueLoansFromDBfor();
             JTable table = SearchModel.converListOfLoansToTable(listOfLoans);
             OverdueItemsView view = new OverdueItemsView(table);
-
         }
     }
 
