@@ -1,22 +1,214 @@
 package Models.Entities;
 
-public class MovieModel extends Article {
+import Models.DatabaseDriver;
+import UI.Views.ErrorMessageView;
+
+import java.sql.*;
+
+public class MovieModel extends Article implements DatabaseActions {
 
     private int movieId;
     private int minimumAge;
 
 
-    public MovieModel(int movieId, int minimumAge, String articleType,
+    public MovieModel(int movieId, int minimumAge,
                       String title, String publicationYear, String genre,
-                      String producer, int available) {
+                      String producer) {
         this.movieId = movieId;
         this.minimumAge = minimumAge;
-        super.articleType = articleType;
         super.title = title;
         super.publicationYear = publicationYear;
         super.genre = genre;
         super.creator = producer;
-        super.setAvailable(available);
+    }
+
+
+
+
+    @Override
+    public void loadToDb() {
+        Connection connection = null;
+
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO Movie (articleType, title, genre, publicationYear , minimumAge) " +
+                            "VALUES (?, ?, ?, ?, ?); ");
+            statement.setString(1, this.articleType);
+            statement.setString(2, this.title);
+            statement.setString(3, this.genre);
+            statement.setString(4, this.publicationYear);
+            statement.setInt(5, minimumAge);
+
+
+            // 3. Execute SQL query
+            statement.executeUpdate();
+
+
+            //Catch exceptions
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void removeFromDb() {
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM Movie WHERE movieId = ?;" );
+            statement.setInt(1, this.movieId);
+
+            // 3. Execute SQL query
+            statement.executeUpdate();
+
+
+            //Catch exceptions
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorMessageView error = new ErrorMessageView("Error!");
+        }
+
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public boolean checkAvailabilityInDb() {
+        boolean isAvailable = false;
+        int movieId = this.getMovieId();
+
+        Connection connection = null;
+
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            String sqlQuery = "SELECT * FROM Movie\n" +
+                    "WHERE movieId = ?\n;";
+            PreparedStatement statement = connection.prepareStatement(sqlQuery);
+            statement.setInt(1, movieId);
+
+            // 3. Execute SQL query
+            ResultSet resultSet = statement.executeQuery();
+
+            // 4. Process the result set
+            if (resultSet.next()) {
+                int isAvailableInt = resultSet.getInt("isAvailable");
+                if (isAvailableInt == 1){
+                    isAvailable = true;
+                }
+            }
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+        return isAvailable;
+
+    }
+
+    @Override
+    public void createLoan(int barcodeId, int userId) {
+
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            String sqlQuery = "CALL spCreateNewLoanMovie(?, ?)";
+            CallableStatement statement = connection.prepareCall(sqlQuery);
+            statement.setInt(1, barcodeId);
+            statement.setInt(2, userId);
+            // 3. Execute SQL query
+            statement.executeQuery();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+        System.out.println(barcodeId);
+    }
+
+    public int getAvailableBarcode() {
+        // move to book, magazine and movie
+        int barcode = 0;
+
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            // previous: "SELECT * FROM Book WHERE Match(title) Against(?)"
+            String sqlQuery = "SELECT * FROM Barcode\n" +
+                    "WHERE movieId = ?\n" +
+                    "AND isAvailable = 1; ";
+            PreparedStatement statement = connection.prepareStatement(sqlQuery);
+            statement.setInt(1, this.movieId);
+
+            // 3. Execute SQL query
+            ResultSet resultSet = statement.executeQuery();
+
+            // 4. Process the result set
+            if (resultSet.next()) {
+                barcode = resultSet.getInt("barcodeId");
+            }
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+        return barcode;
     }
 
 

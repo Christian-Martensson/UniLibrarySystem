@@ -1,7 +1,6 @@
 package Controller;
 
-import Models.Entities.BookModel;
-import Models.Entities.LoanModel;
+import Models.Entities.Article;
 import UI.Views.ErrorMessageView;
 import UI.Views.LoanConfirmationView;
 
@@ -10,20 +9,26 @@ import java.awt.event.ActionListener;
 
 public class LoanConfirmationController {
     private LoanConfirmationView view;
-    private BookModel book;
+    private Article article;
 
-    public LoanConfirmationController(LoanConfirmationView view, BookModel book) {
+    public LoanConfirmationController(LoanConfirmationView view, Article article) {
         this.view = view;
-        this.book = book;
+        this.article = article;
         this.view.addConfirmationButtonListener(new ConfirmationButtonListener());
     }
 
     class ConfirmationButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (book.isAvailable()) {
-                LoanModel.generateLoan(book, MainController.loggedInUser);
+            // check for availability in db.
+            boolean isAvailable = article.checkAvailabilityInDb();
+
+            if (isAvailable) {
+                int userId = MainController.loggedInUser.getUserId();
+                int barcodeId = article.getAvailableBarcode();
+                article.createLoan(barcodeId, userId);
             }
+
             else {
                 ErrorMessageView error = new ErrorMessageView("This book is not available");
             }

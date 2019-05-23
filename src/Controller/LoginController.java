@@ -36,6 +36,7 @@ public class LoginController {
                 view.setErrorMessage("Login Success!");
                 MainController.setLogoutButton();
                 MainController.loggedInUser = userModel;
+                view.getLoginButton().setVisible(false);
 
                 if (userModel.getUserType().equals("librarian")) {
                     MainController.giveLibrarianAccess();

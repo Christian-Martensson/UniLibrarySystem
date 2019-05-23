@@ -28,7 +28,7 @@ public class LoginView extends JFrame {
 
     public LoginView() {
 
-        //** Create Login Frame**//
+        //Create Pop Up Login View
         setTitle("Login");
         setSize(400,250);
         setLocation(600,300);
@@ -37,45 +37,36 @@ public class LoginView extends JFrame {
         Container contentPane = this.getContentPane();
         contentPane.setLayout(null);
 
-        //**Create Username Label**//
+        //Create Username Label
         JLabel lblUsername = new JLabel("Username:");
-        //lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12)); // Format of String
         lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
         lblUsername.setBounds(10, 25, 120, 25);
         contentPane.add(lblUsername);
 
-        //**Create Username TextField**//
+        //Create Username TextField
         txtUsername = new JTextField();
-        //txtUsername.setFont(new Font("Tahoma", Font.PLAIN, 12)); // Format of String
         txtUsername.setBounds(140, 25, 200, 25);
         contentPane.add(txtUsername);
 
-        //**Create Password Label**//
+        //Create Password Label
         JLabel lblPassword = new JLabel("Password:");
         lblPassword.setHorizontalAlignment(SwingConstants.RIGHT);
-        //lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));// Format of String
         lblPassword.setBounds(10, 52, 120, 25);
         contentPane.add(lblPassword);
 
-        //**Create Password Textfield**//
+        //Create Password Textfield
         txtPassword = new JPasswordField();
-        //txtPassword.setFont(new Font("Tahoma", Font.PLAIN, 12));// Format of String
         txtPassword.setBounds(140, 52, 200, 25);
         contentPane.add(txtPassword);
 
-        //**Create Login Button**//
+        //Create Login Button
         loginButton = new JButton("Log in");
-
-
-        //loginButton.setFont(new Font("Tahoma", Font.PLAIN, 14));// Format of String
         loginButton.setBounds(251, 93, 89, 25);
         contentPane.add(loginButton);
 
-        //Create errormessage
+        //Create errormessage if login fails
         lblErrorMessage = new JLabel("");
         lblErrorMessage.setHorizontalAlignment(SwingConstants.RIGHT);
-        //lblErrorMessage.setForeground(Color.RED);//Format of setForeground
-        //lblErrorMessage.setFont(new Font("Tahoma", Font.PLAIN, 14));// Format of String
         lblErrorMessage.setBounds(10, 151, 330, 25);
         contentPane.add(lblErrorMessage);
 
@@ -85,8 +76,8 @@ public class LoginView extends JFrame {
         lblErrorMessage.setText(errorMessage);
     }
 
-    public void addLoginButtonListener (ActionListener listenForLoginButton) {
-        loginButton.addActionListener(listenForLoginButton);
+    public void addLoginButtonListener (ActionListener listener) {
+        loginButton.addActionListener(listener);
     }
 }
 

@@ -1,22 +1,24 @@
 package Controller;
 
-import Models.Entities.BookModel;
-import Models.Entities.MagazineModel;
-import Models.Entities.MovieModel;
-import Models.Entities.UserModel;
+import Controller.FormControllers.FormBookController;
+import Controller.FormControllers.FormMagazineController;
+import Controller.FormControllers.FormMovieController;
+import Controller.FormControllers.FormUserController;
+import Models.Entities.*;
 import Models.SearchModel;
 import UI.UI_Components.ScrollPanel;
 import UI.Views.*;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class MainController {
     private static MainView view;
     private SearchModel model;
 
     public static boolean loggedIn = false;
-    public static String searchAlternative;
+    public static String searchAlternativeWhenPressed;
     public static String addItemAlternative;
     public static UserModel loggedInUser;
 
@@ -40,9 +42,9 @@ public class MainController {
         public void actionPerformed(ActionEvent e) {
 
             String searchWord = view.getToolbar().getTextField().getText();
-            searchAlternative = view.getToolbar().getSearchAlternativesDropdown().getSelectedItem().toString();
+            searchAlternativeWhenPressed = view.getToolbar().getSearchAlternativesDropdown().getSelectedItem().toString();
 
-            switch (searchAlternative) {
+            switch (searchAlternativeWhenPressed) {
                 case "Book": {
                     model.searchBook(searchWord);
 
@@ -105,7 +107,7 @@ public class MainController {
                 int row = ScrollPanel.getTable().getSelectedRow();
                 int column = 0;
 
-                switch (searchAlternative) {
+                switch (searchAlternativeWhenPressed) {
                     case "Book": {
                         String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
                         BookModel book = model.getBookWith(valueIsbn);
@@ -118,12 +120,12 @@ public class MainController {
                         int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
                         MovieModel movie = model.getMovieWith(value);
                         LoanConfirmationView loanConfirmationView = new LoanConfirmationView(movie);
+                        LoanConfirmationController loanConfirmationController = new LoanConfirmationController(loanConfirmationView, movie);
 
                         break;
                     }
                     case "Magazine": {
-                        int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
-                        MagazineModel magazine = model.getMagazineWith(value);
+                        ErrorMessageView error = new ErrorMessageView("You can not loan a magazine.");
                         break;
                     }
                     case "User": {
@@ -171,14 +173,51 @@ public class MainController {
     class RemoveButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if(ScrollPanel.getTable().getSelectionModel().isSelectionEmpty()) {
+                ErrorMessageView error = new ErrorMessageView("You must select an item to remove!");
+            }
+            else {
+                int row = ScrollPanel.getTable().getSelectedRow();
+                int column = 0;
 
+                switch (searchAlternativeWhenPressed) {
+                    case "Book": {
+                        String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
+                        BookModel book = model.getBookWith(valueIsbn);
+                        book.removeFromDb();
+
+                        break;
+                    }
+                    case "Movie": {
+                        int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
+                        MovieModel movie = model.getMovieWith(value);
+                        movie.removeFromDb();
+                        break;
+                    }
+                    case "Magazine": {
+                        int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
+                        MagazineModel magazine = model.getMagazineWith(value);
+                        magazine.removeFromDb();
+                        break;
+                    }
+                    case "User": {
+                        int value = Integer.parseInt(ScrollPanel.getTable().getValueAt(row, column).toString());
+                        UserModel user = model.getUserWith(value);
+                        user.removeFromDb();
+                        break;
+                    }
+                }
+                ErrorMessageView error = new ErrorMessageView("Item sucessfully removed from db");
+            }
         }
     }
 
     class OverdueItemsButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            ArrayList<LoanModel> listOfLoans = LoanModel.fetchOverdueLoansFromDBfor();
+            JTable table = SearchModel.converListOfLoansToTable(listOfLoans);
+            OverdueItemsView view = new OverdueItemsView(table);
         }
     }
 
@@ -190,20 +229,23 @@ public class MainController {
 
             switch (addItemAlternative) {
                 case "Book": {
-                    FormUserView form = FormUserView.generateFormBook();
-                    System.out.println("Adding book!");
+                    FormView formV = FormView.generateFormBook();
+                    FormBookController formC = new FormBookController(formV);
                     break;
                 }
                 case "Movie": {
-                    FormUserView form = FormUserView.generateFormMovie();
+                    FormView formV = FormView.generateFormMovie();
+                    FormMovieController formC = new FormMovieController(formV);
                     break;
                 }
                 case "Magazine": {
-                    FormUserView form = FormUserView.generateFormMagazine();
+                    FormView formV = FormView.generateFormMagazine();
+                    FormMagazineController formC = new FormMagazineController(formV);
                     break;
                 }
                 case "User": {
-                    FormUserView form = FormUserView.generateFormUser();
+                    FormView formV = FormView.generateFormUser();
+                    FormUserController formC = new FormUserController(formV);
                     break;
                 }
             }

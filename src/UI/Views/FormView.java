@@ -1,26 +1,28 @@
 package UI.Views;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class FormUserView extends JFrame {
+public class FormView extends JFrame {
 
     private JTextField[] textFields;
+    JButton submitButton;
+    JPanel panelPosition;
+
 
     // Create a form with the specified labels, tools, and sizes.
-    public FormUserView(String[] labels, String buttonText) {
-        setTitle("Add new user");
+    public FormView(String[] labels, String buttonText) {
+        setTitle(buttonText);
         setLocation(200,200);
         setVisible(true);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
 
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout());
-        JPanel labelPanel = new JPanel(new GridLayout(labels.length, 1));
-        JPanel fieldPanel = new JPanel(new GridLayout(labels.length, 1));
+        JPanel labelPanel = new JPanel(new GridLayout(labels.length + 1, 1));
+        JPanel fieldPanel = new JPanel(new GridLayout(labels.length + 1, 1));
         contentPane.add(labelPanel, BorderLayout.WEST);
         contentPane.add(fieldPanel, BorderLayout.CENTER);
         textFields = new JTextField[labels.length];
@@ -36,48 +38,53 @@ public class FormUserView extends JFrame {
 
             //Panel position FlowLayout left
             labelPanel.add(labelPosition);
-            JPanel panelPosition = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            panelPosition = new JPanel(new FlowLayout(FlowLayout.LEFT));
             panelPosition.add(textFields[i]);
             fieldPanel.add(panelPosition);
         }
 
-        JButton submit = new JButton(buttonText);
+        submitButton = new JButton(buttonText);
 
-        contentPane.add(submit, BorderLayout.SOUTH);
+        contentPane.add(submitButton, BorderLayout.SOUTH);
         pack();
-
     }
 
-    public static FormUserView generateFormUser() {
+    public void addSubmitButtonListener (ActionListener listener) {
+        submitButton.addActionListener(listener);
+    }
+
+    public static FormView generateFormUser() {
         String[] labels = { "First Name:", "Last Name: ", "Personal ID:", "User Type:",
                 "Street:", "Zip code:", "City:", "Country:", "Telephone:", "Mail:",
                 "Username:", "Password:"};
 
 
-        FormUserView view = new FormUserView(labels, "Add user");
+        FormView view = new FormView(labels, "Add user");
+
+
         return view;
     }
-    public static FormUserView generateFormBook() {
+    public static FormView generateFormBook() {
         String[] labels = { "ISBN:", "Title:", "Article type:", "Publisher:", "Publication year:",
         "Genre:", "Author:", };
 
-        FormUserView view = new FormUserView(labels, "Add book");
+        FormView view = new FormView(labels, "Add book");
         return view;
     }
 
-    public static FormUserView generateFormMagazine() {
+    public static FormView generateFormMagazine() {
         String[] labels = { "Magazine number:", "Title:", "Publisher:", "Publication date:",
                 "Genre:"};
 
-        FormUserView view = new FormUserView(labels, "Add Magazine");
+        FormView view = new FormView(labels, "Add Magazine");
         return view;
     }
 
-    public static FormUserView generateFormMovie() {
+    public static FormView generateFormMovie() {
         String[] labels = { "Title:", "Publication Year", "Producer:", "Genre:",
                 "Article Type:"};
 
-        FormUserView view = new FormUserView(labels, "Add movie");
+        FormView view = new FormView(labels, "Add movie");
         return view;
     }
 

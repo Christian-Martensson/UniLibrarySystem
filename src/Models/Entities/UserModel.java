@@ -2,6 +2,7 @@ package Models.Entities;
 
 import Controller.MainController;
 import Models.DatabaseDriver;
+import UI.Views.ErrorMessageView;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,6 +30,14 @@ public class UserModel {
         this.password = password;
     }
 
+    public UserModel(String userType, String firstName, String lastName, String personalId, String username, String password) {
+        this.userType = userType;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.personalId = personalId;
+        this.username = username;
+        this.password = password;
+    }
 
     public UserModel() {
 
@@ -42,7 +51,7 @@ public class UserModel {
             connection = driver.createConnection();
 
             // 2. Create a statement
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM User WHERE Match(username) Against(?)");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM User WHERE username = ?");
             statement.setString(1, username);
 
             // 3. Execute SQL query
@@ -50,6 +59,7 @@ public class UserModel {
 
             // 4. Process the result set
             while (resultSet.next()) {
+                this.userId = resultSet.getInt("userId");
                 this.userType = resultSet.getString("userType");
                 this.firstName = resultSet.getString("fName");
                 this.lastName = resultSet.getString("lName");
@@ -64,6 +74,74 @@ public class UserModel {
         } catch (Exception e) {
             e.printStackTrace();
 
+        }
+
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    public void loadUserToDb() {
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO User (userType, fName, lName, personalId, username, password) " +
+                            "VALUES (?, ?, ?, ?, ?, ?); ");
+            statement.setString(1, this.userType);
+            statement.setString(2, this.firstName);
+            statement.setString(3, this.lastName);
+            statement.setString(4, this.personalId);
+            statement.setString(5, this.username);
+            statement.setString(6, this.password);
+
+            // 3. Execute SQL query
+            statement.executeUpdate();
+
+
+            //Catch exceptions
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    public void removeFromDb() {
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM User WHERE userId= ?;" );
+            statement.setInt(1, this.getUserId());
+
+            // 3. Execute SQL query
+            statement.executeUpdate();
+
+
+            //Catch exceptions
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorMessageView error = new ErrorMessageView("Error!");
         }
 
         finally{
@@ -105,5 +183,18 @@ public class UserModel {
 
     public int getUserId() {
         return userId;
+    }
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "userId=" + userId +
+                ", userType='" + userType + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", personalId='" + personalId + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
