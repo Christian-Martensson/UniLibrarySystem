@@ -1,12 +1,11 @@
 package Models.Entities;
 
 public abstract class Article {
-    String articleType;
-    String title;
-    String publicationYear;
-    String genre;
-    String creator;
-    int numberInStock;
+    protected String articleType;
+    protected String title;
+    protected String publicationYear;
+    protected String genre;
+    protected String creator;
 
     public abstract boolean checkAvailabilityInDb();
 

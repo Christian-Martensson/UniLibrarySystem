@@ -32,7 +32,7 @@ public class LoanConfirmationController {
                 int userId = MainController.loggedInUser.getUserId();
                 int barcodeId = article.getAvailableBarcode();
                 article.createLoan(barcodeId, userId);
-                LoanReceiptView view = new LoanReceiptView(article, generateText(barcodeId));
+                LoanReceiptView view = new LoanReceiptView(generateText(barcodeId));
             }
 
             else {
@@ -48,7 +48,6 @@ public class LoanConfirmationController {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-
 
         text = "-- RECEIPT LOAN --\n" +
                 "\nDate: " +  dateFormat.format(date) +

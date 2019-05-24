@@ -20,7 +20,7 @@ public class LoginController {
 
     public void getUserFromDB(String username){
         userModel.setUsername(username);
-        userModel.populateuser();
+        userModel.populateUser();
     }
 
 

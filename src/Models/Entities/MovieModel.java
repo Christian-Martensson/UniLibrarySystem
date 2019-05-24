@@ -57,6 +57,9 @@ public class MovieModel extends Article {
             //Catch exceptions
         } catch (Exception e) {
             e.printStackTrace();
+            String text = "Error! \n\n" + e.toString() +"\n\nOne of the fields probably contains the wrong datatype."+
+                    "\nHint: Publication year must be written with numbers on the form YYYY.";
+            MessageView error = new MessageView(text);
 
         }
 
@@ -68,8 +71,6 @@ public class MovieModel extends Article {
             }
         }
     }
-
-
 
     @Override
     public void addBarcodesInDb(int number, String title) {
@@ -84,7 +85,7 @@ public class MovieModel extends Article {
                         "INSERT INTO Barcode (movieId, goneMissing, isAvailable) " +
                                 "VALUES (?, ?, ?);");
                 statement.setInt(1, getDbMovieId(title));
-                statement.setInt(2, 1);
+                statement.setInt(2, 0);
                 statement.setInt(3, 1);
 
                 // 3. Execute SQL query
@@ -190,7 +191,7 @@ public class MovieModel extends Article {
             connection = driver.createConnection();
 
             // 2. Create a statement
-            String sqlQuery = "SELECT * FROM Movie\n" +
+            String sqlQuery = "SELECT COUNT(*) FROM Barcode\n" +
                     "WHERE movieId = ?\n;";
             PreparedStatement statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, movieId);
@@ -200,8 +201,8 @@ public class MovieModel extends Article {
 
             // 4. Process the result set
             if (resultSet.next()) {
-                int isAvailableInt = resultSet.getInt("isAvailable");
-                if (isAvailableInt == 1){
+                int count = resultSet.getInt("COUNT(*)");
+                if (count > 0){
                     isAvailable = true;
                 }
             }

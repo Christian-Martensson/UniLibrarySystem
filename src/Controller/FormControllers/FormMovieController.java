@@ -9,11 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class FormMovieController {
-    FormView view;
-    MovieModel movieModel;
-    final int ADDING = 1;
-    final int EDITING = 2;
-    int option;
+    private FormView view;
+    private MovieModel movieModel;
+    private final int ADDING = 1;
+    private final int EDITING = 2;
+    private int option;
 
 
     public FormMovieController(FormView formView, int option) {

@@ -18,11 +18,11 @@ public class MainController {
     private SearchModel model;
 
     public static boolean loggedIn = false;
-    public static String searchAlternativeWhenSearchWasExecuted;
-    public static String addItemAlternative;
     public static UserModel loggedInUser;
-    public final int ADD = 1;
-    public final int EDIT = 2;
+    private static String searchAlternativeWhenSearchWasExecuted;
+    private static String addItemAlternative;
+    private final int ADD = 1;
+    private final int EDIT = 2;
 
 
     public MainController(MainView mainView, SearchModel searchModel) {
@@ -167,7 +167,7 @@ public class MainController {
                     case "Book": {
                         String valueIsbn = ScrollPanel.getTable().getValueAt(row, column).toString();
                         BookModel book = model.getBookWith(valueIsbn);
-                        FormView formV = FormView.generateFormEditBook("Edit book");
+                        FormView formV = FormView.generateFormBook("Edit book");
                         formV.fillFieldsWith(book);
                         FormBookController formC = new FormBookController(formV, EDIT);
                         break;
@@ -291,20 +291,25 @@ public class MainController {
         view.getBottomToolBar().getEditSelectedItemButton().setVisible(true);
         view.getBottomToolBar().getRemoveSelectedItemButton().setVisible(true);
         view.getBottomToolBar().getOverdueItemsButton().setVisible(true);
+        view.getBottomToolBar().getAddButton().setVisible(true);
+        view.getBottomToolBar().getAddAlternativesDropdown().setVisible(true);
 
     }
 
     public static void givePatronViewAccess() {
         giveDefaultViewAccess();
         view.getBottomToolBar().setVisible(true);
+        view.getBottomToolBar().getAddButton().setVisible(false);
+        view.getBottomToolBar().getAddAlternativesDropdown().setVisible(false);
+        view.getBottomToolBar().getEditSelectedItemButton().setVisible(false);
+        view.getBottomToolBar().getRemoveSelectedItemButton().setVisible(false);
+        view.getBottomToolBar().getOverdueItemsButton().setVisible(false);
     }
 
     public static void giveDefaultViewAccess() {
         view.getBottomToolBar().setVisible(false);
         view.getToolbar().getSearchAlternativesDropdown().removeItem("User");
-        view.getBottomToolBar().getEditSelectedItemButton().setVisible(false);
-        view.getBottomToolBar().getRemoveSelectedItemButton().setVisible(false);
-        view.getBottomToolBar().getOverdueItemsButton().setVisible(false);
+
 
     }
 

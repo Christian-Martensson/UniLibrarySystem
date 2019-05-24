@@ -8,9 +8,9 @@ import Models.Entities.BookModel;
 
 public class ReservationConfirmationView extends JFrame {
 
-    JLabel labelTitle;
-    JLabel labelIsbn;
-    JButton confirmationButton;
+    private JLabel labelTitle;
+    private JLabel labelIsbn;
+    private JButton confirmationButton;
 
     public ReservationConfirmationView(BookModel bookModel) {
 

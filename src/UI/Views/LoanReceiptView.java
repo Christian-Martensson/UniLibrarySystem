@@ -9,12 +9,9 @@ public class LoanReceiptView extends JFrame {
     private JFrame frame;
     private JPanel panel;
     private JTextArea  taReceipt;
-    private Article article;
 
     // Constructor
-    public LoanReceiptView(Article article, String text) {
-        this.article = article;
-
+    public LoanReceiptView(String text) {
         setTitle("Your receipt");
         setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE);
 
@@ -45,8 +42,5 @@ public class LoanReceiptView extends JFrame {
             taReceipt.setText( s );
         }
 
-    public JTextArea getTaReceipt() {
-        return taReceipt;
-    }
 }
 

@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class OverdueItemsView extends JFrame {
 
-    Container contentPane;
+    private Container contentPane;
     private JScrollPane scrollPane;
 
     public OverdueItemsView(JTable table) {

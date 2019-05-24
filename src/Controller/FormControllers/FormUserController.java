@@ -8,11 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class FormUserController {
-    FormView view;
-    UserModel userModel;
-    final int ADDING = 1;
-    final int EDITING = 2;
-    int option;
+    private FormView view;
+    private UserModel userModel;
+    private final int ADDING = 1;
+    private final int EDITING = 2;
+    private int option;
 
 
     public FormUserController(FormView formView, int option) {
@@ -26,6 +26,7 @@ public class FormUserController {
     class SubmitButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+
             if(option == ADDING) {
                 String firstName = view.getText(0);
                 String lastName = view.getText(1);
@@ -39,9 +40,9 @@ public class FormUserController {
                 String mail = view.getText(9);
                 String username = view.getText(10);
                 String password = view.getText(11);
-                UserModel user = new UserModel(userType, firstName, lastName, personalId, username, password);
+                userModel = new UserModel(userType, firstName, lastName, personalId, username, password);
 
-                user.insertIntoDb();
+                userModel.insertIntoDb();
             }
 
             else if (option == EDITING) {
@@ -58,11 +59,10 @@ public class FormUserController {
                 String mail = view.getText(10);
                 String username = view.getText(11);
                 String password = view.getText(12);
-                UserModel user = new UserModel(userType, firstName, lastName, personalId, username, password);
+                userModel = new UserModel(userType, firstName, lastName, personalId, username, password);
 
-                user.updateInDb();
+                userModel.updateInDb();
             }
-
 
         }
     }

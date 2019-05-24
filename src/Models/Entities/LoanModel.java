@@ -3,10 +3,7 @@ package Models.Entities;
 import Models.DatabaseDriver;
 import UI.Views.MessageView;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -135,8 +132,10 @@ public class LoanModel {
 
             // 2. Create a statement
             // previous: "SELECT * FROM Book WHERE Match(title) Against(?)"
-            String sqlQuery = "SELECT * FROM Loan\n" +
-                    "WHERE CURDATE() > dueDate;\n;";
+            String sqlQuery = "  SELECT * FROM Loan\n" +
+                    "  WHERE CURDATE() > dueDate\n" +
+                    "  AND dateOfReturn IS NULL\n" +
+                    "  OR dateOfReturn > dueDate;";
             PreparedStatement statement = connection.prepareStatement(sqlQuery);
 
             // 3. Execute SQL query
@@ -144,10 +143,10 @@ public class LoanModel {
 
             // 4. Process the result set
             while (resultSet.next()) {
-                int loanId = resultSet.getInt("reserverationId");
+                int loanId = resultSet.getInt("loanId");
                 int userId = resultSet.getInt("userId");
                 int barcodeId = resultSet.getInt("barcodeId");
-                Date dateOfLoan = resultSet.getDate("dateOfReservation");
+                Date dateOfLoan = resultSet.getDate("dateOfLoan");
                 Date dateOfReturn = resultSet.getDate("dateOfReturn");
                 Date dueDate = resultSet.getDate("dueDate");
                 int nrRenewals = resultSet.getInt("nrRenewals");
@@ -191,6 +190,34 @@ public class LoanModel {
             MessageView error = new MessageView("Error!");
         }
 
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    public void returnLoan() {
+        Connection connection = null;
+        try {
+            // 1. Get a connection to the database
+            DatabaseDriver driver = new DatabaseDriver();
+            connection = driver.createConnection();
+
+            // 2. Create a statement
+            String sqlQuery = "CALL spReturnLoan(?)";
+            CallableStatement statement = connection.prepareCall(sqlQuery);
+            statement.setInt(1, this.loanId);
+
+            // 3. Execute SQL query
+            statement.executeQuery();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         finally{
             try {
                 connection.close();

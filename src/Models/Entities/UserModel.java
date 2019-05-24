@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserModel {
+public class UserModel implements DatabaseActions {
     private int userId;
     private String userType;
     private String firstName;
@@ -43,7 +43,7 @@ public class UserModel {
 
     }
 
-    public void populateuser(){
+    public void populateUser(){
         Connection connection = null;
         try {
             // 1. Get a connection to the database
@@ -110,7 +110,9 @@ public class UserModel {
             //Catch exceptions
         } catch (Exception e) {
             e.printStackTrace();
-
+            String text = "Error! \n\n" + e.toString() +"\n\nOne of the fields probably contains the wrong datatype."+
+                    "\nRemember that the user type must be either 'patron' or 'librarian'.";
+            MessageView error = new MessageView(text);
         }
 
         finally{
@@ -178,7 +180,9 @@ public class UserModel {
             //Catch exceptions
         } catch (Exception e) {
             e.printStackTrace();
-            MessageView error = new MessageView("Error!");
+            String text = "Error! \n\n" + e.toString() +"\n\nOne of the fields probably contains the wrong datatype."+
+                    "\nRemember that the user type must be either 'patron' or 'librarian'.";
+            MessageView error = new MessageView(text);
         }
 
         finally{

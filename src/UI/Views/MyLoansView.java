@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class MyLoansView extends JFrame {
 
-    Container contentPane;
+    private Container contentPane;
     private JScrollPane scrollPane;
     private BottomToolbarLoans bottomToolbar;
     private JTable table;
@@ -19,7 +19,7 @@ public class MyLoansView extends JFrame {
         table.setPreferredScrollableViewportSize(new Dimension(600,350));
         table.setFillsViewportHeight(true);
         //** Create Login Frame**//
-        setTitle("Overdue items");
+        setTitle("My loans");
         setSize(650,450);
         setLocation(600,300);
         setVisible(true);

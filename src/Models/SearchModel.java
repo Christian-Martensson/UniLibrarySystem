@@ -17,14 +17,15 @@ public class SearchModel {
     private ArrayList<MagazineModel> listOfMagazines;
 
     public static JTable converListOfLoansToTable(ArrayList<LoanModel> listOfLoans) {
-        String[] columnNames = new String[5];
-        Object[][] data = new Object[listOfLoans.size()][5];
+        String[] columnNames = new String[6];
+        Object[][] data = new Object[listOfLoans.size()][6];
 
         columnNames[0] = "Loan ID";
         columnNames[1] = "User ID";
         columnNames[2] = "Barcode ID";
         columnNames[3] = "Date of loan";
         columnNames[4] = "Due date";
+        columnNames[5] = "Date returned";
 
 
         for (int i = 0; i < listOfLoans.size(); i++) {
@@ -33,13 +34,14 @@ public class SearchModel {
             int barcodeId = listOfLoans.get(i).getBarcodeId();
             Date dateOfLoan = listOfLoans.get(i).getDateOfLoan();
             Date dueDate = listOfLoans.get(i).getDueDate();
-
+            Date dateOfReturn = listOfLoans.get(i).getDateOfReturn();
 
             data[i][0] = loanId;
             data[i][1] = userId;
             data[i][2] = barcodeId;
             data[i][3] = dateOfLoan;
             data[i][4] = dueDate;
+            data[i][5] = dateOfReturn;
         }
         return new JTable(data, columnNames);
     }
@@ -64,7 +66,7 @@ public class SearchModel {
             String publicationYear = listOfBooks.get(i).getPublicationYear();
             String genre = listOfBooks.get(i).getGenre();
             // fix
-            boolean available = true;
+            boolean available = listOfBooks.get(i).checkAvailabilityInDb();
 
             data[i][0] = isbn;
             data[i][1] = title;

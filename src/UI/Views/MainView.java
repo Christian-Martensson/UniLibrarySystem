@@ -29,7 +29,7 @@ public class MainView extends JFrame {
 		add(scrollPanel, BorderLayout.CENTER);
 		add(bottomToolBar, BorderLayout.SOUTH);
 
-		setSize(750, 500);
+		setSize(1000, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 

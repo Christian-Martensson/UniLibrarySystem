@@ -8,11 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class FormBookController {
-    FormView view;
-    BookModel bookModel;
-    final int ADDING = 1;
-    final int EDITING = 2;
-    int option;
+    private FormView view;
+    private BookModel bookModel;
+    private final int ADDING = 1;
+    private final int EDITING = 2;
+    private int option;
 
 
     public FormBookController(FormView formView, int option) {
@@ -37,16 +37,15 @@ public class FormBookController {
 
             if(option == ADDING) {
                 bookModel.insertIntoDb();
-                bookModel.addBarcodesInDb(1, title);
+                if (bookModel.isLoadSuccessful()) {
+                    bookModel.addBarcodesInDb(1, title);
+                }
             }
 
             else if (option == EDITING) {
                 bookModel.updateInDb();
 
             }
-
-
-
         }
     }
 }

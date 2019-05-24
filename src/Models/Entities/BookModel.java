@@ -5,15 +5,18 @@ import UI.Views.MessageView;
 
 import java.sql.*;
 
-public class BookModel extends Article {
+public class BookModel extends Article implements DatabaseActions {
     private String isbn;
     private String publisher;
+    private boolean available;
+
+    private boolean loadSuccessful = true;
 
     public BookModel(String isbn, String articleType, String title, String publisher, String publicationYear, String genre, String creator) {
         this.isbn = isbn;
+        this.publisher = publisher;
         super.articleType = articleType;
         super.title = title;
-        this.publisher = publisher;
         super.publicationYear = publicationYear;
         super.genre = genre;
         super.creator = creator;
@@ -47,9 +50,11 @@ public class BookModel extends Article {
             //Catch exceptions
         } catch (Exception e) {
             e.printStackTrace();
-            String text = "Error! \n" +"One of the fields probably contains the wrong datatype."+
-                    "\nRemember that the article type must be Normal or CourseLit.\nYear must be written with numbers.";
+            String text = "Error! \n\n" + e.toString() +"\n\nOne of the fields probably contains the wrong datatype."+
+                    "\nRemember that the article type must be 'standard' or 'courseLit'." +
+                    "\nPublication year must be written with numbers on the form YYYY.";
             MessageView error = new MessageView(text);
+            loadSuccessful = false;
         }
 
         finally{
@@ -74,7 +79,7 @@ public class BookModel extends Article {
                         "INSERT INTO Barcode (isbn, goneMissing, isAvailable) " +
                                 "VALUES (?, ?, ?);");
                 statement.setString(1, this.isbn);
-                statement.setInt(2, 1);
+                statement.setInt(2, 0);
                 statement.setInt(3, 1);
 
                 // 3. Execute SQL query
@@ -155,7 +160,10 @@ public class BookModel extends Article {
             //Catch exceptions
         } catch (Exception e) {
             e.printStackTrace();
-            MessageView error = new MessageView("Error!");
+            String text = "Error! \n\n" + e.toString() +"\n\nOne of the fields probably contains the wrong datatype."+
+                    "\nRemember that the article type must be 'standard' or 'courseLit'." +
+                    "\nPublication year must be written with numbers on the form YYYY.";
+            MessageView error = new MessageView(text);
         }
 
         finally{
@@ -166,7 +174,6 @@ public class BookModel extends Article {
             }
         }
     }
-
 
     @Override
     public boolean checkAvailabilityInDb() {
@@ -181,8 +188,9 @@ public class BookModel extends Article {
             connection = driver.createConnection();
 
             // 2. Create a statement
-            String sqlQuery = "SELECT * FROM Book\n" +
-                    "WHERE isbn = ?\n;";
+            String sqlQuery = "SELECT COUNT(*) FROM Barcode\n" +
+                    "WHERE isbn = ?" +
+                    "AND isAvailable = 1\n;";
             PreparedStatement statement = connection.prepareStatement(sqlQuery);
             statement.setString(1, isbn);
 
@@ -191,8 +199,8 @@ public class BookModel extends Article {
 
             // 4. Process the result set
             if (resultSet.next()) {
-                int isAvailableInt = resultSet.getInt("isAvailable");
-                if (isAvailableInt == 1){
+                int count = resultSet.getInt("COUNT(*)");
+                if (count > 0){
                     isAvailable = true;
                 }
             }
@@ -245,6 +253,8 @@ public class BookModel extends Article {
         }
     }
 
+
+
     public int getAvailableBarcode() {
         // move to book, magazine and movie
         int barcode = 0;
@@ -293,4 +303,7 @@ public class BookModel extends Article {
         return publisher;
     }
 
+    public boolean isLoadSuccessful() {
+        return loadSuccessful;
+    }
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class MyLoansController {
     private MyLoansView view;
     private LoanModel loanModel;
-    ArrayList<LoanModel> listOfLoans;
+    private ArrayList<LoanModel> listOfLoans;
 
     public MyLoansController(MyLoansView view, ArrayList<LoanModel> listOfLoans){
         this.listOfLoans = listOfLoans;
@@ -32,7 +32,7 @@ public class MyLoansController {
 
                 int loanId = Integer.parseInt(view.getTable().getValueAt(row, column).toString());
                 loanModel = getLoanWith(loanId);
-                loanModel.removeFromDb();
+                loanModel.returnLoan();
             }
         }
     }

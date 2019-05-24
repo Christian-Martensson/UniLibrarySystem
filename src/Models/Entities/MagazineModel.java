@@ -49,6 +49,11 @@ public class MagazineModel extends Article {
             //Catch exceptions
         } catch (Exception e) {
             e.printStackTrace();
+            String text = "Error! \n\n" + e.toString() +"\n\nOne of the fields probably contains the wrong datatype."+
+                    "\n\nHints: " +
+                    "\n - Publication date must be written in the form yyyy-MM-dd." +
+                    "\n - Magazine number may only contain numbers.";
+            MessageView error = new MessageView(text);
 
         }
 
@@ -73,7 +78,7 @@ public class MagazineModel extends Article {
                         "INSERT INTO Barcode (magazineId, goneMissing, isAvailable) " +
                                 "VALUES (?, ?, ?);");
                 statement.setInt(1, this.magazineId);
-                statement.setInt(2, 1);
+                statement.setInt(2, 0);
                 statement.setInt(3, 1);
 
                 // 3. Execute SQL query

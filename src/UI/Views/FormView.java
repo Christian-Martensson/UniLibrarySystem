@@ -13,8 +13,8 @@ import javax.swing.*;
 public class FormView extends JFrame {
 
     private JTextField[] textFields;
-    JButton submitButton;
-    JPanel panelPosition;
+    private JButton submitButton;
+    private JPanel panelPosition;
 
 
     // Create a form with the specified labels, tools, and sizes.
@@ -84,15 +84,6 @@ public class FormView extends JFrame {
     public static FormView generateFormBook(String buttonText) {
         String[] labels = { "ISBN:", "Title:", "Article type:", "Publisher:", "Publication year:",
         "Genre:", "Author:", };
-
-        FormView view = new FormView(labels, buttonText);
-        return view;
-    }
-
-    //Form for edit Book
-    public static FormView generateFormEditBook(String buttonText) {
-        String[] labels = {"ISBN:", "Title:", "Article type:", "Publisher:", "Publication year:",
-                "Genre:", "Author:",};
 
         FormView view = new FormView(labels, buttonText);
         return view;
