@@ -69,7 +69,6 @@ public class LoginView extends JFrame {
         lblErrorMessage.setHorizontalAlignment(SwingConstants.RIGHT);
         lblErrorMessage.setBounds(10, 151, 330, 25);
         contentPane.add(lblErrorMessage);
-
     }
 
     public void setErrorMessage(String errorMessage) {
